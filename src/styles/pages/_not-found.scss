@@ -2,6 +2,8 @@
 
 $copy-stagger: 0.1s;
 $rising-items: 4;
+$title-size: clamp(3.8rem, 6vw, 7.6rem);
+$lede-size: 1.9rem;
 
 .hero--lost {
   --sky: 300px;
@@ -24,19 +26,19 @@ $rising-items: 4;
   gap: space(3);
   padding-block: 8vh 320px;
 
-  @include mq(md) {
+  @include breakpoint-up(md) {
     padding-bottom: 360px;
   }
 
   .eyebrow {
     gap: 10px;
-    font-size: 13px;
+    font-size: font-size(md);
     letter-spacing: 0.08em;
   }
 
   &__title {
     margin: 0;
-    font-size: clamp(38px, 6vw, 76px);
+    font-size: $title-size;
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.01em;
@@ -50,7 +52,7 @@ $rising-items: 4;
   &__lede {
     max-width: 44ch;
     margin: 0;
-    font-size: 19px;
+    font-size: $lede-size;
     line-height: 1.55;
     opacity: 0.92;
   }

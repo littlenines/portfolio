@@ -14,8 +14,8 @@ export function initThemeSwitch(group: HTMLElement, chooseTheme: ChooseTheme) {
 
     if (!active?.offsetWidth) return;
 
-    group.style.setProperty('--x', `${active.offsetLeft}px`);
-    group.style.setProperty('--w', `${active.offsetWidth}px`);
+    group.style.setProperty('--pill-left', `${active.offsetLeft}px`);
+    group.style.setProperty('--pill-width', `${active.offsetWidth}px`);
   };
 
   const sync = (theme: Theme) => {

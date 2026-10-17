@@ -3,8 +3,8 @@
 @use 'variables' as *;
 @use 'functions' as *;
 
-@mixin mq($from) {
-  @media (min-width: bp($from)) {
+@mixin breakpoint-up($name) {
+  @media (min-width: breakpoint($name)) {
     @content;
   }
 }
@@ -60,7 +60,7 @@
   mask-image: $image;
 }
 
-@mixin fade-x($edge) {
+@mixin fade-sides($edge) {
   @include mask(linear-gradient(90deg, transparent, $mask-show $edge, $mask-show calc(100% - #{$edge}), transparent));
 }
 
@@ -116,13 +116,13 @@
   background: none;
   color: var(--mute);
   font-family: $font-mono;
-  font-size: 12px;
+  font-size: font-size(sm);
   cursor: pointer;
   transition:
     color 0.2s,
     border-color 0.2s;
 
-  @include mq(xxl) {
-    font-size: 15px;
+  @include breakpoint-up(xxl) {
+    font-size: font-size(xl);
   }
 }

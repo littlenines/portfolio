@@ -2,11 +2,12 @@
 
 $inset: 3px;
 $slide: 0.7s;
+$option-size-phone: 1.05rem;
 
 .theme-switch {
   @include pill;
-  --x: #{$inset};
-  --w: 33%;
+  --pill-left: #{$inset};
+  --pill-width: 33%;
 
   position: relative;
   display: inline-grid;
@@ -29,8 +30,8 @@ $slide: 0.7s;
     position: absolute;
     top: $inset;
     bottom: $inset;
-    left: var(--x);
-    width: var(--w);
+    left: var(--pill-left);
+    width: var(--pill-width);
     border-radius: $radius-pill;
     background: var(--accent);
     transition:
@@ -47,14 +48,14 @@ $slide: 0.7s;
     background: none;
     color: var(--mute);
     font: inherit;
-    font-size: 10.5px;
+    font-size: $option-size-phone;
     line-height: 28px;
     white-space: nowrap;
     text-align: center;
     cursor: pointer;
     transition: color $slide ease;
 
-    @include mq(sm) {
+    @include breakpoint-up(sm) {
       padding: 0 10px;
       font-size: inherit;
     }

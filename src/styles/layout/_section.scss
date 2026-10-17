@@ -9,7 +9,7 @@
     position: absolute;
     top: -40px;
     left: 50%;
-    z-index: z(behind);
+    z-index: z-index(behind);
     width: 100vw;
     height: 380px;
     transform: translateX(-50%);

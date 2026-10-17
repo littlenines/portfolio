@@ -4,7 +4,7 @@
   display: grid;
   grid-template-columns: minmax(90px, 150px) minmax(0, 1fr);
   gap: space(2) space(4);
-  font-size: 14px;
+  font-size: font-size(lg);
 
   &__term {
     color: var(--mute);

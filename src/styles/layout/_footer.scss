@@ -16,11 +16,11 @@
     gap: space(1);
     width: 100%;
     padding-block: space(4) 28px;
-    font-size: 13px;
+    font-size: font-size(md);
     letter-spacing: 0.08em;
     text-align: center;
 
-    @include mq(phablet) {
+    @include breakpoint-up(phablet) {
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -28,7 +28,7 @@
       text-align: start;
     }
 
-    @include mq(md) {
+    @include breakpoint-up(md) {
       column-gap: 20px;
     }
 
@@ -54,12 +54,12 @@
     height: 56px;
     margin-block: -4px;
 
-    @include mq(phablet) {
+    @include breakpoint-up(phablet) {
       flex: 1 1 100%;
       order: -1;
     }
 
-    @include mq(md) {
+    @include breakpoint-up(md) {
       flex: 1 1 120px;
       order: 0;
     }
@@ -68,7 +68,7 @@
       display: block;
       width: 100%;
       height: 100%;
-      @include fade-x(8%);
+      @include fade-sides(8%);
     }
   }
 }

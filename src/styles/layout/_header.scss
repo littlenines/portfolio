@@ -13,7 +13,7 @@ $glitch-offset: 1px;
   position: absolute;
   inset-inline: 0;
   top: 0;
-  z-index: z(header);
+  z-index: z-index(header);
 
   &__bar {
     display: flex;
@@ -23,19 +23,19 @@ $glitch-offset: 1px;
     gap: space(1) space(3);
     padding-block: 10px;
 
-    @include mq(xxl) {
+    @include breakpoint-up(xxl) {
       padding-block: space(2);
     }
   }
 
   &__brand {
-    font-size: 14px;
+    font-size: font-size(lg);
     font-weight: 500;
     text-decoration: none;
     user-select: none;
 
-    @include mq(xxl) {
-      font-size: 18px;
+    @include breakpoint-up(xxl) {
+      font-size: font-size(xxxl);
     }
 
     &[data-easter-egg] {

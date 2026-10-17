@@ -1,3 +1,4 @@
+@use 'sass:list';
 @use 'abstracts' as *;
 
 $tape: alpha($eva-orange, 0.85);
@@ -44,7 +45,7 @@ $draw: 1.1s $ease-standard;
   &__label {
     flex: none;
     color: $eva-amber;
-    font: 600 11px/24px $font-mono;
+    font: 600 list.slash(font-size(xs), 24px) $font-mono;
     letter-spacing: 0.32em;
   }
 

@@ -5,6 +5,7 @@
 }
 
 html {
+  font-size: $root-font-size;
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
@@ -29,7 +30,7 @@ body {
   background: var(--ground);
   color: var(--text);
   font-family: $font-body;
-  font-size: 17px;
+  font-size: font-size(body);
   line-height: 1.65;
 }
 

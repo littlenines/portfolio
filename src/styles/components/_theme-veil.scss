@@ -1,14 +1,19 @@
+@use 'sass:list';
 @use 'abstracts' as *;
 
 $tape-height: 34px;
 $tape-stripe: 40px;
+$warning-size: clamp(7.2rem, 16vw, 20rem);
+$title-size: clamp(8.8rem, 20vw, 26rem);
+$caption-size: clamp(font-size(xs), 1.5vw, font-size(lg));
+$detail-size: clamp(font-size(sm), 1.6vw, font-size(xl));
 
 .theme-veil {
   --veil-accent: #{$eva-orange};
 
   position: fixed;
   inset: 0;
-  z-index: z(veil);
+  z-index: z-index(veil);
   overflow: hidden;
   background: $eva-void;
   opacity: 0;
@@ -86,13 +91,13 @@ $tape-stripe: 40px;
     top: 56px;
     right: max(var(--gutter), 20px);
     color: $eva-orange;
-    font: 500 13px/1 $font-mono;
+    font: 500 list.slash(font-size(md), 1) $font-mono;
     letter-spacing: 0.2em;
   }
 
   &__warning {
     color: $eva-orange;
-    font: 800 clamp(72px, 16vw, 200px)/1 $font-display;
+    font: 800 list.slash($warning-size, 1) $font-display;
     letter-spacing: 0.06em;
     text-shadow: 0 0 34px alpha($eva-orange, 0.45);
   }
@@ -100,7 +105,7 @@ $tape-stripe: 40px;
   &__subtitle {
     margin-top: 10px;
     color: $eva-amber;
-    font: 500 clamp(11px, 1.5vw, 14px)/1 $font-mono;
+    font: 500 list.slash($caption-size, 1) $font-mono;
     letter-spacing: 0.42em;
   }
 
@@ -112,7 +117,7 @@ $tape-stripe: 40px;
     margin-top: 30px;
     padding: 10px space(3);
     color: $eva-amber;
-    font: 500 clamp(12px, 1.6vw, 15px)/1 $font-mono;
+    font: 500 list.slash($detail-size, 1) $font-mono;
     letter-spacing: 0.2em;
   }
 
@@ -125,7 +130,7 @@ $tape-stripe: 40px;
 
   &__title {
     color: $eva-paper;
-    font: 800 clamp(88px, 20vw, 260px)/1 $font-display;
+    font: 800 list.slash($title-size, 1) $font-display;
     letter-spacing: 0.08em;
   }
 
@@ -135,7 +140,7 @@ $tape-stripe: 40px;
     gap: 18px;
     margin-top: 18px;
     color: var(--veil-accent);
-    font: 500 clamp(11px, 1.5vw, 14px)/1 $font-mono;
+    font: 500 list.slash($caption-size, 1) $font-mono;
     letter-spacing: 0.5em;
 
     &::before,

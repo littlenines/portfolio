@@ -88,7 +88,7 @@ $small-plate-cut: 8px;
       content: 'EPISODE ' counter(episode, decimal-leading-zero);
       display: block;
       margin-bottom: 2px;
-      font-size: 10px;
+      font-size: font-size(xxs);
       letter-spacing: 0.22em;
       color: var(--teal);
     }
@@ -97,7 +97,7 @@ $small-plate-cut: 8px;
   .spec-list__term::before {
     content: '\25A0';
     margin-right: 10px;
-    font-size: 9px;
+    font-size: font-size(xxxs);
     vertical-align: 1px;
     color: var(--teal);
   }

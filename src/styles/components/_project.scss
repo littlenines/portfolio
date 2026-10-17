@@ -9,7 +9,7 @@ $name-column: 190px;
   grid-template-columns: minmax(0, 1fr);
   column-gap: space(4);
 
-  @include mq(md) {
+  @include breakpoint-up(md) {
     --project-inset: 12px;
 
     grid-template-columns: calc(#{$name-column} + var(--project-inset)) minmax(0, 1fr) auto;
@@ -35,7 +35,7 @@ $name-column: 190px;
   }
 
   &__name {
-    font-size: 16px;
+    font-size: font-size(xxl);
     font-weight: 500;
     transition: color 0.2s;
 
@@ -53,18 +53,18 @@ $name-column: 190px;
     flex-direction: column;
     gap: 4px;
 
-    @include mq(md) {
+    @include breakpoint-up(md) {
       align-items: flex-end;
       text-align: right;
     }
   }
 
   &__tech {
-    font-size: 13px;
+    font-size: font-size(md);
     color: var(--teal);
 
-    @include mq(md) {
-      font-size: 12px;
+    @include breakpoint-up(md) {
+      font-size: font-size(sm);
     }
   }
 
@@ -72,11 +72,11 @@ $name-column: 190px;
     display: flex;
     flex-wrap: wrap;
     gap: 0 space(2);
-    font-size: 13px;
+    font-size: font-size(md);
 
-    @include mq(md) {
+    @include breakpoint-up(md) {
       justify-content: flex-end;
-      font-size: 12px;
+      font-size: font-size(sm);
     }
   }
 
@@ -90,7 +90,7 @@ $name-column: 190px;
     opacity: 0.9;
     transition: opacity 0.25s;
 
-    @include mq(md) {
+    @include breakpoint-up(md) {
       min-height: 32px;
       opacity: 0.65;
 

@@ -6,7 +6,7 @@ $cut: 12px;
   position: fixed;
   right: max(var(--gutter), env(safe-area-inset-right, 0px));
   bottom: calc(max($back-to-top-offset, env(safe-area-inset-bottom, 0px)) + var(--lift, 0px));
-  z-index: z(back-to-top);
+  z-index: z-index(back-to-top);
   min-height: $back-to-top-size;
   padding: 0;
   border: 0;
@@ -20,7 +20,7 @@ $cut: 12px;
     transform 0.3s,
     visibility 0.3s;
 
-  @include mq(md) {
+  @include breakpoint-up(md) {
     right: max($back-to-top-offset, env(safe-area-inset-right, 0px));
   }
 
@@ -39,7 +39,7 @@ $cut: 12px;
     @include chamfer($cut);
     transition: background 0.3s;
 
-    @include mq(md) {
+    @include breakpoint-up(md) {
       width: auto;
     }
   }
@@ -53,31 +53,31 @@ $cut: 12px;
     padding: 0;
     background: alpha($raise, 0.94);
     color: var(--accent);
-    font-size: 12px;
+    font-size: font-size(sm);
     letter-spacing: 0.06em;
     white-space: nowrap;
     @include chamfer($cut - 1px);
     transition: color 0.3s;
 
-    @include mq(md) {
+    @include breakpoint-up(md) {
       padding: 0 space(2);
     }
   }
 
   &__arrow {
     display: inline-block;
-    font-size: 12px;
+    font-size: font-size(sm);
     transition: transform 0.25s;
 
-    @include mq(md) {
-      font-size: 10px;
+    @include breakpoint-up(md) {
+      font-size: font-size(xxs);
     }
   }
 
   &__label {
     display: none;
 
-    @include mq(md) {
+    @include breakpoint-up(md) {
       display: inline;
     }
   }

@@ -1,3 +1,4 @@
+@use 'sass:list';
 @use 'sass:math';
 @use 'abstracts' as *;
 
@@ -7,7 +8,7 @@ $ring-size: 28px;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: z(reticle);
+  z-index: z-index(reticle);
   width: 0;
   height: 0;
   opacity: 0;
@@ -44,7 +45,7 @@ $ring-size: 28px;
     top: 12px;
     left: 26px;
     color: var(--peach);
-    font: 500 9px/1 $font-mono;
+    font: 500 list.slash(font-size(xxxs), 1) $font-mono;
     letter-spacing: 0.14em;
     white-space: nowrap;
     opacity: 0.8;

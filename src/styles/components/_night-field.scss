@@ -3,7 +3,7 @@
 .night-field {
   position: fixed;
   inset: 0;
-  z-index: z(behind);
+  z-index: z-index(behind);
   opacity: 0;
   pointer-events: none;
 

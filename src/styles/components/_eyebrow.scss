@@ -1,21 +1,23 @@
 @use 'abstracts' as *;
 
+$fluid-size: clamp(font-size(sm), min(1.5vh, 1.3vw), 2rem);
+
 .eyebrow {
   display: inline-flex;
   align-items: center;
   gap: space(1);
-  font-size: 12px;
+  font-size: font-size(sm);
   letter-spacing: 0.02em;
   color: var(--teal);
 
-  @include mq(xs) {
-    font-size: 13px;
+  @include breakpoint-up(xs) {
+    font-size: font-size(md);
     letter-spacing: 0.03em;
   }
 
-  @include mq(md) {
+  @include breakpoint-up(md) {
     gap: 10px;
-    font-size: clamp(12px, min(1.5vh, 1.3vw), 20px);
+    font-size: $fluid-size;
     letter-spacing: 0.08em;
   }
 

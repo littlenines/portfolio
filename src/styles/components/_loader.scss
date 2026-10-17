@@ -1,6 +1,7 @@
 @use 'abstracts' as *;
 
 $auto-hide-after: 7s;
+$log-size: clamp(font-size(sm), 1.6vw, font-size(xl));
 
 html.is-loading {
   overflow: hidden;
@@ -13,7 +14,7 @@ html.is-loading {
 .loader {
   position: fixed;
   inset: 0;
-  z-index: z(loader);
+  z-index: z-index(loader);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -35,7 +36,7 @@ html.is-loading {
 
   &__log {
     margin-top: 12vh;
-    font-size: clamp(12px, 1.6vw, 15px);
+    font-size: $log-size;
     line-height: 1.9;
     color: var(--mute);
     white-space: pre;

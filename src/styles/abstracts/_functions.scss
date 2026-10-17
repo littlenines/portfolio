@@ -8,14 +8,21 @@
   @return map.get($space, $step);
 }
 
-@function z($layer) {
+@function z-index($layer) {
   @if not map.has-key($z-layers, $layer) {
     @error 'Unknown z-index layer `#{$layer}`. Expected one of #{map.keys($z-layers)}.';
   }
   @return map.get($z-layers, $layer);
 }
 
-@function bp($name) {
+@function font-size($step) {
+  @if not map.has-key($font-sizes, $step) {
+    @error 'Unknown font size `#{$step}`. Expected one of #{map.keys($font-sizes)}.';
+  }
+  @return map.get($font-sizes, $step);
+}
+
+@function breakpoint($name) {
   @if not map.has-key($breakpoints, $name) {
     @error 'Unknown breakpoint `#{$name}`. Expected one of #{map.keys($breakpoints)}.';
   }

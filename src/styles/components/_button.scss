@@ -8,7 +8,7 @@
   border: 1px solid var(--peach);
   border-radius: $radius-pill;
   color: var(--peach);
-  font-size: 15px;
+  font-size: font-size(xl);
   font-weight: 500;
   text-decoration: none;
   transition:
@@ -29,10 +29,10 @@
 
 .pill-btn {
   @include pill;
-  font-size: 13px;
+  font-size: font-size(md);
 
-  @include mq(md) {
-    font-size: 12px;
+  @include breakpoint-up(md) {
+    font-size: font-size(sm);
   }
 
   &:hover {
