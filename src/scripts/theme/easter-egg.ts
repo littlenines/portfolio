@@ -1,9 +1,10 @@
 import { SECRET_THEME } from '@lib/themes';
-import { currentTheme } from './state';
+import { currentTheme, onThemeChange } from './state';
 import type { ChooseTheme } from './transition';
 
 const TAPS_NEEDED = 3;
 const TAP_WINDOW_MS = 2500;
+const PROGRESS_PROPERTY = '--knock-progress';
 
 const CONSOLE_HINT = 'something here wakes up after dark. knock on the name a few times.';
 const CONSOLE_STYLES = ['color:#FF8A3D;font-weight:700', 'color:#A99CB8'];
@@ -11,19 +12,30 @@ const CONSOLE_STYLES = ['color:#FF8A3D;font-weight:700', 'color:#A99CB8'];
 export function initEasterEgg(tapTarget: HTMLElement | null, chooseTheme: ChooseTheme) {
   if (!tapTarget) return;
 
-  let taps: number[] = [];
+  let taps = 0;
+  let resetTimer = 0;
+
+  const showProgress = (count: number) => {
+    taps = count;
+    tapTarget.style.setProperty(PROGRESS_PROPERTY, String(count / TAPS_NEEDED));
+  };
 
   tapTarget.addEventListener('click', () => {
-    const now = Date.now();
+    if (currentTheme() === SECRET_THEME) return;
 
-    taps = [...taps.filter((time) => now - time < TAP_WINDOW_MS), now];
+    window.clearTimeout(resetTimer);
+    showProgress(taps + 1);
 
-    if (taps.length < TAPS_NEEDED) return;
+    if (taps < TAPS_NEEDED) {
+      resetTimer = window.setTimeout(() => showProgress(0), TAP_WINDOW_MS);
 
-    taps = [];
+      return;
+    }
 
-    if (currentTheme() !== SECRET_THEME) chooseTheme(SECRET_THEME);
+    chooseTheme(SECRET_THEME);
   });
+
+  onThemeChange(() => showProgress(0));
 
   console.log(`%c警告%c  ${CONSOLE_HINT}`, ...CONSOLE_STYLES);
 }

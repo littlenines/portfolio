@@ -27,6 +27,12 @@
   }
 }
 
+@mixin fine-pointer {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
 @mixin night {
   #{$theme-night} & {
     @content;

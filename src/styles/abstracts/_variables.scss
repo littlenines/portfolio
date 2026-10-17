@@ -46,3 +46,4 @@ $back-to-top-offset: 20px;
 
 $theme-night: ':root:is([data-theme="netspace"], [data-theme="evangelion"])';
 $theme-evangelion: ':root[data-theme="evangelion"]';
+$theme-not-evangelion: ':root:not([data-theme="evangelion"])';

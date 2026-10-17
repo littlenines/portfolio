@@ -114,7 +114,9 @@ Other media mixins: `motion-ok`, `reduced-motion`, `touch` (`hover: none`).
 - On phones the back-to-top button is an icon-only square (`$back-to-top-size`) so it fits beside the
   contact buttons; from 701px it shows its label.
 - The header name has `user-select: none`, because three quick taps unlock the easter egg and would
-  otherwise select the text.
+  otherwise select the text. On desktop (fine pointer with hover) it gets a pointer cursor and a soft glitch
+  on hover in the theme's first two wave colours as a hint; the hint is off in evangelion, where knocking
+  does nothing.
 - Project rows share the list's columns through `subgrid`, so the tech and links column lines up in every
   row. From 701px that column is right-aligned, so every tech line and link row ends flush with the row
   edge; on phones it stays left-aligned under the description. A row's side padding comes from `--project-inset` (12px, 20px in evangelion), and the name column is

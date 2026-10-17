@@ -17,7 +17,7 @@ const { minimal = false } = Astro.props;
       </a>
     ) : (
       <>
-        <span class="site-header__brand mono" data-easter-egg>
+        <span class="site-header__brand mono" data-easter-egg data-label={site.name}>
           {site.name}
         </span>
         <ThemeSwitch />

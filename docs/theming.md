@@ -97,5 +97,9 @@ Switching into or out of evangelion changes fonts, shapes, copy and layout all a
 
 ## Easter egg
 
-`scripts/theme/easter-egg.ts`: three taps on the header name within 2.5 seconds switch to evangelion, which
-then appears in the switch. The browser console prints a hint: "knock on the name a few times."
+`scripts/theme/easter-egg.ts`: three taps on the header name switch to evangelion, which then appears in the
+switch. Each tap fills the name with the theme accent (peach in surface, teal in netspace) from the left, a
+third at a time (`--knock-progress`, drawn by a `::after` copy of the name in `layout/_header.scss`). If 2.5
+seconds pass without a tap, the fill drains back to empty. The browser console prints a hint: "knock on the
+name a few times." On desktop the name glitches softly and shows a pointer cursor on hover
+(`layout/_header.scss`), except in evangelion.

@@ -1,5 +1,14 @@
 @use 'abstracts' as *;
 
+$knock-fill: 0.45s;
+$glitch-cycle: 2.6s;
+$glitch-strength: 0.55;
+$glitch-offset: 1px;
+
+@function glitch-split($offset) {
+  @return $offset 0 rgba(var(--wave-1-rgb), $glitch-strength), (-$offset) 0 rgba(var(--wave-2-rgb), $glitch-strength);
+}
+
 .site-header {
   position: absolute;
   inset-inline: 0;
@@ -23,11 +32,42 @@
     font-size: 14px;
     font-weight: 500;
     text-decoration: none;
-    // Tapping the name unlocks the easter egg; don't let the taps highlight it as a triple-click
     user-select: none;
 
     @include mq(xxl) {
       font-size: 18px;
+    }
+
+    &[data-easter-egg] {
+      --knock-progress: 0;
+
+      position: relative;
+
+      &::after {
+        content: attr(data-label);
+        content: attr(data-label) / '';
+        position: absolute;
+        inset: 0;
+        color: var(--accent);
+        white-space: nowrap;
+        clip-path: inset(0 calc((1 - var(--knock-progress)) * 100%) 0 0);
+        transition: clip-path $knock-fill $ease-standard;
+        pointer-events: none;
+      }
+
+      @include fine-pointer {
+        #{$theme-not-evangelion} & {
+          cursor: pointer;
+        }
+
+        #{$theme-not-evangelion} &:hover {
+          text-shadow: glitch-split($glitch-offset);
+
+          @include motion-ok {
+            animation: brand-glitch $glitch-cycle steps(1) infinite;
+          }
+        }
+      }
     }
   }
 
@@ -37,5 +77,28 @@
     .site-header__bar {
       padding-block: 18px;
     }
+  }
+}
+
+@keyframes brand-glitch {
+  0%,
+  10%,
+  52%,
+  58%,
+  100% {
+    text-shadow: glitch-split($glitch-offset);
+  }
+
+  4% {
+    text-shadow: glitch-split(-$glitch-offset);
+  }
+
+  7%,
+  55% {
+    text-shadow: glitch-split($glitch-offset * 2);
+  }
+
+  30% {
+    text-shadow: none;
   }
 }
