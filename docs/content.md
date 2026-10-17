@@ -55,7 +55,12 @@ The download link is commented out in `Contact.astro` until a CV exists. To turn
 1. Put the PDF in `public/` as `cv.pdf` (or change `cv` in `site.ts`).
 2. Uncomment the `contact__cv` link in `Contact.astro`. Its styles are already in place.
 
-## Before going live
+## Deployment (Vercel)
 
-Set `site` in `astro.config.mjs` (for example `site: 'https://example.com'`). Without it the share image
-(`og:image`) is a relative path, which most social networks ignore.
+- `site` in `astro.config.mjs` comes from Vercel's `VERCEL_PROJECT_PRODUCTION_URL`, so the share image
+  (`og:image`) is an absolute URL on every Vercel build: your custom domain once you add one, otherwise
+  `*.vercel.app`. Local builds fall back to a relative path.
+- pnpm is pinned through `packageManager` in `package.json`. Vercel only honours it with the environment
+  variable `ENABLE_EXPERIMENTAL_COREPACK=1`.
+- `pnpm-workspace.yaml` tells pnpm to skip `@parcel/watcher`'s build script (only needed by the Sass CLI's
+  watch mode). Without it, pnpm 12 fails the install.
