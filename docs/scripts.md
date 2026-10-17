@@ -40,9 +40,15 @@ Safety nets, in `Loader.astro` and `_loader.scss`:
 
 - **Intro:** the sun rises, the name, eyebrow and title lines slide in, then the copy. Held until the loader lifts.
 - **Scroll depth:** across the hero, the sun sinks, the stars drift up and the copy lifts slightly.
-- **The city wakes up:** extra "awake" windows light one by one as you scroll away from the top.
+- **The city wakes up:** extra "awake" windows light one by one as you scroll away from the top. Each one
+  switches on over a short slice of the scroll (`AWAKE_SWITCH`), so only a few change in any one frame.
 - **Ambient loops:** beacons pulse, about 40 random windows breathe, haze drifts, and a shooting star crosses
-  every 7–12 seconds. All of these pause while the hero is off screen or the tab is hidden.
+  every 7–12 seconds. All of these pause while the hero is off screen, while the tab is hidden, and **while the
+  page is scrolling** (they resume 200 ms after it settles).
+
+**Performance note:** any change inside the skyline SVG makes the browser redo style and layering for the
+whole SVG. On phones, loops running during a scroll caused visible stutter. Keep new skyline animations
+infrequent, and pause them during scroll the same way.
 
 Tunable values are named constants at the top of the file (`INTRO`, `SCROLL_DEPTH`, `METEOR`, …).
 
@@ -53,15 +59,15 @@ the left.
 
 ## Effects
 
-| Module           | What it does                                                                                                                                                                                                                                                       |
-| :--------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `footer-wave.ts` | Three layered sine waves on a canvas, with a soft blip every few seconds. Colours come from `--wave-*-rgb` and ease between themes. Runs only while visible.                                                                                                       |
-| `night-sky.ts`   | Below the hero, the page background sinks from the theme's ground (`--ground-rgb`) to a darker shade (`--ground-sunk-rgb`) and faint stars fade in. Also tints the phone browser bar from the sky colour (`--sky-top-rgb`) into the page colour.                   |
-| `back-to-top.ts` | Appears after 80% of the first screen. As the footer scrolls in it lifts itself (`--lift`) so it always stops just above the footer's top line, on every screen size. The footer element is found with `data-back-to-top-limit`.                                   |
-| `reticle.ts`     | A ring that trails the mouse and grows over links, buttons and projects. Mouse devices only. In evangelion it becomes a bracket frame with page coordinates.                                                                                                       |
-| `copy-text.ts`   | Any button with `data-copy="text"` copies that text. Optional `data-copied-message` sets the toast. Uses the Clipboard API, which needs HTTPS or `localhost`; on a plain-HTTP address (e.g. testing from a phone over a LAN IP) it shows "Could not copy" instead. |
-| `toast.ts`       | `showToast(message)`: a note at the bottom that fades after 2s.                                                                                                                                                                                                    |
-| `warnbar.ts`     | The evangelion caution tape draws itself the first time it scrolls into view; its stripes pause off screen.                                                                                                                                                        |
+| Module           | What it does                                                                                                                                                                                                                                                                                                                                                              |
+| :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `footer-wave.ts` | Three layered sine waves on a canvas, with a soft blip every few seconds. Colours come from `--wave-*-rgb` and ease between themes. Runs only while visible.                                                                                                                                                                                                              |
+| `night-sky.ts`   | Below the hero, the page background sinks from the theme's ground (`--ground-rgb`) to a darker shade (`--ground-sunk-rgb`) and faint stars fade in. Also tints the phone browser bar from the sky colour (`--sky-top-rgb`) into the page colour.                                                                                                                          |
+| `back-to-top.ts` | Appears after 80% of the first screen. As the footer scrolls in it lifts itself (`--lift`): on wide desktops with a mouse (≥1280px) it may float over the footer wave and only stays clear of the text row; everywhere else it stops just above the footer's top line, so it never covers the contact buttons. The footer element is found with `data-back-to-top-limit`. |
+| `reticle.ts`     | A ring that trails the mouse and grows over links, buttons and projects. Mouse devices only. In evangelion it becomes a bracket frame with page coordinates.                                                                                                                                                                                                              |
+| `copy-text.ts`   | Any button with `data-copy="text"` copies that text. Optional `data-copied-message` sets the toast. Uses the Clipboard API, which needs HTTPS or `localhost`; on a plain-HTTP address (e.g. testing from a phone over a LAN IP) it shows "Could not copy" instead.                                                                                                        |
+| `toast.ts`       | `showToast(message)`: a note at the bottom that fades after 2s.                                                                                                                                                                                                                                                                                                           |
+| `warnbar.ts`     | The evangelion caution tape draws itself the first time it scrolls into view; its stripes pause off screen.                                                                                                                                                                                                                                                               |
 
 ## Adding a behaviour
 

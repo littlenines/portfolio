@@ -115,4 +115,15 @@ Other media mixins: `motion-ok`, `reduced-motion`, `touch` (`hover: none`).
   contact buttons; from 701px it shows its label.
 - The header name has `user-select: none`, because three quick taps unlock the easter egg and would
   otherwise select the text.
+- Project rows share the list's columns through `subgrid`, so the tech and links column lines up in every
+  row. From 701px that column is right-aligned, so every tech line and link row ends flush with the row
+  edge; on phones it stays left-aligned under the description. A row's side padding comes from `--project-inset` (12px, 20px in evangelion), and the name column is
+  widened by the same amount. Change the padding through that variable, not `padding-inline`, or long
+  names wrap.
 - The theme partials must stay in order (surface → netspace → evangelion). See [Theming](theming.md).
+- The header is absolutely positioned, so `.page`'s `overflow-x: clip` does not apply to it. Anything in the
+  header that can stick out must clip itself. The theme switch uses `overflow: clip`, otherwise its pill
+  sliding back after the evangelion option hides widens the page on phones. Its focus ring is drawn inside
+  (`outline-offset: -2px`) for the same reason.
+- On phones the hero copy's bottom padding is `sun lift + sun height + 24px`, so the text always ends above
+  the sun whatever the screen height.

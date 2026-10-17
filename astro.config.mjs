@@ -5,12 +5,12 @@ const PRINTABLE_ASCII = Array.from({ length: 0x7f - 0x20 }, (_, index) => String
 // Kanji shown in the display font by the evangelion transition veil
 const DISPLAY_KANJI = ['警', '告', '撤', '収'];
 
-// Set by Vercel on every build (custom domain if one is added, otherwise *.vercel.app); makes og:image absolute
-const productionHost = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+// Production URL, used for absolute links such as og:image. Update it if a custom domain is added.
+const SITE_URL = 'https://nemanja-galbinovic.vercel.app';
 
 // https://astro.build/config
 export default defineConfig({
-  site: productionHost ? `https://${productionHost}` : undefined,
+  site: SITE_URL,
   build: {
     inlineStylesheets: 'always',
   },

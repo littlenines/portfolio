@@ -12,10 +12,13 @@ const INTRO = {
 
 const SCROLL_DEPTH = { sun: 150, stars: -60, copy: -40 };
 const AWAKE_OPACITY = { min: 0.5, max: 0.95 };
+// Each window switches on over a short slice of the scroll, so only a few change in any one frame
+const AWAKE_SWITCH = { duration: 0.08, spread: 1 };
 
 const BEACON_PULSE = { opacity: 0.1, duration: 1.2, maxDelay: 2 };
 const WINDOW_BREATH = { count: 40, minOpacity: 0.12, maxOpacity: 0.4, minDuration: 1.6, maxDuration: 4, maxDelay: 3 };
 const HAZE_DRIFT = { distance: 70, duration: 38, durationStep: 8 };
+const SCROLL_IDLE_MS = 200;
 
 const METEOR = {
   firstDelay: 4,
@@ -82,8 +85,9 @@ export function initHeroMotion() {
 
     gsap.to(awakeWindows, {
       opacity: () => gsap.utils.random(AWAKE_OPACITY.min, AWAKE_OPACITY.max),
+      duration: AWAKE_SWITCH.duration,
       ease: 'none',
-      stagger: { amount: 1, from: 'random' },
+      stagger: { amount: AWAKE_SWITCH.spread, from: 'random' },
       scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom 45%', scrub: true },
     });
 
@@ -158,13 +162,30 @@ export function initHeroMotion() {
     scheduleMeteor(METEOR.firstDelay);
 
     let isHeroVisible = true;
+    let isScrolling = false;
+    let scrollIdleTimer = 0;
 
     const syncLoops = () => {
-      isHeroActive = isHeroVisible && !document.hidden;
+      isHeroActive = isHeroVisible && !document.hidden && !isScrolling;
 
       for (const loop of loops) loop.paused(!isHeroActive);
 
       nextMeteor?.paused(!isHeroActive);
+    };
+
+    // Every loop repaints the whole skyline SVG, which makes scrolling stutter on phones
+    const pauseWhileScrolling = () => {
+      if (!isScrolling) {
+        isScrolling = true;
+        syncLoops();
+      }
+
+      window.clearTimeout(scrollIdleTimer);
+
+      scrollIdleTimer = window.setTimeout(() => {
+        isScrolling = false;
+        syncLoops();
+      }, SCROLL_IDLE_MS);
     };
 
     const stopWatchingHero = onVisibilityChange(hero, (isVisible) => {
@@ -173,6 +194,7 @@ export function initHeroMotion() {
     });
 
     document.addEventListener('visibilitychange', syncLoops);
+    window.addEventListener('scroll', pauseWhileScrolling, { passive: true });
 
     // The meteor is created after setup, outside GSAP's context, so it has to be cleaned up by hand
     return () => {
@@ -183,6 +205,8 @@ export function initHeroMotion() {
 
       stopWatchingHero();
       document.removeEventListener('visibilitychange', syncLoops);
+      window.removeEventListener('scroll', pauseWhileScrolling);
+      window.clearTimeout(scrollIdleTimer);
     };
   });
 }

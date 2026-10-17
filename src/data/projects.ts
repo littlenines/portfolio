@@ -21,9 +21,8 @@ export const projects: Project[] = [
   {
     name: 'portfolio',
     description: 'This site: a cyberpunk city-pop portfolio with a layered skyline and smooth GSAP motion.',
-    tech: ['Astro', 'TypeScript', 'GSAP'],
-    links: [],
-    status: 'in progress',
+    tech: ['Astro', 'TypeScript', 'SCSS', 'GSAP'],
+    links: [{ label: 'github', href: 'https://github.com/littlenines/portfolio' }],
   },
   {
     name: 'resize-quill-image',

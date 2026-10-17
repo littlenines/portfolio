@@ -57,9 +57,10 @@ The download link is commented out in `Contact.astro` until a CV exists. To turn
 
 ## Deployment (Vercel)
 
-- `site` in `astro.config.mjs` comes from Vercel's `VERCEL_PROJECT_PRODUCTION_URL`, so the share image
-  (`og:image`) is an absolute URL on every Vercel build: your custom domain once you add one, otherwise
-  `*.vercel.app`. Local builds fall back to a relative path.
+- Live at https://nemanja-galbinovic.vercel.app. That URL is `SITE_URL` in `astro.config.mjs`, which makes
+  the share image (`og:image`) an absolute link. Change it if you add a custom domain. Vercel's
+  `VERCEL_PROJECT_PRODUCTION_URL` isn't used because for `.vercel.app` names it gives the auto-generated
+  address, not the one you chose.
 - pnpm is pinned through `packageManager` in `package.json`. Vercel only honours it with the environment
   variable `ENABLE_EXPERIMENTAL_COREPACK=1`.
 - `pnpm-workspace.yaml` tells pnpm to skip `@parcel/watcher`'s build script (only needed by the Sass CLI's

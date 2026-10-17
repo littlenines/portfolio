@@ -3,6 +3,7 @@
 .hero {
   --sky: clamp(220px, 36vh, 620px);
   --sun: clamp(180px, 30vh, 520px);
+  --sun-lift: calc(var(--sky) * 0.2);
   --strip: clamp(20px, 2.6vh, 56px);
 
   position: relative;
@@ -37,10 +38,10 @@
     flex-direction: column;
     justify-content: center;
     gap: clamp(14px, 2.6vh, 32px);
-    padding-block: 12px calc(var(--sky) * 0.85);
+    padding-block: 12px calc(var(--sun-lift) + var(--sun) + #{space(3)});
 
     @include mq(md) {
-      padding-top: space(3);
+      padding-block: space(3) calc(var(--sky) * 0.85);
     }
   }
 

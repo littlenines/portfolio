@@ -75,7 +75,7 @@ $sun-stripes: linear-gradient(
   &__sun {
     position: absolute;
     left: 50%;
-    bottom: calc(var(--sky) * 0.2);
+    bottom: var(--sun-lift);
     width: var(--sun);
     height: var(--sun);
     margin-left: calc(var(--sun) / -2);

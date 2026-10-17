@@ -24,7 +24,7 @@ export function onVisibilityChange(
     return () => {};
   }
 
-  const observer = new IntersectionObserver(([entry]) => callback(entry.isIntersecting), options);
+  const observer = new IntersectionObserver(([entry]) => callback(entry.intersectionRatio > 0), options);
 
   observer.observe(element);
 

@@ -56,12 +56,13 @@ $small-plate-cut: 8px;
   }
 
   .project-list {
+    --project-inset: 20px;
+
     counter-reset: episode;
   }
 
   .project {
     @include chamfer-plate($plate-cut, var(--line), $eva-plate);
-    padding-inline: 20px;
 
     &::before {
       transition: background 0.2s;

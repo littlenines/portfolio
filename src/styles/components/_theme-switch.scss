@@ -15,6 +15,7 @@ $slide: 0.7s;
   align-items: center;
   gap: 0;
   padding: $inset;
+  overflow: clip;
   border-color: alpha($text, 0.28);
   background: alpha($ground, 0.35);
   cursor: default;
@@ -67,7 +68,7 @@ $slide: 0.7s;
     }
 
     &:focus-visible {
-      outline-offset: 2px;
+      outline-offset: -2px;
     }
   }
 }

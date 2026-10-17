@@ -1,6 +1,9 @@
 import { throttleToFrame } from '@scripts/lib/dom';
+import { MEDIA, matches } from '@scripts/lib/media';
 
 const SHOW_AFTER_VIEWPORTS = 0.8;
+
+const FOOTER_TEXT_CLEARANCE = 42;
 
 export function initBackToTop(button: HTMLElement) {
   const footer = document.querySelector<HTMLElement>('[data-back-to-top-limit]');
@@ -18,9 +21,13 @@ export function initBackToTop(button: HTMLElement) {
 
     if (!footer) return;
 
-    const liftAboveFooter = window.innerHeight - footer.getBoundingClientRect().top;
+    const footerBox = footer.getBoundingClientRect();
 
-    button.style.setProperty('--lift', `${Math.max(0, liftAboveFooter)}px`);
+    const lift = matches(MEDIA.wideDesktop)
+      ? window.innerHeight - footerBox.bottom + FOOTER_TEXT_CLEARANCE
+      : window.innerHeight - footerBox.top;
+
+    button.style.setProperty('--lift', `${Math.max(0, lift)}px`);
   };
 
   const scheduleUpdate = throttleToFrame(update);
