@@ -3,6 +3,8 @@
 A cyberpunk city-pop portfolio built with Astro, SCSS (7-1) and GSAP. Mobile first, with three themes
 (surface, netspace and a hidden evangelion theme) and a seeded skyline rendered at build time.
 
+![](https://github.com/littlenines/portfolio/blob/4dfe385a0b0fb5ab96ae8621949c0a055f00b9bb/portfolio-image.png)
+
 ## Commands
 
 | Command         | Action                                                       |
