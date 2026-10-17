@@ -1,0 +1,48 @@
+@use 'abstracts' as *;
+
+#{$theme-night} {
+  --accent: var(--teal);
+  --on-accent: #{$night-ink};
+  --selection: #{alpha($teal, 0.3)};
+  --scrollbar: #{$sea-glass};
+  --footer-glow: #{alpha($teal, 0.17)};
+  --sky-top-rgb: #{rgb-triplet($night-deep)};
+  --wave-1-rgb: #{rgb-triplet($teal)};
+  --wave-2-rgb: #{rgb-triplet($periwinkle)};
+  --wave-3-rgb: #{rgb-triplet($pink)};
+
+  .scene__night-sky,
+  .scene__city-light {
+    opacity: 1;
+  }
+
+  .scene__sunbox {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .scene__star {
+    opacity: 0.8;
+  }
+
+  .skyline__haze {
+    opacity: 0.55;
+  }
+
+  .skyline__window {
+    fill: $window-glow;
+    stroke-opacity: 0.22;
+
+    &--after-dark {
+      fill-opacity: 1;
+    }
+  }
+
+  .skyline__neon {
+    filter: drop-shadow(0 0 4px $pink);
+  }
+
+  .skyline__beacon {
+    filter: drop-shadow(0 0 5px $pink);
+  }
+}

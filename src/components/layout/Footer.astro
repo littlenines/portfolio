@@ -1,0 +1,33 @@
+---
+import ThemedText from '@components/ui/ThemedText.astro';
+import { site } from '@data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner mono" data-back-to-top-limit>
+    <span class="site-footer__note">
+      © {year} {site.name}
+    </span>
+    <div class="site-footer__wave" aria-hidden="true">
+      <canvas data-footer-wave></canvas>
+    </div>
+    <span class="site-footer__note">
+      <ThemedText>
+        <span lang="ja">夜勤</span> · built after dark
+        <Fragment slot="evangelion">
+          <span lang="ja">夜勤</span> · night watch
+        </Fragment>
+      </ThemedText>
+    </span>
+  </div>
+</footer>
+
+<script>
+  import { initFooterWave } from '@scripts/effects/footer-wave';
+
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-footer-wave]');
+
+  if (canvas) initFooterWave(canvas);
+</script>

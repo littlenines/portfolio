@@ -1,0 +1,12 @@
+---
+import { THEMES, THEME_STORAGE_KEY } from '@lib/themes';
+---
+
+<script is:inline define:vars={{ themes: THEMES, storageKey: THEME_STORAGE_KEY }}>
+  // Apply the remembered theme before first paint so the page never flashes the default one
+  try {
+    const saved = localStorage.getItem(storageKey);
+
+    if (themes.includes(saved)) document.documentElement.dataset.theme = saved;
+  } catch {}
+</script>

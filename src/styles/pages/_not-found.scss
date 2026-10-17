@@ -1,0 +1,83 @@
+@use 'abstracts' as *;
+
+$copy-stagger: 0.1s;
+$rising-items: 4;
+
+.hero--lost {
+  --sky: 300px;
+  --sun: 260px;
+  --strip: 24px;
+
+  padding-top: 0;
+  background: var(--night-sky);
+
+  .scene__star {
+    opacity: 0.9;
+  }
+}
+
+.not-found {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: space(3);
+  padding-block: 8vh 320px;
+
+  @include mq(md) {
+    padding-bottom: 360px;
+  }
+
+  .eyebrow {
+    gap: 10px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: clamp(38px, 6vw, 76px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+
+    em {
+      font-style: normal;
+      color: var(--peach);
+    }
+  }
+
+  &__lede {
+    max-width: 44ch;
+    margin: 0;
+    font-size: 19px;
+    line-height: 1.55;
+    opacity: 0.92;
+  }
+
+  > * {
+    animation: not-found-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+    @include reduced-motion {
+      animation: none;
+    }
+  }
+
+  @for $item from 2 through $rising-items {
+    > :nth-child(#{$item}) {
+      animation-delay: ($item - 1) * $copy-stagger;
+    }
+  }
+}
+
+@keyframes not-found-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

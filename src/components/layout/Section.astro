@@ -1,0 +1,24 @@
+---
+import SectionLabel from '@components/ui/SectionLabel.astro';
+
+interface Props {
+  id: string;
+  index: string;
+  japanese: string;
+  label: string;
+}
+
+const { id, index, japanese, label } = Astro.props;
+const headingId = `${id}-heading`;
+---
+
+<section class="section" id={id} aria-labelledby={headingId}>
+  <SectionLabel id={headingId} index={index} japanese={japanese} label={label} />
+  <slot />
+</section>
+
+<script>
+  import { initReveals } from '@scripts/motion/reveal';
+
+  initReveals();
+</script>

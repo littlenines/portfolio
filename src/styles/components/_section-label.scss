@@ -1,0 +1,29 @@
+@use 'abstracts' as *;
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: space(2);
+  margin: 0 0 space(4);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: 0.08em;
+  color: var(--mute);
+
+  @include mq(md) {
+    font-size: 13px;
+  }
+
+  &__index {
+    font-weight: 500;
+    color: var(--teal);
+  }
+
+  &__rule {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+    transform-origin: left center;
+  }
+}

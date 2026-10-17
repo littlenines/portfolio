@@ -1,0 +1,96 @@
+@use 'abstracts' as *;
+
+$cut: 12px;
+
+.back-to-top {
+  position: fixed;
+  right: max(var(--gutter), env(safe-area-inset-right, 0px));
+  bottom: calc(max($back-to-top-offset, env(safe-area-inset-bottom, 0px)) + var(--lift, 0px));
+  z-index: z(back-to-top);
+  min-height: $back-to-top-size;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition:
+    opacity 0.3s,
+    transform 0.3s,
+    visibility 0.3s;
+
+  @include mq(md) {
+    right: max($back-to-top-offset, env(safe-area-inset-right, 0px));
+  }
+
+  &.is-on {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  &__edge {
+    display: block;
+    width: $back-to-top-size;
+    height: $back-to-top-size;
+    padding: 1px;
+    background: color-mix(in srgb, var(--accent) 70%, transparent);
+    @include chamfer($cut);
+    transition: background 0.3s;
+
+    @include mq(md) {
+      width: auto;
+    }
+  }
+
+  &__face {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: space(1);
+    height: 100%;
+    padding: 0;
+    background: alpha($raise, 0.94);
+    color: var(--accent);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    @include chamfer($cut - 1px);
+    transition: color 0.3s;
+
+    @include mq(md) {
+      padding: 0 space(2);
+    }
+  }
+
+  &__arrow {
+    display: inline-block;
+    font-size: 12px;
+    transition: transform 0.25s;
+
+    @include mq(md) {
+      font-size: 10px;
+    }
+  }
+
+  &__label {
+    display: none;
+
+    @include mq(md) {
+      display: inline;
+    }
+  }
+
+  &:hover &__edge {
+    background: var(--pink);
+  }
+
+  &:hover &__face {
+    color: var(--pink);
+  }
+
+  &:hover &__arrow {
+    transform: translateY(-3px);
+  }
+}

@@ -1,0 +1,29 @@
+---
+import ThemedText from '@components/ui/ThemedText.astro';
+---
+
+<button class="back-to-top mono" type="button" aria-label="Back to top" data-back-to-top>
+  <span class="back-to-top__edge">
+    <span class="back-to-top__face">
+      <span class="back-to-top__arrow" aria-hidden="true">
+        ▲
+      </span>
+      <span class="back-to-top__label">
+        <ThemedText>
+          <span lang="ja">浮上</span> · top
+          <Fragment slot="evangelion">
+            <span lang="ja">帰還</span> · return
+          </Fragment>
+        </ThemedText>
+      </span>
+    </span>
+  </span>
+</button>
+
+<script>
+  import { initBackToTop } from '@scripts/effects/back-to-top';
+
+  const button = document.querySelector<HTMLElement>('[data-back-to-top]');
+
+  if (button) initBackToTop(button);
+</script>

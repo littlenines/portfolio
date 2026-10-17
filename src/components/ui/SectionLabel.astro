@@ -1,0 +1,20 @@
+---
+interface Props {
+  id: string;
+  index: string;
+  japanese: string;
+  label: string;
+}
+
+const { id, index, japanese, label } = Astro.props;
+---
+
+<h2 class="section-label mono" id={id}>
+  <b class="section-label__index" aria-hidden="true">
+    {index} //
+  </b>
+  <span>
+    <span lang="ja">{japanese}</span> · {label}
+  </span>
+  <span class="section-label__rule" aria-hidden="true"></span>
+</h2>

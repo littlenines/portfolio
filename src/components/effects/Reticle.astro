@@ -1,0 +1,12 @@
+<div class="reticle" aria-hidden="true" data-reticle>
+  <span class="reticle__ring"></span>
+  <span class="reticle__readout" data-reticle-readout></span>
+</div>
+
+<script>
+  import { initReticle } from '@scripts/effects/reticle';
+
+  const reticle = document.querySelector<HTMLElement>('[data-reticle]');
+
+  if (reticle) initReticle(reticle);
+</script>

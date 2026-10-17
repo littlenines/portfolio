@@ -1,0 +1,73 @@
+@use 'abstracts' as *;
+
+$inset: 3px;
+$slide: 0.7s;
+
+.theme-switch {
+  @include pill;
+  --x: #{$inset};
+  --w: 33%;
+
+  position: relative;
+  display: inline-grid;
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 0;
+  padding: $inset;
+  border-color: alpha($text, 0.28);
+  background: alpha($ground, 0.35);
+  cursor: default;
+
+  &:hover {
+    border-color: alpha($text, 0.5);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: $inset;
+    bottom: $inset;
+    left: var(--x);
+    width: var(--w);
+    border-radius: $radius-pill;
+    background: var(--accent);
+    transition:
+      left $slide $ease-standard,
+      width $slide $ease-standard,
+      background $slide ease;
+  }
+
+  &__option {
+    position: relative;
+    padding: 0 space(1);
+    border: 0;
+    border-radius: $radius-pill;
+    background: none;
+    color: var(--mute);
+    font: inherit;
+    font-size: 10.5px;
+    line-height: 28px;
+    white-space: nowrap;
+    text-align: center;
+    cursor: pointer;
+    transition: color $slide ease;
+
+    @include mq(sm) {
+      padding: 0 10px;
+      font-size: inherit;
+    }
+
+    &[aria-checked='true'] {
+      color: var(--on-accent);
+    }
+
+    &[hidden] {
+      display: none;
+    }
+
+    &:focus-visible {
+      outline-offset: 2px;
+    }
+  }
+}

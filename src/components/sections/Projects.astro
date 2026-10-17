@@ -1,0 +1,13 @@
+---
+import Section from '@components/layout/Section.astro';
+import ProjectItem from './ProjectItem.astro';
+import { projects } from '@data/projects';
+---
+
+<Section id="projects" index="01" japanese="作品" label="projects">
+  <ul class="project-list" role="list">
+    {projects.map((project) => (
+      <ProjectItem project={project} />
+    ))}
+  </ul>
+</Section>

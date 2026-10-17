@@ -1,0 +1,39 @@
+@use 'abstracts' as *;
+
+:root {
+  --gutter: clamp(20px, 5vw, 72px);
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar) transparent;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 2px solid var(--ground);
+    border-radius: $radius-pill;
+    background: var(--scrollbar);
+  }
+}
+
+body {
+  background: var(--ground);
+  color: var(--text);
+  font-family: $font-body;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+::selection {
+  background: var(--selection);
+  color: $white;
+}

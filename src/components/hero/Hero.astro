@@ -1,0 +1,50 @@
+---
+import Scene from './Scene.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import ThemedText from '@components/ui/ThemedText.astro';
+---
+
+<section class="hero">
+  <Scene />
+  <div class="container hero__body">
+    <div class="hero__copy">
+      <Eyebrow>
+        <span>
+          <span lang="ja">ソフトウェアエンジニア</span> <span aria-hidden="true">//</span> software engineer
+        </span>
+      </Eyebrow>
+      <h1 class="hero__title">
+        <span class="hero__line">
+          <span class="hero__line-inner">I build software</span>
+        </span>
+        <span class="hero__line">
+          <span class="hero__line-inner">
+            people can <em>rely on.</em>
+          </span>
+        </span>
+      </h1>
+      <p class="hero__lede">
+        <ThemedText>
+          Connection established. Welcome to my corner of the net. I'm a web developer who runs on coffee, curiosity and
+          a few too many browser tabs.
+          <Fragment slot="evangelion">
+            All systems nominal. Welcome to the control room. I'm a web developer who runs on coffee, curiosity and a
+            few too many open tabs.
+          </Fragment>
+        </ThemedText>
+      </p>
+      <p class="hero__meta mono">
+        <ThemedText>
+          Based in Serbia · working worldwide
+          <Fragment slot="evangelion">Station: Serbia · deployed worldwide</Fragment>
+        </ThemedText>
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initHeroMotion } from '@scripts/motion/hero';
+
+  initHeroMotion();
+</script>

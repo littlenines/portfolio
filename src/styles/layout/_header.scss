@@ -1,0 +1,41 @@
+@use 'abstracts' as *;
+
+.site-header {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  z-index: z(header);
+
+  &__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: space(1) space(3);
+    padding-block: 10px;
+
+    @include mq(xxl) {
+      padding-block: space(2);
+    }
+  }
+
+  &__brand {
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    // Tapping the name unlocks the easter egg; don't let the taps highlight it as a triple-click
+    user-select: none;
+
+    @include mq(xxl) {
+      font-size: 18px;
+    }
+  }
+
+  &--minimal {
+    position: relative;
+
+    .site-header__bar {
+      padding-block: 18px;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+---
+import ThemeSwitch from '@components/ui/ThemeSwitch.astro';
+import { site } from '@data/site';
+
+interface Props {
+  minimal?: boolean;
+}
+
+const { minimal = false } = Astro.props;
+---
+
+<header class:list={['site-header', { 'site-header--minimal': minimal }]}>
+  <div class="container site-header__bar">
+    {minimal ? (
+      <a class="site-header__brand mono" href="/">
+        {site.name}
+      </a>
+    ) : (
+      <>
+        <span class="site-header__brand mono" data-easter-egg>
+          {site.name}
+        </span>
+        <ThemeSwitch />
+      </>
+    )}
+  </div>
+</header>

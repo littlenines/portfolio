@@ -1,0 +1,143 @@
+@use 'abstracts' as *;
+
+$plate-cut: 12px;
+$small-plate-cut: 8px;
+
+#{$theme-evangelion} {
+  --ground: #{$eva-ground};
+  --raise: #{$eva-raise};
+  --line: #{$eva-line};
+  --mute: #{$eva-mute};
+  --peach: #{$eva-orange};
+  --pink: #{$eva-violet};
+  --teal: #{$eva-acid};
+  --accent: var(--peach);
+  --on-peach: #{$eva-raise};
+  --selection: #{alpha($eva-orange, 0.4)};
+  --scrollbar: #{$eva-rust};
+  --footer-glow: #{alpha($eva-orange, 0.2)};
+  --night-sky: #{$gradient-eva-night};
+  --ground-rgb: #{rgb-triplet($eva-ground)};
+  --ground-sunk-rgb: #{rgb-triplet(sunk($eva-ground))};
+  --sky-top-rgb: #{rgb-triplet($eva-ink)};
+  --wave-1-rgb: #{rgb-triplet($eva-orange)};
+  --wave-2-rgb: #{rgb-triplet($eva-violet)};
+  --wave-3-rgb: #{rgb-triplet($eva-acid)};
+
+  .themed-text__default {
+    display: none;
+  }
+
+  .themed-text__alt {
+    display: inline;
+  }
+
+  .hero__title,
+  .contact__title {
+    font-family: $font-display;
+    font-weight: 800;
+  }
+
+  .hero__title {
+    letter-spacing: -0.02em;
+  }
+
+  .warnbar {
+    display: flex;
+  }
+
+  .scene::before {
+    background-image: url('/hex-field.svg');
+    opacity: 0.17;
+  }
+
+  .scene::after {
+    opacity: 0.5;
+  }
+
+  .project-list {
+    counter-reset: episode;
+  }
+
+  .project {
+    @include chamfer-plate($plate-cut, var(--line), $eva-plate);
+    padding-inline: 20px;
+
+    &::before {
+      transition: background 0.2s;
+    }
+
+    & + .project {
+      margin-top: 10px;
+    }
+
+    &:hover {
+      background: alpha($eva-orange, 0.55);
+
+      &::before {
+        background: $eva-plate-hover;
+      }
+    }
+  }
+
+  .project__name {
+    counter-increment: episode;
+
+    &::before {
+      content: 'EPISODE ' counter(episode, decimal-leading-zero);
+      display: block;
+      margin-bottom: 2px;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: var(--teal);
+    }
+  }
+
+  .spec-list__term::before {
+    content: '\25A0';
+    margin-right: 10px;
+    font-size: 9px;
+    vertical-align: 1px;
+    color: var(--teal);
+  }
+
+  .btn {
+    @include chamfer-plate($plate-cut, var(--peach), $eva-plate);
+
+    &::before {
+      transition: background 0.15s;
+    }
+
+    &:hover::before {
+      background: var(--peach);
+    }
+  }
+
+  .pill-btn {
+    @include chamfer-plate($small-plate-cut, var(--line), $eva-plate);
+
+    &:hover {
+      background: var(--peach);
+    }
+  }
+
+  .reticle__ring {
+    top: -15px;
+    left: -15px;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    border-radius: 0;
+    opacity: 0.85;
+    @include corner-brackets(var(--peach));
+  }
+
+  .reticle.is-hot .reticle__ring {
+    opacity: 1;
+    transform: scale(1.35) rotate(90deg);
+  }
+
+  .reticle__readout {
+    display: block;
+  }
+}

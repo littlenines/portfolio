@@ -1,0 +1,29 @@
+@use 'abstracts' as *;
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: space(1);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--teal);
+
+  @include mq(xs) {
+    font-size: 13px;
+    letter-spacing: 0.03em;
+  }
+
+  @include mq(md) {
+    gap: 10px;
+    font-size: clamp(12px, min(1.5vh, 1.3vw), 20px);
+    letter-spacing: 0.08em;
+  }
+
+  &__dot {
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+}

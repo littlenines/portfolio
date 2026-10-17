@@ -1,0 +1,42 @@
+---
+import Skyline from './Skyline.astro';
+import type { SkylineVariant } from '@lib/skyline';
+
+interface Props {
+  variant?: SkylineVariant;
+}
+
+const { variant = 'home' } = Astro.props;
+const isHome = variant === 'home';
+
+const STARS = [
+  { left: 12, top: 90 },
+  { left: 34, top: 150, small: true },
+  { left: 58, top: 70 },
+  { left: 73, top: 180, small: true },
+  { left: 88, top: 110 },
+];
+---
+
+{isHome && <div class="scene__night-sky" aria-hidden="true" />}
+<div class="scene" aria-hidden="true">
+  <div class="scene__stars">
+    {STARS.map((star) => (
+      <div
+        class:list={['scene__star', { 'scene__star--small': star.small }]}
+        style={`left:${star.left}%;top:${star.top}px`}
+      />
+    ))}
+  </div>
+  {isHome && (
+    <>
+      <div class="scene__meteor" />
+      <div class="scene__sunbox">
+        <div class="scene__sun" />
+      </div>
+      <div class="scene__city-light" />
+    </>
+  )}
+  <Skyline variant={variant} />
+  <div class="scene__strip"></div>
+</div>

@@ -1,0 +1,42 @@
+@use 'abstracts' as *;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 space(3);
+  border: 1px solid var(--peach);
+  border-radius: $radius-pill;
+  color: var(--peach);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background 0.15s,
+    color 0.15s;
+
+  &:hover {
+    background: var(--peach);
+    color: var(--on-peach);
+  }
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(2);
+}
+
+.pill-btn {
+  @include pill;
+  font-size: 13px;
+
+  @include mq(md) {
+    font-size: 12px;
+  }
+
+  &:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+  }
+}

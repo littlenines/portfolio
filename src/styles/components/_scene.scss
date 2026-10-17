@@ -1,0 +1,109 @@
+@use 'abstracts' as *;
+
+$sun-stripes: linear-gradient(
+  to bottom,
+  $mask-show 0 52%,
+  transparent 52% 57%,
+  $mask-show 57% 65%,
+  transparent 65% 71%,
+  $mask-show 71% 79%,
+  transparent 79% 86%,
+  $mask-show 86% 100%
+);
+
+.scene {
+  @include cover;
+  pointer-events: none;
+
+  &::before {
+    content: '';
+    @include cover;
+    background: right top / cover no-repeat;
+    opacity: 0;
+    transition: opacity $theme-fade;
+    will-change: opacity;
+  }
+
+  &::after {
+    content: '';
+    @include cover;
+    background: repeating-linear-gradient(180deg, alpha($scanline, 0.34) 0 1px, transparent 1px 3px);
+    opacity: 0;
+    transition: opacity $theme-fade;
+  }
+
+  &__night-sky {
+    @include cover;
+    background: var(--night-sky);
+    opacity: 0;
+    transition: opacity $theme-fade;
+  }
+
+  &__star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: $star;
+    opacity: 0.55;
+    transition: opacity $theme-fade;
+
+    &--small {
+      width: 2px;
+      height: 2px;
+    }
+  }
+
+  &__meteor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 110px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, $star);
+    opacity: 0;
+  }
+
+  &__sunbox {
+    @include cover;
+    transition:
+      opacity $theme-fade,
+      transform $theme-fade;
+  }
+
+  &__sun {
+    position: absolute;
+    left: 50%;
+    bottom: calc(var(--sky) * 0.2);
+    width: var(--sun);
+    height: var(--sun);
+    margin-left: calc(var(--sun) / -2);
+    border-radius: 50%;
+    background: linear-gradient(180deg, $sun-top 0%, $sun-bottom 100%);
+    @include mask($sun-stripes);
+  }
+
+  &__city-light {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 58%;
+    background: radial-gradient(
+      ellipse 60% 85% at 50% 100%,
+      alpha($city-glow, 0.34),
+      alpha($peach, 0.12) 45%,
+      transparent 72%
+    );
+    opacity: 0;
+    transition: opacity $theme-fade;
+  }
+
+  &__strip {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: var(--strip);
+    background: var(--ground);
+  }
+}

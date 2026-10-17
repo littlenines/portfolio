@@ -1,0 +1,74 @@
+@use 'abstracts' as *;
+
+.site-footer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 104px;
+
+  &__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: space(1);
+    width: 100%;
+    padding-block: space(4) 28px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-align: center;
+
+    @include mq(phablet) {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      column-gap: space(2);
+      text-align: start;
+    }
+
+    @include mq(md) {
+      column-gap: 20px;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: max(var(--gutter), env(safe-area-inset-left, 0px));
+      right: max(var(--gutter), env(safe-area-inset-right, 0px));
+      height: 1px;
+      background: linear-gradient(90deg, var(--line), var(--footer-glow) 50%, var(--line));
+    }
+  }
+
+  &__note {
+    color: var(--mute);
+    transition: color $theme-fade;
+  }
+
+  &__wave {
+    align-self: stretch;
+    min-width: 0;
+    height: 56px;
+    margin-block: -4px;
+
+    @include mq(phablet) {
+      flex: 1 1 100%;
+      order: -1;
+    }
+
+    @include mq(md) {
+      flex: 1 1 120px;
+      order: 0;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      @include fade-x(8%);
+    }
+  }
+}

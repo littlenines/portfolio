@@ -1,0 +1,15 @@
+@use 'abstracts' as *;
+
+.night-field {
+  position: fixed;
+  inset: 0;
+  z-index: z(behind);
+  opacity: 0;
+  pointer-events: none;
+
+  &__star {
+    position: absolute;
+    border-radius: 50%;
+    background: $star;
+  }
+}

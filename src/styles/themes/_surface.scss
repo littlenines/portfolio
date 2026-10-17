@@ -1,0 +1,29 @@
+@use 'abstracts' as *;
+
+:root {
+  color-scheme: dark;
+
+  --ground: #{$ground};
+  --raise: #{$raise};
+  --line: #{$line};
+  --text: #{$text};
+  --mute: #{$mute};
+  --peach: #{$peach};
+  --pink: #{$pink};
+  --teal: #{$teal};
+
+  --accent: var(--peach);
+  --on-accent: #{$midnight};
+  --on-peach: #{$aubergine};
+  --selection: #{alpha($peach, 0.3)};
+  --scrollbar: #{$plum};
+  --footer-glow: #{alpha($lilac, 0.17)};
+  --night-sky: #{$gradient-night};
+
+  --ground-rgb: #{rgb-triplet($ground)};
+  --ground-sunk-rgb: #{rgb-triplet(sunk($ground))};
+  --sky-top-rgb: #{rgb-triplet($midnight)};
+  --wave-1-rgb: #{rgb-triplet($peach)};
+  --wave-2-rgb: #{rgb-triplet($pink)};
+  --wave-3-rgb: #{rgb-triplet($lilac)};
+}

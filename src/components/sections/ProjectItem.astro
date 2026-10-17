@@ -1,0 +1,36 @@
+---
+import type { Project, ProjectLink } from '@data/projects';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const TECH_SEPARATOR = ' · ';
+
+const LINK_DESCRIPTIONS: Record<ProjectLink['label'], string> = {
+  demo: 'live demo',
+  github: 'on GitHub',
+  npm: 'on npm',
+};
+const describeLink = (link: ProjectLink) => `${project.name} ${LINK_DESCRIPTIONS[link.label]} (opens in new tab)`;
+---
+
+<li class="project" data-reveal>
+  <span class="project__name mono">{project.name}</span>
+  <span class="project__desc">{project.description}</span>
+  <span class="project__side">
+    <span class="project__tech mono">{project.tech.join(TECH_SEPARATOR)}</span>
+    <span class="project__links mono">
+      {project.links.length > 0 ? (
+        project.links.map((link) => (
+          <a class="project__link" href={link.href} target="_blank" rel="noopener" aria-label={describeLink(link)}>
+            {link.label}
+          </a>
+        ))
+      ) : (
+        <span class="project__status">{project.status}</span>
+      )}
+    </span>
+  </span>
+</li>

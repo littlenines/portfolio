@@ -1,0 +1,124 @@
+---
+import { TOWER_LAYERS, buildSkyline, type LayerOptions, type SkylineVariant, type WindowLight } from '@lib/skyline';
+
+interface Props {
+  variant?: SkylineVariant;
+}
+
+const { variant = 'home' } = Astro.props;
+
+const HAZE_ID = 'skyline-haze';
+const HAZE_COLOR = '#FFB59A';
+const HAZE_OPACITY = 0.26;
+const ACCENT_COLOR = '#FF9EB5';
+const BEACON_RADIUS = 2.5;
+const NEON_OPACITY = 0.55;
+
+const VARIANTS: Record<SkylineVariant, { windowColor: string; afterDarkShare: number; layers: LayerOptions[] }> = {
+  home: {
+    windowColor: '#FFB59A',
+    afterDarkShare: 0.5,
+    layers: [
+      { ...TOWER_LAYERS.far, haze: { cy: 205, rx: 540, ry: 46, centers: [300, 1050] } },
+      {
+        ...TOWER_LAYERS.mid,
+        litChance: 0.02,
+        awakeChance: 0.08,
+        beacons: true,
+        haze: { cy: 238, rx: 500, ry: 34, centers: [520, 1250] },
+      },
+      { ...TOWER_LAYERS.near, litChance: 0.05, awakeChance: 0.14, megaTowers: true, neon: true, beacons: true },
+    ],
+  },
+  lost: {
+    windowColor: '#FFD6B4',
+    afterDarkShare: 0,
+    layers: [
+      TOWER_LAYERS.far,
+      { ...TOWER_LAYERS.mid, litChance: 0.04, flicker: true },
+      { ...TOWER_LAYERS.near, litChance: 0.07, flicker: true },
+    ],
+  },
+};
+
+const skyline = buildSkyline(VARIANTS[variant]);
+const hasHaze = skyline.layers.some((layer) => layer.haze);
+const { width: windowWidth, height: windowHeight } = skyline.windowSize;
+
+const windowClasses = (light: WindowLight) => [
+  'skyline__window',
+  { 'skyline__window--after-dark': light.afterDark, 'skyline__window--flicker': light.flickerDelay !== undefined },
+];
+
+const windowStyle = (light: WindowLight) =>
+  [
+    light.switchDelay !== undefined && `transition-delay:${light.switchDelay}s`,
+    light.flickerDelay !== undefined && `animation-delay:${light.flickerDelay}s`,
+  ]
+    .filter(Boolean)
+    .join(';') || undefined;
+---
+
+<div class="skyline">
+  <svg viewBox={`0 0 ${skyline.width} ${skyline.height}`} preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    {hasHaze && (
+      <defs>
+        <radialGradient id={HAZE_ID}>
+          <stop offset="0" stop-color={HAZE_COLOR} stop-opacity={HAZE_OPACITY} />
+          <stop offset="1" stop-color={HAZE_COLOR} stop-opacity="0" />
+        </radialGradient>
+      </defs>
+    )}
+    {skyline.layers.map((layer) => (
+      <>
+        <g fill={layer.color} opacity={layer.opacity}>
+          {layer.shapes.map((shape) => (
+            <rect x={shape.x} y={shape.y} width={shape.width} height={shape.height} />
+          ))}
+        </g>
+        {[
+          { lights: layer.lit, group: 'skyline__lit' },
+          { lights: layer.awake, group: 'skyline__awake' },
+        ].map(
+          ({ lights, group }) =>
+            lights.length > 0 && (
+              <g class={group} fill={skyline.windowColor}>
+                {lights.map((light) => (
+                  <rect
+                    class:list={windowClasses(light)}
+                    x={light.x}
+                    y={light.y}
+                    width={windowWidth}
+                    height={windowHeight}
+                    opacity={light.opacity}
+                    style={windowStyle(light)}
+                  />
+                ))}
+              </g>
+            ),
+        )}
+        {layer.beacons.map((beacon) => (
+          <circle class="skyline__beacon" cx={beacon.cx} cy={beacon.cy} r={BEACON_RADIUS} fill={ACCENT_COLOR} />
+        ))}
+        {layer.neon.map((sign) => (
+          <rect
+            class="skyline__neon"
+            x={sign.x}
+            y={sign.y}
+            width={sign.width}
+            height={sign.height}
+            fill={ACCENT_COLOR}
+            opacity={NEON_OPACITY}
+          />
+        ))}
+        {layer.haze && (
+          <g class="skyline__haze">
+            {layer.haze.centers.map((cx) => (
+              <ellipse cx={cx} cy={layer.haze!.cy} rx={layer.haze!.rx} ry={layer.haze!.ry} fill={`url(#${HAZE_ID})`} />
+            ))}
+          </g>
+        )}
+      </>
+    ))}
+  </svg>
+</div>

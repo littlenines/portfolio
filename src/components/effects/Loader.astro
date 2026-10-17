@@ -1,0 +1,26 @@
+---
+// Unlocks scrolling even if the loader script never runs
+const SCROLL_LOCK_TIMEOUT_MS = 7500;
+---
+
+<script is:inline define:vars={{ timeout: SCROLL_LOCK_TIMEOUT_MS }}>
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const root = document.documentElement;
+
+    root.classList.add('is-loading');
+    setTimeout(() => root.classList.remove('is-loading'), timeout);
+  }
+</script>
+
+<div class="loader mono" role="status" aria-label="Loading" data-loader>
+  <div class="loader__log" aria-hidden="true" data-loader-log></div>
+  <div class="loader__bar" aria-hidden="true">
+    <i class="loader__progress" data-loader-progress></i>
+  </div>
+</div>
+
+<script>
+  import { initLoader } from '@scripts/loader';
+
+  initLoader();
+</script>

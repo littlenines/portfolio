@@ -1,0 +1,58 @@
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+// 0. ABSTRACTS (Sass-only, no CSS output; each partial @uses it)
+//    _colors ........... palette, alpha(), rgb-triplet()
+//    _variables ........ breakpoints, spacing, z-index, fonts, theme selectors
+//    _functions ........ space(), z(), bp(), chamfer-shape()
+//    _mixins ........... mq(), motion-ok, reduced-motion, touch, night, evangelion,
+//                        cover, gutter-inline, mask, fade-x, chamfer, chamfer-plate,
+//                        corner-brackets, pill
+//
+// 1. BASE
+//    _reset ............ box-sizing, margins, list reset
+//    _document ......... html, body, scrollbar, ::selection, --gutter
+//    _typography ....... .mono
+//    _accessibility .... focus rings, reduced-motion overrides
+//
+// 2. LAYOUT
+//    _container ........ .container, .page
+//    _header ........... .site-header
+//    _hero ............. .hero
+//    _section .......... .section
+//    _footer ........... .site-footer
+//
+// 3. COMPONENTS
+//    _scene ............ .scene (sky, stars, sun, city light, strip)
+//    _skyline .......... .skyline (windows, beacons, neon, haze)
+//    _eyebrow .......... .eyebrow
+//    _section-label .... .section-label
+//    _button ........... .btn, .btn-group, .pill-btn
+//    _theme-switch ..... .theme-switch
+//    _project .......... .project
+//    _spec-list ........ .spec-list
+//    _contact .......... .contact
+//    _themed-text ...... .themed-text__alt
+//    _back-to-top ...... .back-to-top
+//    _toast ............ .toast
+//    _reticle .......... .reticle
+//    _loader ........... .loader, html.is-loading
+//    _theme-veil ....... .theme-veil
+//    _warnbar .......... .warnbar
+//    _night-field ...... .night-field
+//    _skip-link ........ .skip-link
+//
+// 4. PAGES
+//    _not-found ........ .hero--lost, .not-found
+//
+// 5. THEMES
+//    _surface .......... default tokens (CSS custom properties)
+//    _netspace ......... night tokens and scene overrides
+//    _evangelion ....... secret theme tokens and overrides
+// =============================================================================
+
+@use 'base';
+@use 'layout';
+@use 'components';
+@use 'pages';
+@use 'themes';

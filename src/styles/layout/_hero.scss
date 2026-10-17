@@ -1,0 +1,101 @@
+@use 'abstracts' as *;
+
+.hero {
+  --sky: clamp(220px, 36vh, 620px);
+  --sun: clamp(180px, 30vh, 520px);
+  --strip: clamp(20px, 2.6vh, 56px);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  padding-top: 100px;
+  background: $gradient-dusk;
+
+  @include mq(md) {
+    padding-top: 64px;
+  }
+
+  @include mq(xxl) {
+    padding-top: 84px;
+  }
+
+  &__body {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__copy {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(14px, 2.6vh, 32px);
+    padding-block: 12px calc(var(--sky) * 0.85);
+
+    @include mq(md) {
+      padding-top: space(3);
+    }
+  }
+
+  &__title {
+    margin: 0;
+    font-size: clamp(30px, min(8.6vw, 9.5vh), 112px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+
+    @include mq(md) {
+      font-size: clamp(38px, min(7vw, 9.5vh), 112px);
+    }
+
+    @include mq(xxl) {
+      font-size: clamp(38px, min(6vw, 9.5vh), 160px);
+    }
+
+    em {
+      font-style: normal;
+      color: var(--peach);
+    }
+  }
+
+  &__line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.1em;
+    margin-bottom: -0.1em;
+  }
+
+  &__line-inner {
+    display: block;
+  }
+
+  &__lede {
+    max-width: 44ch;
+    margin: 0;
+    font-size: clamp(16px, min(2.1vh, 1.6vw), 30px);
+    line-height: 1.55;
+    opacity: 0.92;
+
+    @media (max-height: 620px) {
+      font-size: 15px;
+      line-height: 1.45;
+    }
+  }
+
+  &__meta {
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.92;
+
+    @include mq(md) {
+      font-size: clamp(12px, min(1.7vh, 1.3vw), 22px);
+    }
+  }
+}

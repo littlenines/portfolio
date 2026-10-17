@@ -1,0 +1,29 @@
+---
+import { DEFAULT_THEME, SECRET_THEME, THEMES } from '@lib/themes';
+---
+
+<div class="theme-switch mono" role="radiogroup" aria-label="Theme" data-theme-switch>
+  {THEMES.map((theme) => {
+    const isDefault = theme === DEFAULT_THEME;
+
+    return (
+      <button
+        type="button"
+        role="radio"
+        class="theme-switch__option"
+        aria-checked={isDefault ? 'true' : 'false'}
+        tabindex={isDefault ? 0 : -1}
+        data-theme-option={theme}
+        hidden={theme === SECRET_THEME}
+      >
+        {theme}
+      </button>
+    );
+  })}
+</div>
+
+<script>
+  import { initThemes } from '@scripts/theme';
+
+  initThemes();
+</script>

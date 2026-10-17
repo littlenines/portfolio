@@ -1,0 +1,52 @@
+@use 'sass:math';
+@use 'abstracts' as *;
+
+$ring-size: 28px;
+
+.reticle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: z(reticle);
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+
+  &.is-on {
+    opacity: 1;
+  }
+
+  &__ring {
+    position: absolute;
+    top: math.div($ring-size, -2);
+    left: math.div($ring-size, -2);
+    width: $ring-size;
+    height: $ring-size;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    opacity: 0.55;
+    transition:
+      transform 0.25s ease,
+      opacity 0.25s,
+      border-color 0.6s;
+
+    .reticle.is-hot & {
+      opacity: 0.9;
+      transform: scale(1.6);
+    }
+  }
+
+  &__readout {
+    display: none;
+    position: absolute;
+    top: 12px;
+    left: 26px;
+    color: var(--peach);
+    font: 500 9px/1 $font-mono;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+    opacity: 0.8;
+  }
+}

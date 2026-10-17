@@ -1,0 +1,19 @@
+@use 'abstracts' as *;
+
+.skip-link {
+  position: absolute;
+  top: space(1);
+  left: -9999px;
+  z-index: z(skip-link);
+  padding: 10px space(2);
+  border: 1px solid var(--peach);
+  border-radius: $radius-pill;
+  background: var(--raise);
+  color: var(--text);
+  font-size: 13px;
+  text-decoration: none;
+
+  &:focus {
+    left: max(space(2), env(safe-area-inset-left, 0px));
+  }
+}

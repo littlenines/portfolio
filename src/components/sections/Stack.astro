@@ -1,0 +1,17 @@
+---
+import Section from '@components/layout/Section.astro';
+import { stack } from '@data/stack';
+
+const TOOL_SEPARATOR = ', ';
+---
+
+<Section id="stack" index="02" japanese="技術" label="stack">
+  <dl class="spec-list mono" data-reveal>
+    {stack.map(({ area, tools }) => (
+      <>
+        <dt class="spec-list__term">{area}</dt>
+        <dd>{tools.join(TOOL_SEPARATOR)}</dd>
+      </>
+    ))}
+  </dl>
+</Section>

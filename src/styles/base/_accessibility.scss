@@ -1,0 +1,24 @@
+@use 'abstracts' as *;
+
+a,
+button {
+  &:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 3px;
+  }
+}
+
+// Targets that only receive focus from script (skip link, back to top) need no ring
+:is(main, .page):focus {
+  outline: none;
+}
+
+@include reduced-motion {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    transition: none !important;
+  }
+}

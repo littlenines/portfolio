@@ -1,0 +1,27 @@
+@use 'sass:map';
+@use 'variables' as *;
+
+@function space($step) {
+  @if not map.has-key($space, $step) {
+    @error 'Unknown space step `#{$step}`. Expected one of #{map.keys($space)}.';
+  }
+  @return map.get($space, $step);
+}
+
+@function z($layer) {
+  @if not map.has-key($z-layers, $layer) {
+    @error 'Unknown z-index layer `#{$layer}`. Expected one of #{map.keys($z-layers)}.';
+  }
+  @return map.get($z-layers, $layer);
+}
+
+@function bp($name) {
+  @if not map.has-key($breakpoints, $name) {
+    @error 'Unknown breakpoint `#{$name}`. Expected one of #{map.keys($breakpoints)}.';
+  }
+  @return map.get($breakpoints, $name);
+}
+
+@function chamfer-shape($cut) {
+  @return polygon(0 0, calc(100% - #{$cut}) 0, 100% $cut, 100% 100%, $cut 100%, 0 calc(100% - #{$cut}));
+}

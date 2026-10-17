@@ -1,0 +1,24 @@
+@use 'abstracts' as *;
+
+.section {
+  position: relative;
+  padding-block: space(6) space(5);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    z-index: z(behind);
+    width: 100vw;
+    height: 380px;
+    transform: translateX(-50%);
+    background: radial-gradient(
+      ellipse 50% 50% at 50% 50%,
+      alpha($pink, 0.016),
+      alpha($plum, 0.01) 55%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+}

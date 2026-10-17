@@ -1,0 +1,122 @@
+@use 'sass:list';
+@use 'colors' as *;
+@use 'variables' as *;
+@use 'functions' as *;
+
+@mixin mq($from) {
+  @media (min-width: bp($from)) {
+    @content;
+  }
+}
+
+@mixin motion-ok {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin touch {
+  @media (hover: none) {
+    @content;
+  }
+}
+
+@mixin night {
+  #{$theme-night} & {
+    @content;
+  }
+}
+
+@mixin evangelion {
+  #{$theme-evangelion} & {
+    @content;
+  }
+}
+
+@mixin cover {
+  position: absolute;
+  inset: 0;
+}
+
+@mixin gutter-inline {
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+@mixin mask($image) {
+  -webkit-mask-image: $image;
+  mask-image: $image;
+}
+
+@mixin fade-x($edge) {
+  @include mask(linear-gradient(90deg, transparent, $mask-show $edge, $mask-show calc(100% - #{$edge}), transparent));
+}
+
+@mixin chamfer($cut) {
+  clip-path: chamfer-shape($cut);
+}
+
+@mixin chamfer-plate($cut, $edge, $face) {
+  position: relative;
+  isolation: isolate;
+  border: 0;
+  border-radius: 0;
+  background: $edge;
+  @include chamfer($cut);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    z-index: -1;
+    background: $face;
+    @include chamfer($cut - 1px);
+  }
+}
+
+@mixin corner-brackets($color, $length: 9px, $thickness: 1.5px) {
+  $bar: linear-gradient($color, $color);
+  $corners: (0 0), (100% 0), (0 100%), (100% 100%);
+  $bar-sizes: ($length $thickness), ($thickness $length);
+  $images: ();
+  $positions: ();
+  $sizes: ();
+
+  @each $corner in $corners {
+    @each $bar-size in $bar-sizes {
+      $images: list.append($images, $bar, comma);
+      $positions: list.append($positions, $corner, comma);
+      $sizes: list.append($sizes, $bar-size, comma);
+    }
+  }
+
+  background-image: $images;
+  background-position: $positions;
+  background-size: $sizes;
+  background-repeat: no-repeat;
+}
+
+@mixin pill {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: $radius-pill;
+  background: none;
+  color: var(--mute);
+  font-family: $font-mono;
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+
+  @include mq(xxl) {
+    font-size: 15px;
+  }
+}

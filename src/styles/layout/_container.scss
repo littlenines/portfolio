@@ -1,0 +1,20 @@
+@use 'abstracts' as *;
+
+.container {
+  max-width: $container;
+  margin-inline: auto;
+  @include gutter-inline;
+
+  @include mq(xl) {
+    max-width: $container-xl;
+  }
+
+  @include mq(xxl) {
+    max-width: $container-xxl;
+  }
+}
+
+// Clips the 100vw section glows; clip, not hidden, so position: sticky still works
+.page {
+  overflow-x: clip;
+}

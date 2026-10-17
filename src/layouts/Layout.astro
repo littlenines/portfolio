@@ -1,23 +1,55 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import { Font } from 'astro:assets';
+import '@styles/main.scss';
+import ThemeBootScript from '@components/layout/ThemeBootScript.astro';
+import { site } from '@data/site';
+import { DEFAULT_THEME } from '@lib/themes';
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+interface Props {
+  title?: string;
+  description?: string;
+  themed?: boolean;
+}
+
+const { title = site.title, description = site.description, themed = false } = Astro.props;
+
+const OG_IMAGE = { path: '/og.png', width: 1200, height: 630 };
+const ogImage = Astro.site ? new URL(OG_IMAGE.path, Astro.site).href : OG_IMAGE.path;
+---
+
+<!doctype html>
+<html lang="en" data-theme={themed ? DEFAULT_THEME : undefined}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content={site.themeColor} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={site.ogTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content={String(OG_IMAGE.width)} />
+    <meta property="og:image:height" content={String(OG_IMAGE.height)} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <Font cssVariable="--font-mono" preload={[{ weight: 400, subset: 'latin' }]} />
+    <Font
+      cssVariable="--font-body"
+      preload={[
+        { weight: 400, subset: 'latin' },
+        { weight: 700, subset: 'latin' },
+      ]}
+    />
+    <Font cssVariable="--font-display" />
+
+    {themed && <ThemeBootScript />}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

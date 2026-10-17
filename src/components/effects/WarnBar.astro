@@ -1,0 +1,11 @@
+<div class="warnbar" aria-hidden="true" data-warnbar>
+  <b class="warnbar__label">警告 · WARNING · 警告</b>
+</div>
+
+<script>
+  import { initWarnbar } from '@scripts/effects/warnbar';
+
+  const bar = document.querySelector<HTMLElement>('[data-warnbar]');
+
+  if (bar) initWarnbar(bar);
+</script>

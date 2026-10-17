@@ -1,0 +1,40 @@
+---
+const STARS = [
+  { left: 6, top: 12, size: 2 },
+  { left: 14, top: 58, size: 1 },
+  { left: 23, top: 31, size: 2 },
+  { left: 31, top: 82, size: 1 },
+  { left: 38, top: 9, size: 1 },
+  { left: 47, top: 46, size: 2 },
+  { left: 55, top: 72, size: 1 },
+  { left: 63, top: 20, size: 1 },
+  { left: 71, top: 90, size: 2 },
+  { left: 78, top: 38, size: 1 },
+  { left: 84, top: 64, size: 2 },
+  { left: 91, top: 14, size: 1 },
+  { left: 96, top: 52, size: 1 },
+  { left: 18, top: 94, size: 1 },
+  { left: 42, top: 24, size: 1 },
+  { left: 68, top: 6, size: 2 },
+];
+
+const OPACITY = { large: 0.7, small: 0.45 };
+const LARGE_STAR_SIZE = 2;
+
+const starStyle = ({ left, top, size }: (typeof STARS)[number]) =>
+  `left:${left}%;top:${top}%;width:${size}px;height:${size}px;opacity:${size >= LARGE_STAR_SIZE ? OPACITY.large : OPACITY.small}`;
+---
+
+<div class="night-field" aria-hidden="true" data-night-field>
+  {STARS.map((star) => (
+    <i class="night-field__star" style={starStyle(star)} />
+  ))}
+</div>
+
+<script>
+  import { initNightSky } from '@scripts/effects/night-sky';
+
+  const field = document.querySelector<HTMLElement>('[data-night-field]');
+
+  if (field) initNightSky(field);
+</script>

@@ -1,46 +1,24 @@
-# Astro Starter Kit: Basics
+# Nemanja Galbinovic · Portfolio
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+A cyberpunk city-pop portfolio built with Astro, SCSS (7-1) and GSAP. Mobile first, with three themes
+(surface, netspace and a hidden evangelion theme) and a seeded skyline rendered at build time.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Commands
 
-## 🚀 Project Structure
+| Command        | Action                                                 |
+| :------------- | :----------------------------------------------------- |
+| `pnpm install` | Install dependencies                                   |
+| `pnpm dev`     | Dev server at `localhost:4321`                         |
+| `pnpm check`   | Type-check `.astro` and `.ts` files                    |
+| `pnpm format`  | Format everything (Prettier + ESLint blank-line rules) |
+| `pnpm lint`    | Check formatting without changing files                |
+| `pnpm build`   | Type-check, then build to `./dist/`                    |
+| `pnpm preview` | Preview the production build                           |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Docs
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- [Content](docs/content.md): text, projects, stack, links, CV
+- [Architecture](docs/architecture.md): folders, separation of concerns, build time vs. browser
+- [Styles](docs/styles.md): 7-1 table of contents, conventions, breakpoints, mixins
+- [Theming](docs/theming.md): tokens, theme files, themed copy, switch, transition, easter egg
+- [Scripts](docs/scripts.md): loader, motion, effects, reduced motion

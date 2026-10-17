@@ -1,0 +1,12 @@
+@use 'abstracts' as *;
+
+.spec-list {
+  display: grid;
+  grid-template-columns: minmax(90px, 150px) minmax(0, 1fr);
+  gap: space(2) space(4);
+  font-size: 14px;
+
+  &__term {
+    color: var(--mute);
+  }
+}

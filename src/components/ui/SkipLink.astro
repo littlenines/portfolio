@@ -1,0 +1,11 @@
+---
+interface Props {
+  target?: string;
+}
+
+const { target = 'main' } = Astro.props;
+---
+
+<a class="skip-link mono" href={`#${target}`}>
+  Skip to content
+</a>

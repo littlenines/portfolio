@@ -1,0 +1,7 @@
+dist
+.astro
+node_modules
+demo
+pnpm-lock.yaml
+# Whitespace between these inline spans is significant
+src/components/ui/ThemedText.astro

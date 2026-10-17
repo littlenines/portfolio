@@ -1,0 +1,29 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Header from '@components/layout/Header.astro';
+import Scene from '@components/hero/Scene.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import { site } from '@data/site';
+---
+
+<Layout title={`Signal lost · ${site.name}`}>
+  <section class="hero hero--lost">
+    <Scene variant="lost" />
+    <Header minimal />
+    <div class="container hero__body">
+      <main class="not-found">
+        <Eyebrow>
+          404 <span aria-hidden="true">//</span> page not found
+        </Eyebrow>
+        <h1 class="not-found__title">
+          Signal lost.
+          <br />
+          <em>Back to the surface.</em>
+        </h1>
+        <p class="not-found__lede">This page drifted off the net, or never existed. Nothing broken on your end.</p>
+        <Button href="/">Back to the surface</Button>
+      </main>
+    </div>
+  </section>
+</Layout>
