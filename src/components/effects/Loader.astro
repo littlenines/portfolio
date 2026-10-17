@@ -2,14 +2,23 @@
 import { BOOT_TIMEOUT_MS } from '@scripts/lib/boot';
 import { MEDIA } from '@scripts/lib/media';
 import { STATE_CLASS } from '@scripts/lib/state-classes';
+import { RETURNING_NAVIGATIONS } from '@scripts/loader';
 ---
 
-<!-- Unlocks scrolling even if the loader script never runs -->
+<!-- Skips the loader when coming back to the page, and unlocks scrolling even if the loader script never runs -->
 <script
   is:inline
-  define:vars={{ timeout: BOOT_TIMEOUT_MS, loadingClass: STATE_CLASS.loading, reducedMotion: MEDIA.reducedMotion }}
+  define:vars={{
+    timeout: BOOT_TIMEOUT_MS,
+    loadingClass: STATE_CLASS.loading,
+    reducedMotion: MEDIA.reducedMotion,
+    returningNavigations: RETURNING_NAVIGATIONS,
+  }}
 >
-  if (!matchMedia(reducedMotion).matches) {
+  const [navigation] = performance.getEntriesByType('navigation');
+  const isReturning = navigation !== undefined && returningNavigations.includes(navigation.type);
+
+  if (!isReturning && !matchMedia(reducedMotion).matches) {
     const root = document.documentElement;
 
     root.classList.add(loadingClass);

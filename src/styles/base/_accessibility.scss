@@ -14,10 +14,6 @@ button {
 }
 
 @include reduced-motion {
-  html {
-    scroll-behavior: auto;
-  }
-
   * {
     transition: none !important;
   }

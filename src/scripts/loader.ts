@@ -1,10 +1,11 @@
 import { site } from '@data/site';
 import { LOADER_SELECTOR, markBooted } from '@scripts/lib/boot';
 import { wait } from '@scripts/lib/dom';
-import { prefersReducedMotion } from '@scripts/lib/media';
 import { STATE_CLASS } from '@scripts/lib/state-classes';
 
 const SESSION_KEY = 'booted';
+
+export const RETURNING_NAVIGATIONS: NavigationTimingType[] = ['back_forward', 'reload'];
 
 const LINE_CLASS = {
   line: 'loader__line',
@@ -75,7 +76,9 @@ export async function initLoader() {
   const log = loader?.querySelector<HTMLElement>('[data-loader-log]');
   const progress = loader?.querySelector<HTMLElement>('[data-loader-progress]');
 
-  if (!loader || !log || !progress || prefersReducedMotion()) {
+  const shouldPlay = document.documentElement.classList.contains(STATE_CLASS.loading);
+
+  if (!loader || !log || !progress || !shouldPlay) {
     finishLoading(loader ?? undefined);
     markBooted();
 

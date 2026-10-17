@@ -30,7 +30,7 @@ html.is-loading {
     pointer-events: none;
   }
 
-  @include reduced-motion {
+  html:not(.is-loading) & {
     display: none;
   }
 

@@ -1,5 +1,5 @@
 import { throttleToFrame } from '@scripts/lib/dom';
-import { MEDIA, matches } from '@scripts/lib/media';
+import { MEDIA, matches, prefersReducedMotion } from '@scripts/lib/media';
 import { STATE_CLASS } from '@scripts/lib/state-classes';
 
 const SHOW_AFTER_VIEWPORTS = 0.8;
@@ -11,7 +11,7 @@ export function initBackToTop(button: HTMLElement) {
   const top = document.querySelector<HTMLElement>('[data-back-to-top-target]');
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0 });
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'instant' : 'smooth' });
 
     // The button hides once the page scrolls up, so focus moves to the top instead of being lost
     top?.focus({ preventScroll: true });
