@@ -1,4 +1,4 @@
-# Nemanja Galbinovic · Portfolio
+# Portfolio
 
 A cyberpunk city-pop portfolio built with Astro, SCSS (7-1) and GSAP. Mobile first, with three themes
 (surface, netspace and a hidden evangelion theme) and a seeded skyline rendered at build time.
