@@ -1,3 +1,4 @@
+import { PALETTE } from './palette';
 import { createSeededRandom, roundTo } from './rng';
 
 export const SKYLINE_WIDTH = 1600;
@@ -293,7 +294,7 @@ export type SkylineVariant = 'home' | 'lost';
 
 export const TOWER_LAYERS = {
   far: {
-    color: '#6A3B7C',
+    color: PALETTE.towerFar,
     opacity: 0.5,
     minWidth: 30,
     maxWidth: 70,
@@ -303,7 +304,7 @@ export const TOWER_LAYERS = {
     maxGap: 10,
   },
   mid: {
-    color: '#2E1D52',
+    color: PALETTE.towerMid,
     opacity: 1,
     minWidth: 40,
     maxWidth: 90,
@@ -313,7 +314,7 @@ export const TOWER_LAYERS = {
     maxGap: 14,
   },
   near: {
-    color: '#140F24',
+    color: PALETTE.ground,
     opacity: 1,
     minWidth: 36,
     maxWidth: 100,

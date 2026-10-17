@@ -13,12 +13,14 @@ async function copy(text: string) {
   }
 }
 
+async function copyFrom(button: HTMLElement) {
+  const { copy: text = '', copiedMessage = DEFAULT_COPIED_MESSAGE } = button.dataset;
+
+  showToast((await copy(text)) ? copiedMessage : FAILED_MESSAGE);
+}
+
 export function initCopyButtons() {
   for (const button of document.querySelectorAll<HTMLElement>('[data-copy]')) {
-    button.addEventListener('click', async () => {
-      const { copy: text = '', copiedMessage = DEFAULT_COPIED_MESSAGE } = button.dataset;
-
-      showToast((await copy(text)) ? copiedMessage : FAILED_MESSAGE);
-    });
+    button.addEventListener('click', () => void copyFrom(button));
   }
 }

@@ -28,7 +28,7 @@ The same table is at the top of `main.scss`. Folders are listed in cascade order
 |     |            | `_skyline`       | `.skyline` (windows, beacons, neon, haze)                                                                                                                                                               |
 |     |            | `_eyebrow`       | `.eyebrow`                                                                                                                                                                                              |
 |     |            | `_section-label` | `.section-label`                                                                                                                                                                                        |
-|     |            | `_button`        | `.btn`, `.btn-group`, `.pill-btn`                                                                                                                                                                       |
+|     |            | `_button`        | `.button`, `.button-group`, `.pill-button`                                                                                                                                                              |
 |     |            | `_theme-switch`  | `.theme-switch`                                                                                                                                                                                         |
 |     |            | `_project`       | `.project`                                                                                                                                                                                              |
 |     |            | `_spec-list`     | `.spec-list`                                                                                                                                                                                            |
@@ -39,7 +39,7 @@ The same table is at the top of `main.scss`. Folders are listed in cascade order
 |     |            | `_reticle`       | `.reticle`                                                                                                                                                                                              |
 |     |            | `_loader`        | `.loader`, `html.is-loading`                                                                                                                                                                            |
 |     |            | `_theme-veil`    | `.theme-veil`                                                                                                                                                                                           |
-|     |            | `_warnbar`       | `.warnbar`                                                                                                                                                                                              |
+|     |            | `_warn-bar`      | `.warn-bar`                                                                                                                                                                                             |
 |     |            | `_night-field`   | `.night-field`                                                                                                                                                                                          |
 |     |            | `_skip-link`     | `.skip-link`                                                                                                                                                                                            |
 | 4   | pages      | `_not-found`     | `.hero--lost`, `.not-found`                                                                                                                                                                             |
@@ -54,6 +54,7 @@ with the same name.
 
 - **BEM:** `.block`, `.block__element`, `.block--modifier`.
 - **State classes** set from scripts use `is-`: `is-on`, `is-out`, `is-hot`, `is-in`, `is-paused`, `is-ok`, `is-loading`.
+  Scripts take them from `STATE_CLASS` (`scripts/lib/state-classes.ts`), never as string literals.
 - **Script hooks** use `data-` attributes (`data-toast`, `data-back-to-top`), never classes. Restyling can't break behaviour.
 - **No raw colours in partials.** Themeable colours come from CSS custom properties (`var(--peach)`). Fixed
   art colours come from the palette in `abstracts/_colors.scss`. Use `alpha($color, 0.3)` for transparency.
@@ -112,8 +113,9 @@ Other media mixins: `motion-ok`, `reduced-motion`, `touch` (`hover: none`).
   not 10px, so text still grows when a visitor raises their browser's font size. Breakpoints stay in px:
   rem in media queries ignores the root size and always means 16px.
 
-- **Spacing:** `space(1)` to `space(6)` → 8, 16, 24, 32, 48, 80px.
-- **z-index:** `z-index(header)`, `z-index(back-to-top)`, `z-index(reticle)`, `z-index(toast)`, `z-index(veil)`, `z-index(skip-link)`, `z-index(loader)`, `z-index(behind)`. Add new layers to `$z-layers`, never raw numbers.
+- **Spacing:** `space(1)` to `space(6)` → 8, 16, 24, 32, 48, 80px, for layout spacing. Small optical
+  adjustments may stay in `px` (see [Conventions](conventions.md#styles)).
+- **z-index:** `z-index(header)`, `z-index(back-to-top)`, `z-index(reticle)`, `z-index(toast)`, `z-index(veil)`, `z-index(skip-link)`, `z-index(loader)`, `z-index(behind)`, `z-index(raised)` (above siblings inside a component). Add new layers to `$z-layers`, never raw numbers.
 - **Gutter:** `--gutter` (a CSS custom property, `clamp(20px, 5vw, 72px)`), applied with `@include gutter-inline` so it respects phone notches.
 - **Shapes:** `chamfer($cut)` cuts two corners; `chamfer-plate($cut, $edge, $face)` makes a cut-corner plate with a 1px lit edge (the element paints the edge, `::before` paints the face); `corner-brackets($color)` draws four L-shaped corners.
 

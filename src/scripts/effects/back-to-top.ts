@@ -1,5 +1,6 @@
 import { throttleToFrame } from '@scripts/lib/dom';
 import { MEDIA, matches } from '@scripts/lib/media';
+import { STATE_CLASS } from '@scripts/lib/state-classes';
 
 const SHOW_AFTER_VIEWPORTS = 0.8;
 
@@ -17,7 +18,7 @@ export function initBackToTop(button: HTMLElement) {
   };
 
   const update = () => {
-    button.classList.toggle('is-on', window.scrollY > window.innerHeight * SHOW_AFTER_VIEWPORTS);
+    button.classList.toggle(STATE_CLASS.visible, window.scrollY > window.innerHeight * SHOW_AFTER_VIEWPORTS);
 
     if (!footer) return;
 

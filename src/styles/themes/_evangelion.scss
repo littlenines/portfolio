@@ -42,7 +42,7 @@ $small-plate-cut: 8px;
     letter-spacing: -0.02em;
   }
 
-  .warnbar {
+  .warn-bar {
     display: flex;
   }
 
@@ -102,7 +102,7 @@ $small-plate-cut: 8px;
     color: var(--teal);
   }
 
-  .btn {
+  .button {
     @include chamfer-plate($plate-cut, var(--peach), $eva-plate);
 
     &::before {
@@ -114,7 +114,7 @@ $small-plate-cut: 8px;
     }
   }
 
-  .pill-btn {
+  .pill-button {
     @include chamfer-plate($small-plate-cut, var(--line), $eva-plate);
 
     &:hover {

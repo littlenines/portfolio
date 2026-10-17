@@ -22,6 +22,10 @@ export function applyTheme(theme: Theme, { remember = true } = {}) {
   document.dispatchEvent(new CustomEvent<Theme>(THEME_CHANGE_EVENT, { detail: theme }));
 }
 
-export function onThemeChange(callback: (theme: Theme) => void) {
-  document.addEventListener(THEME_CHANGE_EVENT, (event) => callback((event as CustomEvent<Theme>).detail));
+export function onThemeChange(callback: (theme: Theme) => void): () => void {
+  const listener = (event: Event) => callback((event as CustomEvent<Theme>).detail);
+
+  document.addEventListener(THEME_CHANGE_EVENT, listener);
+
+  return () => document.removeEventListener(THEME_CHANGE_EVENT, listener);
 }

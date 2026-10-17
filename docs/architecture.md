@@ -20,16 +20,21 @@ src/
 
 ## Code style
 
-Run `pnpm format` before committing; `pnpm lint` checks without changing anything.
+The rules themselves are in [Conventions](conventions.md). Run `pnpm format` before committing; `pnpm lint`
+checks without changing anything.
 
 - **Prettier** (`.prettierrc.json`) handles layout for TypeScript, Astro, SCSS and Markdown: 120-character
-  lines, single quotes, trailing commas.
-- **ESLint** (`eslint.config.js`) only adds the blank lines Prettier never inserts:
+  lines, single quotes, trailing commas. `.editorconfig` and `.gitattributes` keep LF line endings.
+- **ESLint** (`eslint.config.js`) runs the recommended JavaScript, TypeScript (type-aware for `.ts`) and
+  Astro rules, plus `id-length` (no short names), `eqeqeq` and `consistent-type-imports`. It also adds the
+  blank lines Prettier never inserts:
   - around functions, classes and blocks (`if`, `for`, `while`, `switch`, `try`);
   - around multi-line expressions, such as a `gsap.to({ … })` call spread over several lines;
   - before and after each group of `const`/`let` (consecutive declarations stay together);
   - before `return`;
   - between class members.
+- **Stylelint** (`stylelint.config.mjs`) checks the SCSS: BEM class names, full function and mixin names,
+  no `px` font sizes, no raw `z-index` numbers. Blank lines in SCSS are left to Prettier.
 - `src/components/ui/ThemedText.astro` is excluded from Prettier. Its two spans must touch, and Prettier
   would put whitespace between them.
 

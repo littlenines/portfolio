@@ -1,3 +1,4 @@
+import { PALETTE } from '@lib/palette';
 import { SECRET_THEME } from '@lib/themes';
 import { currentTheme, onThemeChange } from './state';
 import type { ChooseTheme } from './transition';
@@ -7,7 +8,7 @@ const TAP_WINDOW_MS = 2500;
 const PROGRESS_PROPERTY = '--knock-progress';
 
 const CONSOLE_HINT = 'something here wakes up after dark. knock on the name a few times.';
-const CONSOLE_STYLES = ['color:#FF8A3D;font-weight:700', 'color:#A99CB8'];
+const CONSOLE_STYLES = [`color:${PALETTE.evaOrange};font-weight:700`, `color:${PALETTE.mute}`];
 
 export function initEasterEgg(tapTarget: HTMLElement | null, chooseTheme: ChooseTheme) {
   if (!tapTarget) return;
@@ -37,5 +38,5 @@ export function initEasterEgg(tapTarget: HTMLElement | null, chooseTheme: Choose
 
   onThemeChange(() => showProgress(0));
 
-  console.log(`%c警告%c  ${CONSOLE_HINT}`, ...CONSOLE_STYLES);
+  console.info(`%c警告%c  ${CONSOLE_HINT}`, ...CONSOLE_STYLES);
 }

@@ -1,14 +1,19 @@
 ---
-// Unlocks scrolling even if the loader script never runs
-const SCROLL_LOCK_TIMEOUT_MS = 7500;
+import { BOOT_TIMEOUT_MS } from '@scripts/lib/boot';
+import { MEDIA } from '@scripts/lib/media';
+import { STATE_CLASS } from '@scripts/lib/state-classes';
 ---
 
-<script is:inline define:vars={{ timeout: SCROLL_LOCK_TIMEOUT_MS }}>
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+<!-- Unlocks scrolling even if the loader script never runs -->
+<script
+  is:inline
+  define:vars={{ timeout: BOOT_TIMEOUT_MS, loadingClass: STATE_CLASS.loading, reducedMotion: MEDIA.reducedMotion }}
+>
+  if (!matchMedia(reducedMotion).matches) {
     const root = document.documentElement;
 
-    root.classList.add('is-loading');
-    setTimeout(() => root.classList.remove('is-loading'), timeout);
+    root.classList.add(loadingClass);
+    setTimeout(() => root.classList.remove(loadingClass), timeout);
   }
 </script>
 
@@ -22,5 +27,5 @@ const SCROLL_LOCK_TIMEOUT_MS = 7500;
 <script>
   import { initLoader } from '@scripts/loader';
 
-  initLoader();
+  void initLoader();
 </script>

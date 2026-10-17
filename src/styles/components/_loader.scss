@@ -18,7 +18,7 @@ html.is-loading {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: max(24px, env(safe-area-inset-top, 0px)) max(var(--gutter), env(safe-area-inset-right, 0px))
+  padding: max(space(3), env(safe-area-inset-top, 0px)) max(var(--gutter), env(safe-area-inset-right, 0px))
     max(28px, env(safe-area-inset-bottom, 0px)) max(var(--gutter), env(safe-area-inset-left, 0px));
   background: linear-gradient(180deg, $night-deep 0%, $ground 60%);
   color: var(--text);
@@ -46,7 +46,7 @@ html.is-loading {
     animation: loader-line-in 0.25s ease both;
   }
 
-  &__head {
+  &__heading {
     margin-bottom: 14px;
     color: var(--teal);
     letter-spacing: 0.08em;

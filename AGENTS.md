@@ -1,3 +1,8 @@
+## Project rules
+
+Follow [docs/conventions.md](docs/conventions.md): naming, constants, styles, tests and commits. Run
+`pnpm lint`, `pnpm test` and `pnpm build` before finishing a change.
+
 ## Development
 
 When starting the dev server, use background mode:

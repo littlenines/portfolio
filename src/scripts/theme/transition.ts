@@ -1,10 +1,10 @@
 import { SECRET_THEME, type Theme } from '@lib/themes';
 import { prefersReducedMotion } from '@scripts/lib/media';
+import { STATE_CLASS } from '@scripts/lib/state-classes';
 import { applyTheme, currentTheme } from './state';
 
 export type ChooseTheme = (theme: Theme) => void;
 
-const VISIBLE_CLASS = 'is-on';
 const PHASE = { none: '', alert: 'alert', title: 'title' } as const;
 
 const TIMING = {
@@ -90,7 +90,7 @@ class ThemeTransition {
     this.#veil.dataset.phase = PHASE.none;
     setText(this.#syncRate, formatSyncRate(0));
     setText(this.#countdown, formatCountdown(COUNTDOWN_FROM));
-    this.#veil.classList.add(VISIBLE_CLASS);
+    this.#veil.classList.add(STATE_CLASS.visible);
 
     if (isEntering) this.#playEnter();
     else this.#playExit(theme);
@@ -112,7 +112,7 @@ class ThemeTransition {
     // Wait two frames so the new theme has painted before the veil lifts, unless a new sequence started since
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
-        if (!this.#isPlaying) this.#veil.classList.remove(VISIBLE_CLASS);
+        if (!this.#isPlaying) this.#veil.classList.remove(STATE_CLASS.visible);
       }),
     );
   }

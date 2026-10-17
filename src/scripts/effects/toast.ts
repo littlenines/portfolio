@@ -1,3 +1,5 @@
+import { STATE_CLASS } from '@scripts/lib/state-classes';
+
 const VISIBLE_MS = 2000;
 let hideTimer = 0;
 
@@ -7,7 +9,7 @@ export function showToast(message: string) {
   if (!toast) return;
 
   toast.textContent = message;
-  toast.classList.add('is-on');
+  toast.classList.add(STATE_CLASS.visible);
   clearTimeout(hideTimer);
-  hideTimer = window.setTimeout(() => toast.classList.remove('is-on'), VISIBLE_MS);
+  hideTimer = window.setTimeout(() => toast.classList.remove(STATE_CLASS.visible), VISIBLE_MS);
 }

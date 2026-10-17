@@ -3,5 +3,7 @@ dist
 node_modules
 demo
 pnpm-lock.yaml
+test-results
+playwright-report
 # Whitespace between these inline spans is significant
 src/components/ui/ThemedText.astro

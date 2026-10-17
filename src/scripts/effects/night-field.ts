@@ -16,7 +16,7 @@ const readColors = () => ({
   skyTop: readRgbToken(TOKENS.skyTop),
 });
 
-export function initNightSky(field: HTMLElement) {
+export function initNightField(field: HTMLElement) {
   const hero = document.querySelector<HTMLElement>('.hero');
   const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
 

@@ -10,6 +10,6 @@ const { external = false, class: className, ...attributes } = Astro.props;
 const externalAttributes = external ? { target: '_blank', rel: 'noopener' } : {};
 ---
 
-<a class:list={['btn', className]} {...externalAttributes} {...attributes}>
+<a class:list={['button', className]} {...externalAttributes} {...attributes}>
   <slot />
 </a>

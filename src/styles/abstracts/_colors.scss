@@ -52,7 +52,6 @@ $gradient-eva-night: linear-gradient(180deg, $eva-ink 0%, #1e0e42 38%, #43207c 6
 $black: #000;
 $sunk-ground-share: 88%;
 
-// The slightly darker ground the page sinks to by the bottom of the scroll (night-sky.ts)
 @function sunk($color) {
   @return color.mix($color, $black, $sunk-ground-share);
 }

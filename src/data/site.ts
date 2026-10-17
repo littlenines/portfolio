@@ -1,9 +1,11 @@
+import { PALETTE } from '@lib/palette';
+
 export const site = {
   name: 'Nemanja Galbinovic',
   title: 'Nemanja Galbinovic Portfolio',
   ogTitle: 'Nemanja Galbinovic · Software engineer',
   description: 'A cyberpunk city-pop portfolio with a layered skyline and smooth GSAP motion.',
-  themeColor: '#1B1233',
+  themeColor: PALETTE.midnight,
   email: 'galbinovic584@gmail.com',
   // TODO: add the CV file to public/, then uncomment the download link in Contact.astro
   cv: '/cv.pdf',

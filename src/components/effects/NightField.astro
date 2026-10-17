@@ -32,9 +32,9 @@ const starStyle = ({ left, top, size }: (typeof STARS)[number]) =>
 </div>
 
 <script>
-  import { initNightSky } from '@scripts/effects/night-sky';
+  import { initNightField } from '@scripts/effects/night-field';
 
   const field = document.querySelector<HTMLElement>('[data-night-field]');
 
-  if (field) initNightSky(field);
+  if (field) initNightField(field);
 </script>

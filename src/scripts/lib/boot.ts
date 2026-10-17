@@ -1,10 +1,10 @@
 // Kept in the DOM (attribute + event) rather than module state, so separate component scripts agree on it.
 const BOOTED_ATTRIBUTE = 'data-booted';
 const BOOTED_EVENT = 'app:booted';
-const LOADER_SELECTOR = '[data-loader]';
 
-// Same as the loader's scroll-lock timeout: if the loader script never signals, run anyway
-const BOOT_TIMEOUT_MS = 7500;
+export const LOADER_SELECTOR = '[data-loader]';
+
+export const BOOT_TIMEOUT_MS = 7500;
 
 export function markBooted() {
   document.documentElement.setAttribute(BOOTED_ATTRIBUTE, '');

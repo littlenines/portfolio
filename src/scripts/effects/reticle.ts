@@ -1,6 +1,7 @@
 import { SECRET_THEME } from '@lib/themes';
 import { MEDIA, matches, prefersReducedMotion } from '@scripts/lib/media';
 import { currentTheme, onThemeChange } from '@scripts/theme/state';
+import { STATE_CLASS } from '@scripts/lib/state-classes';
 
 const FOLLOW_EASING = 0.22;
 const SETTLE_THRESHOLD_PX = 0.1;
@@ -47,18 +48,18 @@ class Reticle {
     if (!this.#isShown) {
       this.#position = { ...this.#target };
       this.#isShown = true;
-      this.#element.classList.add('is-on');
+      this.#element.classList.add(STATE_CLASS.visible);
     }
 
-    this.#frame ||= requestAnimationFrame(this.#tick);
+    if (!this.#frame) this.#frame = requestAnimationFrame(this.#tick);
 
     const isOverInteractive = target instanceof Element && target.closest(INTERACTIVE) !== null;
 
-    this.#element.classList.toggle('is-hot', isOverInteractive);
+    this.#element.classList.toggle(STATE_CLASS.hovering, isOverInteractive);
   }
 
   #hide() {
-    this.#element.classList.remove('is-on');
+    this.#element.classList.remove(STATE_CLASS.visible);
     this.#isShown = false;
   }
 

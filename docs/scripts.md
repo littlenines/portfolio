@@ -8,7 +8,7 @@ scripts/
 ├── lib/        dom.ts (frame throttle, visibility, colour helpers), media.ts (media queries), boot.ts
 ├── theme/      state, switch, transition, easter-egg, index (wires them together)
 ├── motion/     gsap.ts (setup), hero.ts, reveal.ts
-├── effects/    footer-wave, night-sky, back-to-top, reticle, toast, copy-text, warnbar
+├── effects/    footer-wave, night-field, back-to-top, reticle, toast, copy-text, warn-bar
 └── loader.ts
 ```
 
@@ -62,12 +62,12 @@ the left.
 | Module           | What it does                                                                                                                                                                                                                                                                                                                                                              |
 | :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `footer-wave.ts` | Three layered sine waves on a canvas, with a soft blip every few seconds. Colours come from `--wave-*-rgb` and ease between themes. Runs only while visible.                                                                                                                                                                                                              |
-| `night-sky.ts`   | Below the hero, the page background sinks from the theme's ground (`--ground-rgb`) to a darker shade (`--ground-sunk-rgb`) and faint stars fade in. Also tints the phone browser bar from the sky colour (`--sky-top-rgb`) into the page colour.                                                                                                                          |
+| `night-field.ts` | Below the hero, the page background sinks from the theme's ground (`--ground-rgb`) to a darker shade (`--ground-sunk-rgb`) and faint stars fade in. Also tints the phone browser bar from the sky colour (`--sky-top-rgb`) into the page colour.                                                                                                                          |
 | `back-to-top.ts` | Appears after 80% of the first screen. As the footer scrolls in it lifts itself (`--lift`): on wide desktops with a mouse (≥1280px) it may float over the footer wave and only stays clear of the text row; everywhere else it stops just above the footer's top line, so it never covers the contact buttons. The footer element is found with `data-back-to-top-limit`. |
 | `reticle.ts`     | A ring that trails the mouse and grows over links, buttons and projects. Mouse devices only. In evangelion it becomes a bracket frame with page coordinates.                                                                                                                                                                                                              |
 | `copy-text.ts`   | Any button with `data-copy="text"` copies that text. Optional `data-copied-message` sets the toast. Uses the Clipboard API, which needs HTTPS or `localhost`; on a plain-HTTP address (e.g. testing from a phone over a LAN IP) it shows "Could not copy" instead.                                                                                                        |
 | `toast.ts`       | `showToast(message)`: a note at the bottom that fades after 2s.                                                                                                                                                                                                                                                                                                           |
-| `warnbar.ts`     | The evangelion caution tape draws itself the first time it scrolls into view; its stripes pause off screen.                                                                                                                                                                                                                                                               |
+| `warn-bar.ts`    | The evangelion caution tape draws itself the first time it scrolls into view; its stripes pause off screen.                                                                                                                                                                                                                                                               |
 
 ## Adding a behaviour
 

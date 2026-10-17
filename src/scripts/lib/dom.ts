@@ -40,8 +40,8 @@ export function readRgbToken(name: string, element: Element = document.documentE
   return [red, green, blue];
 }
 
-export const mixRgb = (from: Rgb, to: Rgb, amount: number): Rgb =>
-  from.map((channel, index) => channel + (to[index] - channel) * amount) as Rgb;
+export const mixRgb = (start: Rgb, end: Rgb, amount: number): Rgb =>
+  start.map((channel, index) => channel + (end[index] - channel) * amount) as Rgb;
 
 export const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 

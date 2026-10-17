@@ -1,3 +1,5 @@
+import { PALETTE } from './palette';
+
 const HEX_SIDES = 6;
 const DEGREES_PER_SIDE = 360 / HEX_SIDES;
 const POINTY_TOP_OFFSET = -30;
@@ -10,7 +12,7 @@ const GLOW_RADIUS_Y = 0.75;
 const MIN_VISIBLE_FADE = 0.04;
 const MAX_STROKE_OPACITY = 0.75;
 
-const STROKE_COLOR = '#C9B2FF';
+const STROKE_COLOR = PALETTE.evaHexStroke;
 const STROKE_WIDTH = 1.2;
 
 export interface HexFieldOptions {

@@ -73,7 +73,9 @@ export function initHeroMotion() {
         INTRO.copy.at,
       );
 
-    whenBooted(() => intro.play());
+    whenBooted(() => {
+      intro.play();
+    });
 
     const acrossHero = { trigger: hero, start: 'top top', end: 'bottom top', scrub: true };
 

@@ -1,5 +1,13 @@
 ---
-import { TOWER_LAYERS, buildSkyline, type LayerOptions, type SkylineVariant, type WindowLight } from '@lib/skyline';
+import { PALETTE } from '@lib/palette';
+import {
+  TOWER_LAYERS,
+  buildSkyline,
+  type Haze,
+  type LayerOptions,
+  type SkylineVariant,
+  type WindowLight,
+} from '@lib/skyline';
 
 interface Props {
   variant?: SkylineVariant;
@@ -8,15 +16,15 @@ interface Props {
 const { variant = 'home' } = Astro.props;
 
 const HAZE_ID = 'skyline-haze';
-const HAZE_COLOR = '#FFB59A';
+const HAZE_COLOR = PALETTE.peach;
 const HAZE_OPACITY = 0.26;
-const ACCENT_COLOR = '#FF9EB5';
+const ACCENT_COLOR = PALETTE.pink;
 const BEACON_RADIUS = 2.5;
 const NEON_OPACITY = 0.55;
 
 const VARIANTS: Record<SkylineVariant, { windowColor: string; afterDarkShare: number; layers: LayerOptions[] }> = {
   home: {
-    windowColor: '#FFB59A',
+    windowColor: PALETTE.peach,
     afterDarkShare: 0.5,
     layers: [
       { ...TOWER_LAYERS.far, haze: { cy: 205, rx: 540, ry: 46, centers: [300, 1050] } },
@@ -31,7 +39,7 @@ const VARIANTS: Record<SkylineVariant, { windowColor: string; afterDarkShare: nu
     ],
   },
   lost: {
-    windowColor: '#FFD6B4',
+    windowColor: PALETTE.windowGlow,
     afterDarkShare: 0,
     layers: [
       TOWER_LAYERS.far,
@@ -42,6 +50,7 @@ const VARIANTS: Record<SkylineVariant, { windowColor: string; afterDarkShare: nu
 };
 
 const skyline = buildSkyline(VARIANTS[variant]);
+const hazeEllipses = ({ centers, cy, rx, ry }: Haze) => centers.map((cx) => ({ cx, cy, rx, ry }));
 const hasHaze = skyline.layers.some((layer) => layer.haze);
 const { width: windowWidth, height: windowHeight } = skyline.windowSize;
 
@@ -113,8 +122,8 @@ const windowStyle = (light: WindowLight) =>
         ))}
         {layer.haze && (
           <g class="skyline__haze">
-            {layer.haze.centers.map((cx) => (
-              <ellipse cx={cx} cy={layer.haze!.cy} rx={layer.haze!.rx} ry={layer.haze!.ry} fill={`url(#${HAZE_ID})`} />
+            {hazeEllipses(layer.haze).map((ellipse) => (
+              <ellipse {...ellipse} fill={`url(#${HAZE_ID})`} />
             ))}
           </g>
         )}

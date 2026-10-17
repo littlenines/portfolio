@@ -5,18 +5,21 @@ A cyberpunk city-pop portfolio built with Astro, SCSS (7-1) and GSAP. Mobile fir
 
 ## Commands
 
-| Command        | Action                                                 |
-| :------------- | :----------------------------------------------------- |
-| `pnpm install` | Install dependencies                                   |
-| `pnpm dev`     | Dev server at `localhost:4321`                         |
-| `pnpm check`   | Type-check `.astro` and `.ts` files                    |
-| `pnpm format`  | Format everything (Prettier + ESLint blank-line rules) |
-| `pnpm lint`    | Check formatting without changing files                |
-| `pnpm build`   | Type-check, then build to `./dist/`                    |
-| `pnpm preview` | Preview the production build                           |
+| Command         | Action                                                       |
+| :-------------- | :----------------------------------------------------------- |
+| `pnpm install`  | Install dependencies                                         |
+| `pnpm dev`      | Dev server at `localhost:4321`                               |
+| `pnpm check`    | Type-check `.astro` and `.ts` files                          |
+| `pnpm format`   | Fix formatting and lint issues (Prettier, ESLint, Stylelint) |
+| `pnpm lint`     | Check formatting and lint rules without changing files       |
+| `pnpm test`     | Unit tests (Vitest)                                          |
+| `pnpm test:e2e` | Build, then browser and accessibility tests (Playwright)     |
+| `pnpm build`    | Type-check, then build to `./dist/`                          |
+| `pnpm preview`  | Preview the production build                                 |
 
 ## Docs
 
+- [Conventions](docs/conventions.md): the coding rules, checks and commit format
 - [Content](docs/content.md): text, projects, stack, links, CV
 - [Architecture](docs/architecture.md): folders, separation of concerns, build time vs. browser
 - [Styles](docs/styles.md): 7-1 table of contents, conventions, breakpoints, mixins

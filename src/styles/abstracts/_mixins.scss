@@ -56,7 +56,6 @@
 }
 
 @mixin mask($image) {
-  -webkit-mask-image: $image;
   mask-image: $image;
 }
 
@@ -80,7 +79,7 @@
     content: '';
     position: absolute;
     inset: 1px;
-    z-index: -1;
+    z-index: z-index(behind);
     background: $face;
     @include chamfer($cut - 1px);
   }

@@ -1,6 +1,6 @@
 @use 'abstracts' as *;
 
-.btn {
+.button {
   display: inline-flex;
   align-items: center;
   min-height: 48px;
@@ -21,13 +21,13 @@
   }
 }
 
-.btn-group {
+.button-group {
   display: flex;
   flex-wrap: wrap;
   gap: space(2);
 }
 
-.pill-btn {
+.pill-button {
   @include pill;
   font-size: font-size(md);
 

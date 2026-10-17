@@ -1,4 +1,4 @@
-import { SECRET_THEME, type Theme } from '@lib/themes';
+import { DEFAULT_THEME, SECRET_THEME, isTheme, type Theme } from '@lib/themes';
 import { currentTheme, onThemeChange } from './state';
 import type { ChooseTheme } from './transition';
 
@@ -7,7 +7,12 @@ const PREVIOUS_KEYS = new Set(['ArrowLeft', 'ArrowUp']);
 
 export function initThemeSwitch(group: HTMLElement, chooseTheme: ChooseTheme) {
   const options = [...group.querySelectorAll<HTMLButtonElement>('[data-theme-option]')];
-  const themeOf = (option: HTMLButtonElement) => option.dataset.themeOption as Theme;
+
+  const themeOf = (option: HTMLButtonElement): Theme => {
+    const { themeOption } = option.dataset;
+
+    return isTheme(themeOption) ? themeOption : DEFAULT_THEME;
+  };
 
   const placeHighlight = () => {
     const active = options.find((option) => themeOf(option) === currentTheme());
