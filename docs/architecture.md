@@ -9,7 +9,7 @@ src/
 ├── layouts/         Layout.astro: <head>, fonts, meta tags, theme boot script
 ├── components/
 │   ├── layout/      Header, Footer, Section
-│   ├── hero/        Hero, Scene, Skyline
+│   ├── hero/        Hero, Scene, Skyline, StreamBeams
 │   ├── sections/    Projects, ProjectItem, Stack, Contact
 │   ├── ui/          Button, Eyebrow, SectionLabel, ThemeSwitch, ThemedText, SkipLink
 │   └── effects/     Loader, ThemeVeil, WarnBar, BackToTop, Toast, Reticle, NightField
@@ -90,10 +90,17 @@ reveal script.
 
 **Built once, shipped as static files:**
 
-- **Skyline.** `lib/skyline.ts` is a seeded generator, so the city is the same on every build. `Skyline.astro`
-  renders it straight into the HTML as SVG, which means no script and nothing pops in on load.
+- **Skyline.** `lib/skyline.ts` is a seeded generator, so the city is the same on every build. Window
+  lighting is in `lib/skyline-windows.ts`, and the home and 404 settings in `lib/skyline-variants.ts`.
+  `Skyline.astro` renders it straight into the HTML as SVG, which means no script and nothing pops in on load.
   Which windows only light up after dark is picked with `Math.random`, not the seeded generator.
   Switching that to the seeded generator would shift every value after it and reshape the city.
+- **Stream beams (netspace).** `lib/stream-beams.ts` picks up to five front towers (closest to the middle,
+  at least 190 units apart, away from the edges) and lays out a light beam with six climbing packets on
+  each. Towers whose roof is in the top 60 units are skipped: wide, short windows crop that part of the
+  skyline, which would leave the beam floating above a cut-off tower. `StreamBeams.astro` draws them in a
+  second, small SVG on top of the city, so the moving packets never repaint the large skyline drawing. Packet speeds and start points come from fixed multipliers, not
+  randomness, so every build looks the same.
 - **Hex field.** `pages/hex-field.svg.ts` is a static endpoint that writes `/hex-field.svg` from
   `lib/hex-field.ts`. The fade is baked into each hexagon's stroke opacity instead of using a CSS mask, which
   would force an offscreen repaint every frame. The browser only downloads it once the evangelion theme is on.

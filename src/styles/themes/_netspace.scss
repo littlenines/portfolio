@@ -46,3 +46,9 @@
     filter: drop-shadow(0 0 5px $pink);
   }
 }
+
+#{$theme-netspace} {
+  .stream-beams {
+    opacity: 1;
+  }
+}

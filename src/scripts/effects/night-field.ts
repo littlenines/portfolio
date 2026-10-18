@@ -1,4 +1,5 @@
-import { clamp01, mixRgb, readRgbToken, rgbToHex, throttleToFrame, type Rgb } from '@scripts/lib/dom';
+import { clamp01, mixRgb, readRgbToken, rgbToHex, type Rgb } from '@scripts/lib/color';
+import { throttleToFrame } from '@scripts/lib/dom';
 import { onThemeChange } from '@scripts/theme/state';
 
 const MAX_STAR_OPACITY = 0.7;

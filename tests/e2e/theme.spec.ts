@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 const KNOCKS_TO_UNLOCK = 3;
 
@@ -36,5 +36,28 @@ test.describe('themes', () => {
 
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'evangelion');
     await expect(page.locator('[data-theme-option="evangelion"]')).toBeVisible();
+  });
+
+  test.describe('stream beams', () => {
+    // The beams need motion, so this group opts back into it
+    test.use({ reducedMotion: 'no-preference' });
+
+    const packetPositions = (page: Page) =>
+      page.evaluate(() =>
+        [...document.querySelectorAll('[data-stream-packet]')]
+          .map((packet) => packet.getAttribute('transform'))
+          .join('|'),
+      );
+
+    test('the packets climb in netspace', async ({ page }) => {
+      await page.goto('/');
+      await page.evaluate((theme) => localStorage.setItem('theme', theme), 'netspace');
+      await page.goto('/');
+      await page.waitForFunction(() => document.documentElement.hasAttribute('data-booted'));
+
+      const before = await packetPositions(page);
+
+      await expect.poll(() => packetPositions(page)).not.toBe(before);
+    });
   });
 });

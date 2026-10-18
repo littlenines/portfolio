@@ -1,0 +1,16 @@
+@use 'abstracts' as *;
+
+$fade-in-delay: 0.5s;
+
+.stream-beams {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity $theme-fade $fade-in-delay;
+
+  &__packet {
+    opacity: 0;
+  }
+}

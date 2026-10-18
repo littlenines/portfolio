@@ -1,34 +1,54 @@
-import { describe, expect, it } from 'vitest';
-import { clamp01, mixRgb, rgbToHex, type Rgb } from '@scripts/lib/dom';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { onVisibilityChange } from '@scripts/lib/dom';
 
-const BLACK: Rgb = [0, 0, 0];
-const WHITE: Rgb = [255, 255, 255];
+type ObserverCallback = (entries: Pick<IntersectionObserverEntry, 'intersectionRatio'>[]) => void;
 
-describe('mixRgb', () => {
-  it('returns the start colour at 0 and the end colour at 1', () => {
-    expect(mixRgb(BLACK, WHITE, 0)).toEqual(BLACK);
-    expect(mixRgb(BLACK, WHITE, 1)).toEqual(WHITE);
+const VISIBLE = { intersectionRatio: 1 };
+const HIDDEN = { intersectionRatio: 0 };
+
+// Stands in for the browser's IntersectionObserver and lets the test deliver batches by hand
+function stubIntersectionObserver() {
+  let deliver: ObserverCallback = () => {};
+
+  class FakeIntersectionObserver {
+    constructor(callback: ObserverCallback) {
+      deliver = callback;
+    }
+
+    observe() {}
+
+    disconnect() {}
+  }
+
+  vi.stubGlobal('window', { IntersectionObserver: FakeIntersectionObserver });
+  vi.stubGlobal('IntersectionObserver', FakeIntersectionObserver);
+
+  return (entries: Pick<IntersectionObserverEntry, 'intersectionRatio'>[]) => deliver(entries);
+}
+
+describe('onVisibilityChange', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
-  it('mixes each channel proportionally', () => {
-    expect(mixRgb([0, 100, 200], [100, 200, 0], 0.5)).toEqual([50, 150, 100]);
-  });
-});
+  it('reports each change', () => {
+    const deliver = stubIntersectionObserver();
+    const callback = vi.fn();
 
-describe('rgbToHex', () => {
-  it('formats channels as a lowercase hex colour', () => {
-    expect(rgbToHex([255, 138, 61])).toBe('#ff8a3d');
+    onVisibilityChange({} as Element, callback);
+    deliver([HIDDEN]);
+    deliver([VISIBLE]);
+
+    expect(callback.mock.calls).toEqual([[false], [true]]);
   });
 
-  it('rounds fractional channels and pads single digits', () => {
-    expect(rgbToHex([0.4, 9.6, 15])).toBe('#000a0f');
-  });
-});
+  it('uses the latest change when a slow frame delivers several at once', () => {
+    const deliver = stubIntersectionObserver();
+    const callback = vi.fn();
 
-describe('clamp01', () => {
-  it('keeps values between 0 and 1', () => {
-    expect(clamp01(-0.5)).toBe(0);
-    expect(clamp01(0.25)).toBe(0.25);
-    expect(clamp01(3)).toBe(1);
+    onVisibilityChange({} as Element, callback);
+    deliver([HIDDEN, VISIBLE]);
+
+    expect(callback).toHaveBeenLastCalledWith(true);
   });
 });

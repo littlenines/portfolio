@@ -1,0 +1,63 @@
+---
+import { BEAM_COLORS, BEAM_SHAPE, PACKET_SHAPE, type StreamBeam } from '@lib/stream-beams';
+
+interface Props {
+  beams: StreamBeam[];
+  viewBox: string;
+}
+
+const { beams, viewBox } = Astro.props;
+
+const GRADIENT_ID = 'stream-beam';
+
+const GRADIENT_STOPS = [
+  { offset: 0, opacity: 0.9 },
+  { offset: 0.55, opacity: 0.35 },
+  { offset: 1, opacity: 0 },
+];
+---
+
+<svg class="stream-beams" viewBox={viewBox} preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <defs>
+    {BEAM_COLORS.map((color, index) => (
+      <linearGradient id={`${GRADIENT_ID}-${index}`} x1="0" y1="1" x2="0" y2="0">
+        {GRADIENT_STOPS.map((stop) => (
+          <stop offset={stop.offset} stop-color={color} stop-opacity={stop.opacity} />
+        ))}
+      </linearGradient>
+    ))}
+  </defs>
+  {beams.map((beam) => (
+    <g fill={`url(#${GRADIENT_ID}-${beam.gradientIndex})`}>
+      <rect
+        x={beam.centerX - BEAM_SHAPE.glowWidth / 2}
+        y={beam.top}
+        width={BEAM_SHAPE.glowWidth}
+        height={beam.height}
+        opacity={BEAM_SHAPE.glowOpacity}
+      />
+      <rect
+        x={beam.centerX - BEAM_SHAPE.coreWidth / 2}
+        y={beam.top + beam.height * BEAM_SHAPE.coreStart}
+        width={BEAM_SHAPE.coreWidth}
+        height={beam.height * (1 - BEAM_SHAPE.coreStart)}
+        opacity={BEAM_SHAPE.coreOpacity}
+      />
+      {beam.packets.map((packet) => (
+        <rect
+          class="stream-beams__packet"
+          x={packet.x}
+          y={packet.y}
+          width={PACKET_SHAPE.width}
+          height={packet.height}
+          rx={PACKET_SHAPE.cornerRadius}
+          fill={packet.color}
+          data-stream-packet
+          data-rise={packet.rise}
+          data-duration={packet.durationSeconds}
+          data-start-offset={packet.startOffsetSeconds}
+        />
+      ))}
+    </g>
+  ))}
+</svg>

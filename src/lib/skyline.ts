@@ -1,5 +1,7 @@
 import { PALETTE } from './palette';
 import { createSeededRandom, roundTo } from './rng';
+import { WINDOW, createWindowLighting, type WindowLight } from './skyline-windows';
+import type { Tower } from './stream-beams';
 
 export const SKYLINE_WIDTH = 1600;
 export const SKYLINE_HEIGHT = 300;
@@ -7,23 +9,6 @@ export const SKYLINE_HEIGHT = 300;
 const EDGE_OVERHANG = 20;
 
 const VALLEY = { depth: 0.5, spread: 240 } as const;
-
-const WINDOW = {
-  width: 3,
-  height: 4,
-  columnStep: 8,
-  rowStep: 10,
-  insetLeft: 6,
-  insetRight: 8,
-  insetTop: 12,
-  insetBottom: 16,
-  minOpacity: 0.45,
-  opacityRange: 0.4,
-  awakeOpacity: 0.6,
-  maxSwitchDelay: 1.4,
-  flickerEvery: 3,
-  maxFlickerDelay: 3,
-} as const;
 
 const SETBACK = {
   chance: [0.3, 0.55],
@@ -64,14 +49,6 @@ export interface Box {
   width: number;
   height: number;
 }
-export interface WindowLight {
-  x: number;
-  y: number;
-  opacity: number;
-  afterDark: boolean;
-  switchDelay?: number;
-  flickerDelay?: number;
-}
 export interface Beacon {
   cx: number;
   cy: number;
@@ -109,6 +86,7 @@ export interface Layer {
   awake: WindowLight[];
   beacons: Beacon[];
   neon: Box[];
+  towers: Tower[];
   haze?: Haze;
 }
 
@@ -122,11 +100,8 @@ export interface SkylineOptions {
 
 const DEFAULT_SEED = 11;
 const DEFAULT_AWAKE_SEED = 7;
-const SECONDS_PRECISION = 2;
-const OPACITY_PRECISION = 2;
 
 const inRange = (value: number, [min, max]: readonly [number, number]) => value > min && value <= max;
-const seconds = (value: number) => Number(value.toFixed(SECONDS_PRECISION));
 
 export function buildSkyline({
   layers,
@@ -137,60 +112,8 @@ export function buildSkyline({
 }: SkylineOptions) {
   const shapeRandom = createSeededRandom(seed);
   const awakeRandom = createSeededRandom(awakeSeed);
-  // The after-dark split uses Math.random, so it never shifts the seeded layout.
-  const isAfterDark = () => Math.random() < afterDarkShare;
-  const switchDelay = () => seconds(Math.random() * WINDOW.maxSwitchDelay);
+  const windows = createWindowLighting({ shapeRandom, awakeRandom, afterDarkShare, skylineHeight: SKYLINE_HEIGHT });
   const valley = (x: number) => 1 - VALLEY.depth * Math.exp(-(((x - SKYLINE_WIDTH / 2) / VALLEY.spread) ** 2));
-  let litCount = 0;
-
-  function* windowSlots(x: number, top: number, width: number) {
-    for (let y = top + WINDOW.insetTop; y < SKYLINE_HEIGHT - WINDOW.insetBottom; y += WINDOW.rowStep) {
-      for (let column = x + WINDOW.insetLeft; column < x + width - WINDOW.insetRight; column += WINDOW.columnStep) {
-        yield { x: roundTo(column), y: roundTo(y) };
-      }
-    }
-  }
-
-  const litWindows = (x: number, top: number, width: number, chance: number, flicker: boolean) => {
-    const lights: WindowLight[] = [];
-
-    for (const slot of windowSlots(x, top, width)) {
-      if (shapeRandom.next() >= chance) continue;
-
-      const opacity = Number((WINDOW.minOpacity + shapeRandom.next() * WINDOW.opacityRange).toFixed(OPACITY_PRECISION));
-      const afterDark = isAfterDark();
-      const light: WindowLight = { ...slot, opacity, afterDark };
-
-      if (afterDark) light.switchDelay = switchDelay();
-
-      if (flicker && litCount++ % WINDOW.flickerEvery === 0) {
-        light.flickerDelay = seconds(shapeRandom.next() * WINDOW.maxFlickerDelay);
-      }
-
-      lights.push(light);
-    }
-
-    return lights;
-  };
-
-  const awakeWindows = (x: number, top: number, width: number, chance: number) => {
-    const lights: WindowLight[] = [];
-
-    for (const slot of windowSlots(x, top, width)) {
-      if (awakeRandom.next() >= chance) continue;
-
-      const afterDark = isAfterDark();
-
-      lights.push({
-        ...slot,
-        opacity: WINDOW.awakeOpacity,
-        afterDark,
-        switchDelay: afterDark ? switchDelay() : undefined,
-      });
-    }
-
-    return lights;
-  };
 
   const buildLayer = (options: LayerOptions): Layer => {
     const { next: random, between } = shapeRandom;
@@ -203,6 +126,7 @@ export function buildSkyline({
       awake: [],
       beacons: [],
       neon: [],
+      towers: [],
       haze: options.haze,
     };
 
@@ -223,6 +147,10 @@ export function buildSkyline({
 
       addShape(x, top, width, height + BASE_BLEED);
 
+      let roof = top;
+      let roofLeft = x;
+      let roofWidth = width;
+
       if (isMega || inRange(kind, SETBACK.chance)) {
         const tiers = SETBACK.minTiers + Math.floor(random() * SETBACK.extraTiers);
         let tierWidth = width;
@@ -236,6 +164,10 @@ export function buildSkyline({
           tierTop -= tierHeight;
           addShape(x + (width - tierWidth) / 2, tierTop, tierWidth, tierHeight + SEAM);
         }
+
+        roof = tierTop;
+        roofLeft = x + (width - tierWidth) / 2;
+        roofWidth = tierWidth;
       } else if (inRange(kind, ANTENNA.chance)) {
         const length = between(ANTENNA.minLength, ANTENNA.maxLength);
 
@@ -245,6 +177,8 @@ export function buildSkyline({
           layer.beacons.push({ cx: roundTo(x + width / 2), cy: roundTo(top - length - ANTENNA.beaconLift) });
         }
       } else if (inRange(kind, ROOF_BLOCK.chance)) {
+        roof = top - ROOF_BLOCK.slabHeight;
+
         addShape(
           x - ROOF_BLOCK.overhang,
           top - ROOF_BLOCK.slabHeight,
@@ -260,9 +194,17 @@ export function buildSkyline({
         );
       }
 
-      if (options.litChance) layer.lit.push(...litWindows(x, top, width, options.litChance, options.flicker ?? false));
+      layer.towers.push({
+        x: roundTo(x),
+        width: roundTo(width),
+        roof: roundTo(roof),
+        roofLeft: roundTo(roofLeft),
+        roofWidth: roundTo(roofWidth),
+      });
 
-      if (options.awakeChance) layer.awake.push(...awakeWindows(x, top, width, options.awakeChance));
+      if (options.litChance) layer.lit.push(...windows.lit(x, top, width, options.litChance, options.flicker ?? false));
+
+      if (options.awakeChance) layer.awake.push(...windows.awake(x, top, width, options.awakeChance));
 
       if (options.neon && height > NEON.minTowerHeight && random() > 1 - NEON.chance) {
         layer.neon.push({
@@ -289,8 +231,6 @@ export function buildSkyline({
 }
 
 export type Skyline = ReturnType<typeof buildSkyline>;
-
-export type SkylineVariant = 'home' | 'lost';
 
 export const TOWER_LAYERS = {
   far: {

@@ -1,13 +1,10 @@
 ---
+import StreamBeams from '@components/hero/StreamBeams.astro';
 import { PALETTE } from '@lib/palette';
-import {
-  TOWER_LAYERS,
-  buildSkyline,
-  type Haze,
-  type LayerOptions,
-  type SkylineVariant,
-  type WindowLight,
-} from '@lib/skyline';
+import { buildSkyline, type Haze } from '@lib/skyline';
+import type { WindowLight } from '@lib/skyline-windows';
+import { SKYLINE_VARIANTS, type SkylineVariant } from '@lib/skyline-variants';
+import { buildStreamBeams } from '@lib/stream-beams';
 
 interface Props {
   variant?: SkylineVariant;
@@ -22,37 +19,15 @@ const ACCENT_COLOR = PALETTE.pink;
 const BEACON_RADIUS = 2.5;
 const NEON_OPACITY = 0.55;
 
-const VARIANTS: Record<SkylineVariant, { windowColor: string; afterDarkShare: number; layers: LayerOptions[] }> = {
-  home: {
-    windowColor: PALETTE.peach,
-    afterDarkShare: 0.5,
-    layers: [
-      { ...TOWER_LAYERS.far, haze: { cy: 205, rx: 540, ry: 46, centers: [300, 1050] } },
-      {
-        ...TOWER_LAYERS.mid,
-        litChance: 0.02,
-        awakeChance: 0.08,
-        beacons: true,
-        haze: { cy: 238, rx: 500, ry: 34, centers: [520, 1250] },
-      },
-      { ...TOWER_LAYERS.near, litChance: 0.05, awakeChance: 0.14, megaTowers: true, neon: true, beacons: true },
-    ],
-  },
-  lost: {
-    windowColor: PALETTE.windowGlow,
-    afterDarkShare: 0,
-    layers: [
-      TOWER_LAYERS.far,
-      { ...TOWER_LAYERS.mid, litChance: 0.04, flicker: true },
-      { ...TOWER_LAYERS.near, litChance: 0.07, flicker: true },
-    ],
-  },
-};
-
-const skyline = buildSkyline(VARIANTS[variant]);
-const hazeEllipses = ({ centers, cy, rx, ry }: Haze) => centers.map((cx) => ({ cx, cy, rx, ry }));
+const options = SKYLINE_VARIANTS[variant];
+const skyline = buildSkyline(options);
+const viewBox = `0 0 ${skyline.width} ${skyline.height}`;
+const frontTowers = skyline.layers.at(-1)?.towers ?? [];
+const streamBeams = options.streamBeams ? buildStreamBeams(frontTowers, skyline.width, skyline.height) : [];
 const hasHaze = skyline.layers.some((layer) => layer.haze);
 const { width: windowWidth, height: windowHeight } = skyline.windowSize;
+
+const hazeEllipses = ({ centers, cy, rx, ry }: Haze) => centers.map((cx) => ({ cx, cy, rx, ry }));
 
 const windowClasses = (light: WindowLight) => [
   'skyline__window',
@@ -69,7 +44,7 @@ const windowStyle = (light: WindowLight) =>
 ---
 
 <div class="skyline">
-  <svg viewBox={`0 0 ${skyline.width} ${skyline.height}`} preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <svg viewBox={viewBox} preserveAspectRatio="xMidYMax slice" aria-hidden="true">
     {hasHaze && (
       <defs>
         <radialGradient id={HAZE_ID}>
@@ -130,4 +105,6 @@ const windowStyle = (light: WindowLight) =>
       </>
     ))}
   </svg>
+
+  {streamBeams.length > 0 && <StreamBeams beams={streamBeams} viewBox={viewBox} />}
 </div>

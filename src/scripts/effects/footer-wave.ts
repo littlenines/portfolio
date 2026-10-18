@@ -1,4 +1,5 @@
-import { mixRgb, onVisibilityChange, readRgbToken, type Rgb } from '@scripts/lib/dom';
+import { mixRgb, readRgbToken, type Rgb } from '@scripts/lib/color';
+import { onVisibilityChange } from '@scripts/lib/dom';
 import { prefersReducedMotion } from '@scripts/lib/media';
 import { onThemeChange } from '@scripts/theme/state';
 

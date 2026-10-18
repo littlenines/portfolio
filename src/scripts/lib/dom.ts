@@ -1,5 +1,3 @@
-export type Rgb = [red: number, green: number, blue: number];
-
 export function throttleToFrame(callback: () => void) {
   let frame = 0;
 
@@ -24,28 +22,15 @@ export function onVisibilityChange(
     return () => {};
   }
 
-  const observer = new IntersectionObserver(([entry]) => callback(entry.intersectionRatio > 0), options);
+  const observer = new IntersectionObserver((entries) => {
+    const latest = entries.at(-1);
+
+    if (latest) callback(latest.intersectionRatio > 0);
+  }, options);
 
   observer.observe(element);
 
   return () => observer.disconnect();
 }
-
-export function readRgbToken(name: string, element: Element = document.documentElement): Rgb {
-  const [red = 0, green = 0, blue = 0] = getComputedStyle(element)
-    .getPropertyValue(name)
-    .split(',')
-    .map((channel) => Number(channel.trim()));
-
-  return [red, green, blue];
-}
-
-export const mixRgb = (start: Rgb, end: Rgb, amount: number): Rgb =>
-  start.map((channel, index) => channel + (end[index] - channel) * amount) as Rgb;
-
-export const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
-
-export const rgbToHex = (rgb: Rgb) =>
-  `#${rgb.map((channel) => Math.round(channel).toString(16).padStart(2, '0')).join('')}`;
 
 export const wait = (milliseconds: number) => new Promise<void>((resolve) => setTimeout(resolve, milliseconds));

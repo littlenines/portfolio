@@ -5,7 +5,7 @@ There are three themes:
 | Theme                 | Look                                                                                                        | How to get it                                              |
 | :-------------------- | :---------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------- |
 | **surface** (default) | Warm dusk, setting sun                                                                                      | Theme switch                                               |
-| **netspace**          | Deep night: the sun sets, the city lights up, neon glows                                                    | Theme switch                                               |
+| **netspace**          | Deep night: the sun sets, the city lights up, neon glows, light beams rise from the towers                  | Theme switch                                               |
 | **evangelion**        | Violet and orange, Mincho headings, cut-corner plates, caution tape, scanlines, hexagon sky, alternate copy | Easter egg: tap the name in the header 3 times within 2.5s |
 
 Theme names, the default, the secret theme, the storage key and the event name are defined once in

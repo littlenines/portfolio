@@ -3,6 +3,7 @@ export type Theme = (typeof THEMES)[number];
 
 export const DEFAULT_THEME: Theme = 'surface';
 export const SECRET_THEME: Theme = 'evangelion';
+export const STREAM_BEAM_THEME: Theme = 'netspace';
 export const THEME_STORAGE_KEY = 'theme';
 export const THEME_CHANGE_EVENT = 'theme:change';
 

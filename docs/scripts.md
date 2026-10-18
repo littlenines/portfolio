@@ -5,9 +5,11 @@ Browser code lives in `src/scripts/`, one module per feature. Components call th
 
 ```text
 scripts/
-├── lib/        dom.ts (frame throttle, visibility, colour helpers), media.ts (media queries), boot.ts
+├── lib/        dom.ts (frame throttle, visibility), color.ts (RGB tokens and mixing), activity.ts (on screen,
+│               tab visible, not scrolling), media.ts (media queries), state-classes.ts, boot.ts
 ├── theme/      state, switch, transition, easter-egg, index (wires them together)
-├── motion/     gsap.ts (setup), hero.ts, reveal.ts
+├── motion/     gsap.ts (setup, selectAll), ambient-clock.ts, reveal.ts
+│   └── hero/   index (wires them together), intro, scroll-effects, ambient-loops, stream-beams, meteor
 ├── effects/    footer-wave, night-field, back-to-top, reticle, toast, copy-text, warn-bar
 └── loader.ts
 ```
@@ -42,21 +44,41 @@ Safety nets, in `Loader.astro` and `_loader.scss`:
   if the loader script never runs.
 - A CSS animation hides the loader after 7s for the same reason.
 
-## Hero motion: `motion/hero.ts`
+## Hero motion: `motion/hero/`
+
+One module per job; `index.ts` wires them together and decides when they run.
 
 - **Intro:** the sun rises, the name, eyebrow and title lines slide in, then the copy. Held until the loader lifts.
 - **Scroll depth:** across the hero, the sun sinks, the stars drift up and the copy lifts slightly.
 - **The city wakes up:** extra "awake" windows light one by one as you scroll away from the top. Each one
   switches on over a short slice of the scroll (`AWAKE_SWITCH`), so only a few change in any one frame.
-- **Ambient loops:** beacons pulse, about 40 random windows breathe, haze drifts, and a shooting star crosses
-  every 7–12 seconds. All of these pause while the hero is off screen, while the tab is hidden, and **while the
-  page is scrolling** (they resume 200 ms after it settles).
+- **Ambient loops** (`ambient-loops.ts`): beacons pulse, about 40 random windows breathe and the haze drifts.
+- **Stream beams** (`stream-beams.ts`, netspace only): packets of light climb each beam. Their climb, speed and
+  starting point come from data attributes written at build time.
+- **Meteor** (`meteor.ts`): a shooting star crosses every 7–12 seconds.
 
-**Performance note:** any change inside the skyline SVG makes the browser redo style and layering for the
-whole SVG. On phones, loops running during a scroll caused visible stutter. Keep new skyline animations
-infrequent, and pause them during scroll the same way.
+When they run (`watchActivity()` in `lib/activity.ts` reports whether the hero is shown and whether the page
+is scrolling):
 
-Tunable values are named constants at the top of the file (`INTRO`, `SCROLL_DEPTH`, `METEOR`, …).
+- Everything pauses while the hero is off screen or the tab is hidden.
+- The ambient loops and the meteor also pause **while the page is scrolling** and resume 200 ms after it
+  settles. They change the large skyline drawing, which made scrolling stutter on phones.
+- The beam packets keep climbing while scrolling: they sit on their own layer, so they cost only 10–20% more
+  scroll work on a throttled phone, and freezing them mid-scroll looked broken. They only run in netspace.
+
+**Performance.** Any change inside the skyline SVG makes the browser restyle the whole drawing. Measured on a
+phone emulated with a 4× slower CPU:
+
+- The ambient loops and the beam packets run on an **ambient clock** (`motion/ambient-clock.ts`) instead of
+  GSAP's 60 fps ticker: 15 fps for the slow loops (`AMBIENT_FPS`) and 30 fps for the packets
+  (`STREAM_BEAM_FPS`). They look the same and cut idle main-thread time by about two thirds.
+- Both skyline SVGs have `will-change: transform` (`_skyline.scss`), so the city is rasterised once instead of
+  when it scrolls back into view, which caused a 40 ms frame, and the packets never repaint the city.
+- The meteor moves fast, so it stays on the normal frame rate.
+
+Keep new skyline animations on the ambient clock, and give anything that moves continuously its own small SVG.
+
+Tunable values are named constants at the top of each module (`INTRO`, `SCROLL_DEPTH`, `METEOR`, …).
 
 ## Scroll reveals: `motion/reveal.ts`
 
