@@ -1,13 +1,6 @@
+import { isOdd, roundTo } from './math';
 import { PALETTE } from './palette';
-import { roundTo } from './rng';
-
-export interface Tower {
-  x: number;
-  width: number;
-  roof: number;
-  roofLeft: number;
-  roofWidth: number;
-}
+import type { Tower } from './skyline';
 
 export interface Packet {
   x: number;
@@ -34,7 +27,9 @@ const BEAM_HEIGHTS = [200, 150, 220, 140, 175];
 
 const PICK = { maxBeams: 5, edgeMargin: 90, minTowerHeight: 80, minRoofY: 60, minSpacing: 190 } as const;
 
-const ROOF_POSITION = { even: 0.4, odd: 0.6 } as const;
+const PHONE_BAND = { width: 340, beams: 2, minTowerHeight: 60, minSpacing: 140 } as const;
+
+const ROOF_POSITION = { even: 0.4, odd: 0.6, center: 0.5 } as const;
 
 export const BEAM_SHAPE = {
   glowWidth: 24,
@@ -63,22 +58,43 @@ export const PACKET_SHAPE = { width: 1.4, cornerRadius: 0.7 } as const;
 const SPREAD = { durationPacket: 7, durationBeam: 3, offsetPacket: 11, offsetBeam: 17 } as const;
 const TENTHS = 10;
 
-const isOdd = (value: number) => value % 2 === 1;
-
 export function pickBeamTowers(towers: Tower[], skylineWidth: number, skylineHeight: number): Tower[] {
   const middle = skylineWidth / 2;
   const centerOf = (tower: Tower) => tower.x + tower.width / 2;
   const distanceToMiddle = (tower: Tower) => Math.abs(centerOf(tower) - middle);
-  const byDistanceToMiddle = [...towers].sort((first, second) => distanceToMiddle(first) - distanceToMiddle(second));
+  const heightOf = (tower: Tower) => skylineHeight - tower.roof;
+
+  const isUsable = (tower: Tower) =>
+    tower.x >= PICK.edgeMargin &&
+    tower.x + tower.width <= skylineWidth - PICK.edgeMargin &&
+    tower.roof >= PICK.minRoofY;
+
+  const usable = towers.filter(isUsable);
+  const byDistanceToMiddle = [...usable].sort((first, second) => distanceToMiddle(first) - distanceToMiddle(second));
+  const byHeight = [...usable].sort((first, second) => heightOf(second) - heightOf(first));
   const picks: Tower[] = [];
 
-  for (const tower of byDistanceToMiddle) {
-    const isNearEdge = tower.x < PICK.edgeMargin || tower.x + tower.width > skylineWidth - PICK.edgeMargin;
-    const isTall = skylineHeight - tower.roof > PICK.minTowerHeight;
-    const isRoofVisible = tower.roof >= PICK.minRoofY;
-    const isSpacedOut = picks.every((pick) => Math.abs(centerOf(pick) - centerOf(tower)) > PICK.minSpacing);
+  const isSpacedOut = (tower: Tower, spacing: number) =>
+    picks.every((pick) => Math.abs(centerOf(pick) - centerOf(tower)) > spacing);
 
-    if (picks.length < PICK.maxBeams && !isNearEdge && isTall && isRoofVisible && isSpacedOut) picks.push(tower);
+  const isRoofInPhoneBand = (tower: Tower) =>
+    tower.roofLeft >= middle - PHONE_BAND.width / 2 &&
+    tower.roofLeft + tower.roofWidth <= middle + PHONE_BAND.width / 2;
+
+  for (const tower of byHeight) {
+    if (picks.length === PHONE_BAND.beams) break;
+
+    const fits = isRoofInPhoneBand(tower) && heightOf(tower) > PHONE_BAND.minTowerHeight;
+
+    if (fits && isSpacedOut(tower, PHONE_BAND.minSpacing)) picks.push(tower);
+  }
+
+  for (const tower of byDistanceToMiddle) {
+    if (picks.length === PICK.maxBeams) break;
+
+    const fits = !picks.includes(tower) && heightOf(tower) > PICK.minTowerHeight;
+
+    if (fits && isSpacedOut(tower, PICK.minSpacing)) picks.push(tower);
   }
 
   return picks;
@@ -105,7 +121,9 @@ function buildPackets(centerX: number, roof: number, beamHeight: number, beamInd
 
 export function buildStreamBeams(towers: Tower[], skylineWidth: number, skylineHeight: number): StreamBeam[] {
   return pickBeamTowers(towers, skylineWidth, skylineHeight).map((tower, index) => {
-    const roofPosition = isOdd(index) ? ROOF_POSITION.odd : ROOF_POSITION.even;
+    const offCenter = isOdd(index) ? ROOF_POSITION.odd : ROOF_POSITION.even;
+    const isStepped = tower.roofWidth < tower.width;
+    const roofPosition = isStepped ? ROOF_POSITION.center : offCenter;
     const centerX = roundTo(tower.roofLeft + tower.roofWidth * roofPosition);
     const height = BEAM_HEIGHTS[index % BEAM_HEIGHTS.length];
 

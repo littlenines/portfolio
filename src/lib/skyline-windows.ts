@@ -1,4 +1,6 @@
-import { roundTo, type SeededRandom } from './rng';
+import type { Point } from './geometry';
+import { roundTo } from './math';
+import type { SeededRandom } from './seeded-random';
 
 export const WINDOW = {
   width: 3,
@@ -20,9 +22,7 @@ export const WINDOW = {
 const SECONDS_PRECISION = 2;
 const OPACITY_PRECISION = 2;
 
-export interface WindowLight {
-  x: number;
-  y: number;
+export interface WindowLight extends Point {
   opacity: number;
   afterDark: boolean;
   switchDelay?: number;

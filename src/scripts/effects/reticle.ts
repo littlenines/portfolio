@@ -1,3 +1,4 @@
+import type { Point } from '@lib/geometry';
 import { SECRET_THEME } from '@lib/themes';
 import { MEDIA, matches, prefersReducedMotion } from '@scripts/lib/media';
 import { currentTheme, onThemeChange } from '@scripts/theme/state';
@@ -7,11 +8,6 @@ const FOLLOW_EASING = 0.22;
 const SETTLE_THRESHOLD_PX = 0.1;
 const COORDINATE_DIGITS = 4;
 const INTERACTIVE = 'a, button, .project';
-
-interface Point {
-  x: number;
-  y: number;
-}
 
 const formatCoordinate = (value: number) => String(Math.round(value)).padStart(COORDINATE_DIGITS, '0');
 

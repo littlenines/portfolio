@@ -1,4 +1,5 @@
-import { clamp01, mixRgb, readRgbToken, rgbToHex, type Rgb } from '@scripts/lib/color';
+import { clamp01 } from '@lib/math';
+import { mixRgb, readRgbToken, rgbToHex, type Rgb } from '@scripts/lib/color';
 import { throttleToFrame } from '@scripts/lib/dom';
 import { onThemeChange } from '@scripts/theme/state';
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createSeededRandom, roundTo } from '@lib/rng';
+import { createSeededRandom } from '@lib/seeded-random';
 
 const SEED = 11;
 const SAMPLE_SIZE = 50;
@@ -36,15 +36,5 @@ describe('createSeededRandom', () => {
       expect(value).toBeGreaterThanOrEqual(min);
       expect(value).toBeLessThan(max);
     }
-  });
-});
-
-describe('roundTo', () => {
-  it('rounds to one decimal by default', () => {
-    expect(roundTo(1.26)).toBe(1.3);
-  });
-
-  it('rounds to the given number of decimals', () => {
-    expect(roundTo(1.23456, 3)).toBe(1.235);
   });
 });

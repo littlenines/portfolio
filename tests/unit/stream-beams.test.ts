@@ -1,14 +1,17 @@
 import { describe, expect, it } from 'vitest';
-import { SKYLINE_HEIGHT, SKYLINE_WIDTH, TOWER_LAYERS, buildSkyline } from '@lib/skyline';
-import { buildStreamBeams, pickBeamTowers, type Tower } from '@lib/stream-beams';
+import { SKYLINE_HEIGHT, SKYLINE_WIDTH, buildSkyline, type Tower } from '@lib/skyline';
+import { SKYLINE_VARIANTS } from '@lib/skyline-variants';
+import { buildStreamBeams, pickBeamTowers } from '@lib/stream-beams';
 
 const MAX_BEAMS = 5;
-const MIN_SPACING = 190;
+const MIN_SPACING = 140;
 const EDGE_MARGIN = 90;
 const MIN_ROOF_Y = 60;
+// The middle of the skyline a 360px phone shows
+const PHONE_BAND_WIDTH = 340;
+const PHONE_BEAMS = 2;
 
-const frontTowers = (): Tower[] =>
-  buildSkyline({ windowColor: '#FFFFFF', layers: [TOWER_LAYERS.near] }).layers[0].towers;
+const frontTowers = (): Tower[] => buildSkyline(SKYLINE_VARIANTS.home).layers.at(-1)?.towers ?? [];
 
 const centerOf = (tower: Tower) => tower.x + tower.width / 2;
 
@@ -39,12 +42,12 @@ describe('pickBeamTowers', () => {
     for (const tower of picks) expect(tower.roof).toBeGreaterThanOrEqual(MIN_ROOF_Y);
   });
 
-  it('starts with the tower closest to the middle', () => {
-    const [first] = picks;
+  it('puts two beams in the middle that a phone shows', () => {
+    const beams = buildStreamBeams(frontTowers(), SKYLINE_WIDTH, SKYLINE_HEIGHT);
     const middle = SKYLINE_WIDTH / 2;
-    const closest = Math.min(...picks.map((tower) => Math.abs(centerOf(tower) - middle)));
+    const onPhone = beams.filter((beam) => Math.abs(beam.centerX - middle) <= PHONE_BAND_WIDTH / 2);
 
-    expect(Math.abs(centerOf(first) - middle)).toBe(closest);
+    expect(onPhone.length).toBeGreaterThanOrEqual(PHONE_BEAMS);
   });
 });
 
@@ -63,6 +66,20 @@ describe('buildStreamBeams', () => {
       expect(beam.centerX).toBeGreaterThan(picks[index].roofLeft);
       expect(beam.centerX).toBeLessThan(picks[index].roofLeft + picks[index].roofWidth);
     }
+  });
+
+  it('centres the beam on the top tier of a stepped tower', () => {
+    const towers = frontTowers();
+    const picks = pickBeamTowers(towers, SKYLINE_WIDTH, SKYLINE_HEIGHT);
+    const beams = buildStreamBeams(towers, SKYLINE_WIDTH, SKYLINE_HEIGHT);
+
+    const stepped = picks.flatMap((tower, index) =>
+      tower.roofWidth < tower.width ? [{ tower, beam: beams[index] }] : [],
+    );
+
+    expect(stepped.length).toBeGreaterThan(0);
+
+    for (const { tower, beam } of stepped) expect(beam.centerX).toBeCloseTo(tower.roofLeft + tower.roofWidth / 2, 0);
   });
 
   it('rises each beam from its tower roof, with packets that start already moving', () => {

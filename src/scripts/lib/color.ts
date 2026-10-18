@@ -17,5 +17,3 @@ export const mixRgb = (start: Rgb, end: Rgb, amount: number): Rgb =>
 
 export const rgbToHex = (rgb: Rgb) =>
   `#${rgb.map((channel) => Math.round(channel).toString(HEX_RADIX).padStart(HEX_DIGITS, '0')).join('')}`;
-
-export const clamp01 = (value: number) => Math.min(1, Math.max(0, value));

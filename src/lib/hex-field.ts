@@ -1,3 +1,4 @@
+import { isOdd } from './math';
 import { PALETTE } from './palette';
 
 const HEX_SIDES = 6;
@@ -39,7 +40,7 @@ export function buildHexField({ radius = 36, width = 1600, height = 900 }: HexFi
   const paths: string[] = [];
 
   for (let row = 0; row * rowStep < height + radius; row++) {
-    const rowOffset = row % 2 ? columnStep / 2 : 0;
+    const rowOffset = isOdd(row) ? columnStep / 2 : 0;
 
     for (let column = 0; column * columnStep < width + columnStep; column++) {
       const cx = column * columnStep + rowOffset;

@@ -1,3 +1,4 @@
+import { isOdd } from '@lib/math';
 import type { AmbientClock } from '../ambient-clock';
 import { gsap, selectAll } from '../gsap';
 
@@ -32,7 +33,7 @@ export function addAmbientLoops(clock: AmbientClock, hero: HTMLElement) {
     clock.add(
       gsap.to(haze, {
         ...LOOP,
-        x: index % 2 ? -HAZE_DRIFT.distance : HAZE_DRIFT.distance,
+        x: isOdd(index) ? -HAZE_DRIFT.distance : HAZE_DRIFT.distance,
         duration: HAZE_DRIFT.duration + index * HAZE_DRIFT.durationStep,
       }),
     );

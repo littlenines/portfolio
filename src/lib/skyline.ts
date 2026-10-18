@@ -1,7 +1,8 @@
+import type { Box } from './geometry';
+import { roundTo } from './math';
 import { PALETTE } from './palette';
-import { createSeededRandom, roundTo } from './rng';
+import { createSeededRandom } from './seeded-random';
 import { WINDOW, createWindowLighting, type WindowLight } from './skyline-windows';
-import type { Tower } from './stream-beams';
 
 export const SKYLINE_WIDTH = 1600;
 export const SKYLINE_HEIGHT = 300;
@@ -43,12 +44,14 @@ const NEON = { minTowerHeight: 120, chance: 0.22, inset: 4, top: 14, width: 2, m
 const SEAM = 1;
 const BASE_BLEED = 2;
 
-export interface Box {
+export interface Tower {
   x: number;
-  y: number;
   width: number;
-  height: number;
+  roof: number;
+  roofLeft: number;
+  roofWidth: number;
 }
+
 export interface Beacon {
   cx: number;
   cy: number;

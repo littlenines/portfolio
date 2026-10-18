@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { clamp01, mixRgb, rgbToHex, type Rgb } from '@scripts/lib/color';
+import { mixRgb, rgbToHex, type Rgb } from '@scripts/lib/color';
 
 const BLACK: Rgb = [0, 0, 0];
 const WHITE: Rgb = [255, 255, 255];
@@ -22,13 +22,5 @@ describe('rgbToHex', () => {
 
   it('rounds fractional channels and pads single digits', () => {
     expect(rgbToHex([0.4, 9.6, 15])).toBe('#000a0f');
-  });
-});
-
-describe('clamp01', () => {
-  it('keeps values between 0 and 1', () => {
-    expect(clamp01(-0.5)).toBe(0);
-    expect(clamp01(0.25)).toBe(0.25);
-    expect(clamp01(3)).toBe(1);
   });
 });

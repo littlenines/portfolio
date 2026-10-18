@@ -19,9 +19,3 @@ export function createSeededRandom(seed: number): SeededRandom {
 
   return { next, between };
 }
-
-export const roundTo = (value: number, decimals = 1) => {
-  const factor = 10 ** decimals;
-
-  return Math.round(value * factor) / factor;
-};
