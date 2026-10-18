@@ -3,7 +3,7 @@
 A cyberpunk city-pop portfolio built with Astro, SCSS (7-1) and GSAP. Mobile first, with three themes
 (surface, netspace and a hidden evangelion theme) and a seeded skyline rendered at build time.
 
-![](https://github.com/littlenines/portfolio/blob/4dfe385a0b0fb5ab96ae8621949c0a055f00b9bb/portfolio-image.png)
+![](https://github.com/littlenines/portfolio/blob/16199d7e942c0a457e6c974bc28fbbafc14f2f61/portfolio-image.png)
 
 ## Commands
 
@@ -19,11 +19,3 @@ A cyberpunk city-pop portfolio built with Astro, SCSS (7-1) and GSAP. Mobile fir
 | `pnpm build`    | Type-check, then build to `./dist/`                          |
 | `pnpm preview`  | Preview the production build                                 |
 
-## Docs
-
-- [Conventions](docs/conventions.md): the coding rules, checks and commit format
-- [Content](docs/content.md): text, projects, stack, links, CV
-- [Architecture](docs/architecture.md): folders, separation of concerns, build time vs. browser
-- [Styles](docs/styles.md): 7-1 table of contents, conventions, breakpoints, mixins
-- [Theming](docs/theming.md): tokens, theme files, themed copy, switch, transition, easter egg
-- [Scripts](docs/scripts.md): loader, motion, effects, reduced motion
