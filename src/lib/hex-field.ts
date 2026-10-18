@@ -1,9 +1,7 @@
+import { hexagonCorners } from './geometry';
 import { isOdd } from './math';
 import { PALETTE } from './palette';
 
-const HEX_SIDES = 6;
-const DEGREES_PER_SIDE = 360 / HEX_SIDES;
-const POINTY_TOP_OFFSET = -30;
 const SQRT_3 = Math.sqrt(3);
 const ROW_SPACING = 1.5;
 
@@ -22,14 +20,8 @@ export interface HexFieldOptions {
   height?: number;
 }
 
-const toRadians = (degrees: number) => (Math.PI / 180) * degrees;
-
 function hexagonPath(cx: number, cy: number, radius: number) {
-  const corners = Array.from({ length: HEX_SIDES }, (_, side) => {
-    const angle = toRadians(DEGREES_PER_SIDE * side + POINTY_TOP_OFFSET);
-
-    return `${(cx + radius * Math.cos(angle)).toFixed(1)},${(cy + radius * Math.sin(angle)).toFixed(1)}`;
-  });
+  const corners = hexagonCorners({ x: cx, y: cy }, radius).map(({ x, y }) => `${x.toFixed(1)},${y.toFixed(1)}`);
 
   return `M${corners.join('L')}Z`;
 }

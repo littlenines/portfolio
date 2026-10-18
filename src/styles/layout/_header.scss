@@ -20,8 +20,12 @@ $glitch-offset: 1px;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: space(1) space(3);
+    gap: space(1) space(2);
     padding-block: 10px;
+
+    @include breakpoint-up(xs) {
+      column-gap: space(3);
+    }
 
     @include breakpoint-up(xxl) {
       padding-block: space(2);

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { clamp01, isOdd, roundTo } from '@lib/math';
+import { clamp01, isOdd, roundTo, toRadians } from '@lib/math';
 
 describe('roundTo', () => {
   it('rounds to one decimal by default', () => {
@@ -22,5 +22,12 @@ describe('clamp01', () => {
 describe('isOdd', () => {
   it('tells odd numbers from even ones, negatives included', () => {
     expect([0, 1, 2, 3, -1, -2].map(isOdd)).toEqual([false, true, false, true, true, false]);
+  });
+});
+
+describe('toRadians', () => {
+  it('turns degrees into radians', () => {
+    expect(toRadians(180)).toBeCloseTo(Math.PI);
+    expect(toRadians(-90)).toBeCloseTo(-Math.PI / 2);
   });
 });

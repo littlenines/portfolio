@@ -1,4 +1,3 @@
-// Kept in the DOM (attribute + event) rather than module state, so separate component scripts agree on it.
 const BOOTED_ATTRIBUTE = 'data-booted';
 const BOOTED_EVENT = 'app:booted';
 

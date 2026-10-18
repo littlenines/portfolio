@@ -32,11 +32,8 @@ $z-layers: (
 $font-body: var(--font-body);
 $font-mono: var(--font-mono);
 $font-display: var(--font-display);
-// 62.5% of the browser default (16px), so 1rem = 10px and 1.4rem = 14px. A percentage, not 10px,
-// so text still follows the visitor's font-size setting
 $root-font-size: 62.5%;
 
-// Text scale, 9px to 18px; use through font-size(). One-off and fluid sizes live in their partial
 $font-sizes: (
   xxxs: 0.9rem,
   xxs: 1rem,

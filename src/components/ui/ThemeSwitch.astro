@@ -1,4 +1,5 @@
 ---
+import ThemeIcon from '@components/ui/ThemeIcon.astro';
 import { DEFAULT_THEME, SECRET_THEME, THEMES } from '@lib/themes';
 ---
 
@@ -13,10 +14,12 @@ import { DEFAULT_THEME, SECRET_THEME, THEMES } from '@lib/themes';
         class="theme-switch__option"
         aria-checked={isDefault ? 'true' : 'false'}
         tabindex={isDefault ? 0 : -1}
+        aria-label={theme}
         data-theme-option={theme}
         hidden={theme === SECRET_THEME}
       >
-        {theme}
+        <span class="theme-switch__name">{theme}</span>
+        <ThemeIcon theme={theme} class="theme-switch__icon" />
       </button>
     );
   })}

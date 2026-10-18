@@ -69,7 +69,6 @@ class FooterWave {
     this.#canvas = canvas;
     this.#context = context;
 
-    // Fires for any change to the canvas box (window resize, font swap, footer text changing with the theme)
     new ResizeObserver(() => this.#fitToCanvas()).observe(canvas);
 
     onVisibilityChange(canvas, (isVisible) => {

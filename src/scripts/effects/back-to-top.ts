@@ -13,7 +13,6 @@ export function initBackToTop(button: HTMLElement) {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'instant' : 'smooth' });
 
-    // The button hides once the page scrolls up, so focus moves to the top instead of being lost
     top?.focus({ preventScroll: true });
   };
 

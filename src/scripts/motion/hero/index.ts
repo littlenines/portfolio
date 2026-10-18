@@ -30,9 +30,6 @@ export function initHeroMotion() {
     const hasStreamBeams = addStreamBeamPackets(streamBeams, hero);
     let activity: ActivityState = { isShown: false, isScrolling: false };
 
-    // Everything pauses while the hero is off screen or the tab is hidden. The skyline loops and the meteor
-    // also pause while scrolling, because they repaint the large skyline drawing. The beams keep climbing:
-    // they sit on their own layer, and freezing them mid-scroll looked broken. They only run in netspace.
     const sync = () => {
       const isCalm = activity.isShown && !activity.isScrolling;
 

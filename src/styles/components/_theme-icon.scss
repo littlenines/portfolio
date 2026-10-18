@@ -1,0 +1,51 @@
+@use 'abstracts' as *;
+
+$outline-width: 1.4;
+$hexagon-edge-width: 1.2;
+$chip-glow: 1.5px;
+$chip-glow-strength: 0.8;
+
+.theme-icon {
+  &__outline {
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: $outline-width;
+    stroke-linecap: round;
+  }
+
+  &__fill {
+    fill: currentcolor;
+    stroke: none;
+  }
+
+  &__chip {
+    stroke: $teal;
+    filter: drop-shadow(0 0 $chip-glow alpha($teal, $chip-glow-strength));
+  }
+
+  &__chip-core {
+    fill: $pink;
+  }
+
+  &__sun-top {
+    stop-color: $sun-top;
+  }
+
+  &__sun-bottom {
+    stop-color: $sun-bottom;
+  }
+
+  &__hexagon {
+    fill: $eva-ink;
+    stroke: $eva-violet;
+    stroke-width: $hexagon-edge-width;
+  }
+
+  &__unit-number {
+    fill: $eva-acid;
+    font-family: $font-mono;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+}

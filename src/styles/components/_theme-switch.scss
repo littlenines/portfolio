@@ -1,12 +1,17 @@
+@use 'sass:math';
 @use 'abstracts' as *;
 
-$inset: 3px;
-$slide: 0.7s;
+$pill-inset: 3px;
+$pill-slide-duration: 0.7s;
 $option-size-phone: 1.05rem;
+$option-height: 28px;
+$icon-size: 20px;
+$icon-option-padding: 4px;
+$option-padding-wide: 10px;
 
 .theme-switch {
   @include pill;
-  --pill-left: #{$inset};
+  --pill-left: #{$pill-inset};
   --pill-width: 33%;
 
   position: relative;
@@ -15,7 +20,7 @@ $option-size-phone: 1.05rem;
   grid-auto-flow: column;
   align-items: center;
   gap: 0;
-  padding: $inset;
+  padding: $pill-inset;
   overflow: clip;
   border-color: alpha($text, 0.28);
   background: alpha($ground, 0.35);
@@ -28,16 +33,16 @@ $option-size-phone: 1.05rem;
   &::before {
     content: '';
     position: absolute;
-    top: $inset;
-    bottom: $inset;
+    top: $pill-inset;
+    bottom: $pill-inset;
     left: var(--pill-left);
     width: var(--pill-width);
     border-radius: $radius-pill;
     background: var(--accent);
     transition:
-      left $slide $ease-standard,
-      width $slide $ease-standard,
-      background $slide ease;
+      left $pill-slide-duration $ease-standard,
+      width $pill-slide-duration $ease-standard,
+      background $pill-slide-duration ease;
   }
 
   &__option {
@@ -49,15 +54,23 @@ $option-size-phone: 1.05rem;
     color: var(--mute);
     font: inherit;
     font-size: $option-size-phone;
-    line-height: 28px;
+    line-height: $option-height;
     white-space: nowrap;
     text-align: center;
     cursor: pointer;
-    transition: color $slide ease;
+    transition: color $pill-slide-duration ease;
 
     @include breakpoint-up(sm) {
-      padding: 0 10px;
+      padding: 0 $option-padding-wide;
       font-size: inherit;
+    }
+
+    @include evangelion {
+      padding: 0 $icon-option-padding;
+
+      @include breakpoint-up(phablet) {
+        padding: 0 $option-padding-wide;
+      }
     }
 
     &[aria-checked='true'] {
@@ -70,6 +83,33 @@ $option-size-phone: 1.05rem;
 
     &:focus-visible {
       outline-offset: -2px;
+    }
+  }
+
+  &__name {
+    display: block;
+
+    @include evangelion {
+      display: none;
+
+      @include breakpoint-up(phablet) {
+        display: block;
+      }
+    }
+  }
+
+  &__icon {
+    display: none;
+    width: $icon-size;
+    height: $icon-size;
+    margin-block: math.div($option-height - $icon-size, 2);
+
+    @include evangelion {
+      display: block;
+
+      @include breakpoint-up(phablet) {
+        display: none;
+      }
     }
   }
 }

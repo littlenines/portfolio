@@ -1,4 +1,3 @@
-// Mirrors the lg breakpoint in styles/abstracts/_variables.scss
 const DESKTOP_MIN_WIDTH_PX = 1280;
 const FINE_POINTER = '(hover: hover) and (pointer: fine)';
 

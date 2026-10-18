@@ -1,4 +1,3 @@
-// Mirror styles/abstracts/_colors.scss; change a colour in both places.
 export const PALETTE = {
   ground: '#140F24',
   midnight: '#1B1233',

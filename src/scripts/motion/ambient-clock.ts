@@ -8,15 +8,11 @@ interface Track {
 }
 
 export interface AmbientClock {
-  // startOffset > 0 starts the animation part-way through; < 0 holds it back like a delay
   add: (animation: gsap.core.Animation, startOffset?: number) => void;
   setRunning: (isRunning: boolean) => void;
   kill: () => void;
 }
 
-// Drives slow, looping background animations at a capped frame rate instead of every frame.
-// Each change inside the skyline SVG makes the browser restyle the whole drawing, so at 60fps
-// the hero kept a throttled phone's main thread busy most of the time, even with nothing moving fast.
 export function createAmbientClock(framesPerSecond: number): AmbientClock {
   const tracks: Track[] = [];
   const frameSeconds = 1 / framesPerSecond;

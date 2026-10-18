@@ -76,8 +76,9 @@ See [Styles](styles.md) for the folder map. The rules:
 
 ## Comments
 
-Only comments that explain _why_ (a browser quirk, a non-obvious constraint). Don't describe what the code
-already says.
+No comments by default: names and named constants carry the meaning, and explanations belong in `docs/`.
+The only exceptions are TODOs and a one-line warning where changing the code's odd shape would break
+something (for example `clip`, not `hidden`, so `position: sticky` still works).
 
 ## Content
 

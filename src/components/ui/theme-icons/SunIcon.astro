@@ -1,0 +1,37 @@
+---
+import { ICON_CENTER, ICON_VIEW_SIZE } from './icon-frame';
+
+const RADIUS = 6.5;
+
+const BANDS = [
+  [0.52, 0.59],
+  [0.66, 0.74],
+  [0.81, 0.9],
+] as const;
+
+const GRADIENT_ID = 'theme-icon-sun-gradient';
+const MASK_ID = 'theme-icon-sun-bands';
+const SVG_MASK = { show: 'white', hide: 'black' } as const;
+
+const top = ICON_CENTER.y - RADIUS;
+const diameter = RADIUS * 2;
+
+const bands = BANDS.map(([start, end]) => ({
+  y: top + diameter * start,
+  height: diameter * (end - start),
+}));
+---
+
+<defs>
+  <linearGradient id={GRADIENT_ID} x1="0" y1="0" x2="0" y2="1">
+    <stop class="theme-icon__sun-top" offset="0" />
+    <stop class="theme-icon__sun-bottom" offset="1" />
+  </linearGradient>
+  <mask id={MASK_ID}>
+    <rect width={ICON_VIEW_SIZE} height={ICON_VIEW_SIZE} fill={SVG_MASK.show} />
+    {bands.map((band) => (
+      <rect x="0" y={band.y} width={ICON_VIEW_SIZE} height={band.height} fill={SVG_MASK.hide} />
+    ))}
+  </mask>
+</defs>
+<circle cx={ICON_CENTER.x} cy={ICON_CENTER.y} r={RADIUS} fill={`url(#${GRADIENT_ID})`} mask={`url(#${MASK_ID})`} />

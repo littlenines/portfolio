@@ -1,0 +1,38 @@
+---
+import { ICON_VIEW_SIZE } from './icon-frame';
+
+const BODY_INSET = 4;
+const CORNER_RADIUS = 1.2;
+const CORE_INSET = 6.5;
+const PIN_LENGTH = 2;
+const PIN_POSITIONS = [5.5, 8, 10.5];
+
+const bodyEdge = ICON_VIEW_SIZE - BODY_INSET;
+
+const pins = PIN_POSITIONS.flatMap((position) => [
+  { x1: BODY_INSET, y1: position, x2: BODY_INSET - PIN_LENGTH, y2: position },
+  { x1: bodyEdge, y1: position, x2: bodyEdge + PIN_LENGTH, y2: position },
+  { x1: position, y1: BODY_INSET, x2: position, y2: BODY_INSET - PIN_LENGTH },
+  { x1: position, y1: bodyEdge, x2: position, y2: bodyEdge + PIN_LENGTH },
+]);
+---
+
+<g class="theme-icon__outline theme-icon__chip">
+  <rect
+    x={BODY_INSET}
+    y={BODY_INSET}
+    width={ICON_VIEW_SIZE - BODY_INSET * 2}
+    height={ICON_VIEW_SIZE - BODY_INSET * 2}
+    rx={CORNER_RADIUS}
+  />
+  <rect
+    class="theme-icon__fill theme-icon__chip-core"
+    x={CORE_INSET}
+    y={CORE_INSET}
+    width={ICON_VIEW_SIZE - CORE_INSET * 2}
+    height={ICON_VIEW_SIZE - CORE_INSET * 2}
+  />
+  {pins.map((pin) => (
+    <line {...pin} />
+  ))}
+</g>

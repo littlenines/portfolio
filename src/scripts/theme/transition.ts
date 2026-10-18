@@ -62,7 +62,6 @@ class ThemeTransition {
   }
 
   choose: ChooseTheme = (theme) => {
-    // A second choice while the sequence plays only skips ahead; it never changes where it lands
     if (this.#isPlaying) {
       this.#finish();
 

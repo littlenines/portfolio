@@ -1,18 +1,14 @@
-// Class names follow BEM: block, block__element, block--modifier, plus is-* state classes
 const BEM_CLASS =
   /^(?:is-[a-z0-9-]+|[a-z][a-z0-9]*(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?)$/;
 
-// Function, mixin and variable names are written out in full, at least three characters (see docs/conventions.md)
 const FULL_NAME = /^(?=[a-z0-9-]{3,}$)[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
 
-// Blank lines and spacing are Prettier's job; Stylelint checks conventions and correctness
 const LEFT_TO_PRETTIER = [
   'at-rule-empty-line-before',
   'declaration-empty-line-before',
   'custom-property-empty-line-before',
   'scss/dollar-variable-empty-line-before',
   'scss/double-slash-comment-empty-line-before',
-  // The table of contents in main.scss uses empty // lines as spacers
   'scss/comment-no-empty',
 ];
 

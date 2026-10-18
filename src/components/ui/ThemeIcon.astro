@@ -1,0 +1,26 @@
+---
+import ChipIcon from '@components/ui/theme-icons/ChipIcon.astro';
+import { ICON_VIEW_SIZE } from '@components/ui/theme-icons/icon-frame';
+import SunIcon from '@components/ui/theme-icons/SunIcon.astro';
+import UnitHexagonIcon from '@components/ui/theme-icons/UnitHexagonIcon.astro';
+import type { Theme } from '@lib/themes';
+
+interface Props {
+  theme: Theme;
+  class?: string;
+}
+
+const { theme, class: className } = Astro.props;
+
+const ICONS: Record<Theme, typeof SunIcon> = {
+  surface: SunIcon,
+  netspace: ChipIcon,
+  evangelion: UnitHexagonIcon,
+};
+
+const Icon = ICONS[theme];
+---
+
+<svg class:list={['theme-icon', className]} viewBox={`0 0 ${ICON_VIEW_SIZE} ${ICON_VIEW_SIZE}`} aria-hidden="true">
+  <Icon />
+</svg>
