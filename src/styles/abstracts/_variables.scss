@@ -59,6 +59,8 @@ $radius-pill: 999px;
 $back-to-top-size: 44px;
 $back-to-top-offset: 20px;
 
+$theme-names: surface, netspace, evangelion;
+$secret-theme: evangelion;
 $theme-night: ':root:is([data-theme="netspace"], [data-theme="evangelion"])';
 $theme-netspace: ':root[data-theme="netspace"]';
 $theme-evangelion: ':root[data-theme="evangelion"]';

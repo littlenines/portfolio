@@ -1,4 +1,5 @@
 import { DEFAULT_THEME, SECRET_THEME, isTheme, type Theme } from '@lib/themes';
+import { STATE_CLASS } from '@scripts/lib/state-classes';
 import { currentTheme, onThemeChange } from './state';
 import type { ChooseTheme } from './transition';
 
@@ -21,6 +22,10 @@ export function initThemeSwitch(group: HTMLElement, chooseTheme: ChooseTheme) {
 
     group.style.setProperty('--pill-left', `${active.offsetLeft}px`);
     group.style.setProperty('--pill-width', `${active.offsetWidth}px`);
+
+    if (!group.classList.contains(STATE_CLASS.entered)) {
+      requestAnimationFrame(() => group.classList.add(STATE_CLASS.entered));
+    }
   };
 
   const sync = (theme: Theme) => {

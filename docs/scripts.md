@@ -51,7 +51,9 @@ One module per job; `index.ts` wires them together and decides when they run.
 - **Intro:** the sun rises, the name, eyebrow and title lines slide in, then the copy. Held until the loader lifts.
 - **Scroll depth:** across the hero, the sun sinks, the stars drift up and the copy lifts slightly.
 - **The city wakes up:** extra "awake" windows light one by one as you scroll away from the top. Each one
-  switches on over a short slice of the scroll (`AWAKE_SWITCH`), so only a few change in any one frame.
+  switches on over a short slice of the scroll (`AWAKE_SWITCH`), so only a few change in any one frame. CSS
+  keeps them off from the first paint when motion is allowed (`_skyline.scss`); otherwise they would show lit
+  until the script starts, which flashed on every reload.
 - **Ambient loops** (`ambient-loops.ts`): beacons pulse, about 40 random windows breathe and the haze drifts.
 - **Stream beams** (`stream-beams.ts`, netspace only): packets of light climb each beam. Their climb, speed and
   starting point come from data attributes written at build time.

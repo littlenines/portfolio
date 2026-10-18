@@ -83,6 +83,11 @@ Swapping needs no script, works before scripts load, and screen readers only rea
 highlight pill is sized from script to the active label's real width. A `ResizeObserver` keeps it right when
 the web font swaps in. The evangelion option stays hidden until that theme is active.
 
+The first paint must not wait for the script, or the switch flashes on every reload. CSS keyed on
+`html[data-theme]` (set by the boot script before paint) already colours the active option, gives it the
+highlight background and shows the evangelion option. Once `switch.ts` has measured the highlight, it adds
+`is-in`: the sliding highlight takes over in place, and only from then on does it animate.
+
 In evangelion the third option makes the switch too wide to sit beside the site name on a phone, so below 486px
 (`phablet`) its options show icons instead of their names (`ThemeIcon.astro`, one component per icon in `components/ui/theme-icons/`): the striped hero sun for surface, a teal neon microchip for
 netspace and a Unit-01 hexagon with "01" for evangelion. Surface and netspace keep their names everywhere. Each

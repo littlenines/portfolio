@@ -17,6 +17,12 @@
     transition: opacity $theme-fade;
   }
 
+  &__awake &__window {
+    @include motion-ok {
+      opacity: 0;
+    }
+  }
+
   &__window {
     stroke: $peach;
     stroke-width: 2.5;

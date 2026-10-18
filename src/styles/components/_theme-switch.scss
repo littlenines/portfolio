@@ -39,6 +39,11 @@ $option-padding-wide: 10px;
     width: var(--pill-width);
     border-radius: $radius-pill;
     background: var(--accent);
+    opacity: 0;
+  }
+
+  &.is-in::before {
+    opacity: 1;
     transition:
       left $pill-slide-duration $ease-standard,
       width $pill-slide-duration $ease-standard,
@@ -71,10 +76,6 @@ $option-padding-wide: 10px;
       @include breakpoint-up(phablet) {
         padding: 0 $option-padding-wide;
       }
-    }
-
-    &[aria-checked='true'] {
-      color: var(--on-accent);
     }
 
     &[hidden] {
@@ -112,4 +113,18 @@ $option-padding-wide: 10px;
       }
     }
   }
+}
+
+@each $theme in $theme-names {
+  :root[data-theme='#{$theme}'] .theme-switch__option[data-theme-option='#{$theme}'] {
+    color: var(--on-accent);
+  }
+
+  :root[data-theme='#{$theme}'] .theme-switch:not(.is-in) .theme-switch__option[data-theme-option='#{$theme}'] {
+    background: var(--accent);
+  }
+}
+
+#{$theme-evangelion} .theme-switch__option[data-theme-option='#{$secret-theme}'] {
+  display: block;
 }
