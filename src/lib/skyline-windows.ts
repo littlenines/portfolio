@@ -50,7 +50,7 @@ export function createWindowLighting({
   skylineHeight,
 }: WindowLightingOptions): WindowLighting {
   const isAfterDark = () => Math.random() < afterDarkShare;
-  
+
   const switchDelay = () => seconds(Math.random() * WINDOW.maxSwitchDelay);
   let litCount = 0;
 
