@@ -39,4 +39,14 @@ test.describe('navigation', () => {
       .poll(() => page.evaluate(() => window.scrollY))
       .toBeGreaterThanOrEqual(scrolledTo - RESTORE_TOLERANCE_PX);
   });
+
+  test('the 404 button goes back to the surface theme', async ({ page }) => {
+    await page.goto('/');
+    await page.evaluate(() => localStorage.setItem('theme', 'netspace'));
+    await page.goto('/does-not-exist');
+    await page.getByRole('link', { name: 'Back to the surface' }).click();
+    await page.waitForURL((url) => url.pathname === '/');
+
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'surface');
+  });
 });

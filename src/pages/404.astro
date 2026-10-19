@@ -22,8 +22,17 @@ import { site } from '@data/site';
           <em>Back to the surface.</em>
         </h1>
         <p class="not-found__lede">This page drifted off the net, or never existed. Nothing broken on your end.</p>
-        <Button href="/">Back to the surface</Button>
+        <Button href="/" data-return-to-surface>
+          Back to the surface
+        </Button>
       </main>
     </div>
   </section>
 </Layout>
+
+<script>
+  import { DEFAULT_THEME } from '@lib/themes';
+  import { applyTheme } from '@scripts/theme/state';
+
+  document.querySelector('[data-return-to-surface]')?.addEventListener('click', () => applyTheme(DEFAULT_THEME));
+</script>
