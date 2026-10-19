@@ -25,6 +25,7 @@ class Reticle {
     this.#readout = element.querySelector('[data-reticle-readout]');
 
     document.addEventListener('mousemove', (event) => this.#follow(event), { passive: true });
+    document.addEventListener('mouseover', ({ target }) => this.#updateHover(target), { passive: true });
     document.documentElement.addEventListener('mouseleave', () => this.#hide());
     window.addEventListener('scroll', () => this.#updateReadout(), { passive: true });
     onThemeChange(() => this.#updateReadout());
@@ -38,7 +39,7 @@ class Reticle {
     this.#readout.textContent = `X${formatCoordinate(this.#position.x)} Y${formatCoordinate(pageY)}`;
   }
 
-  #follow({ clientX, clientY, target }: MouseEvent) {
+  #follow({ clientX, clientY }: MouseEvent) {
     this.#target = { x: clientX, y: clientY };
 
     if (!this.#isShown) {
@@ -48,7 +49,9 @@ class Reticle {
     }
 
     if (!this.#frame) this.#frame = requestAnimationFrame(this.#tick);
+  }
 
+  #updateHover(target: EventTarget | null) {
     const isOverInteractive = target instanceof Element && target.closest(INTERACTIVE) !== null;
 
     this.#element.classList.toggle(STATE_CLASS.hovering, isOverInteractive);

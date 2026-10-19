@@ -25,7 +25,7 @@ export function onVisibilityChange(
   const observer = new IntersectionObserver((entries) => {
     const latest = entries.at(-1);
 
-    if (latest) callback(latest.intersectionRatio > 0);
+    if (latest) callback(latest.isIntersecting);
   }, options);
 
   observer.observe(element);

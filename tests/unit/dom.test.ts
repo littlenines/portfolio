@@ -1,10 +1,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { onVisibilityChange } from '@scripts/lib/dom';
 
-type ObserverCallback = (entries: Pick<IntersectionObserverEntry, 'intersectionRatio'>[]) => void;
+type Entry = Pick<IntersectionObserverEntry, 'isIntersecting' | 'intersectionRatio'>;
+type ObserverCallback = (entries: Entry[]) => void;
 
-const VISIBLE = { intersectionRatio: 1 };
-const HIDDEN = { intersectionRatio: 0 };
+const VISIBLE: Entry = { isIntersecting: true, intersectionRatio: 1 };
+const HIDDEN: Entry = { isIntersecting: false, intersectionRatio: 0 };
+const TOUCHING_EDGE: Entry = { isIntersecting: true, intersectionRatio: 0 };
 
 // Stands in for the browser's IntersectionObserver and lets the test deliver batches by hand
 function stubIntersectionObserver() {
@@ -23,7 +25,7 @@ function stubIntersectionObserver() {
   vi.stubGlobal('window', { IntersectionObserver: FakeIntersectionObserver });
   vi.stubGlobal('IntersectionObserver', FakeIntersectionObserver);
 
-  return (entries: Pick<IntersectionObserverEntry, 'intersectionRatio'>[]) => deliver(entries);
+  return (entries: Entry[]) => deliver(entries);
 }
 
 describe('onVisibilityChange', () => {
@@ -48,6 +50,17 @@ describe('onVisibilityChange', () => {
 
     onVisibilityChange({} as Element, callback);
     deliver([HIDDEN, VISIBLE]);
+
+    expect(callback).toHaveBeenLastCalledWith(true);
+  });
+
+  it('counts an element touching the viewport edge as visible, since the observer stays quiet as it scrolls further in', () => {
+    const deliver = stubIntersectionObserver();
+    const callback = vi.fn();
+
+    onVisibilityChange({} as Element, callback);
+    deliver([HIDDEN]);
+    deliver([TOUCHING_EDGE]);
 
     expect(callback).toHaveBeenLastCalledWith(true);
   });
