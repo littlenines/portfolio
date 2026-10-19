@@ -18,4 +18,3 @@ A cyberpunk city-pop portfolio built with Astro, SCSS (7-1) and GSAP. Mobile fir
 | `pnpm test:e2e` | Build, then browser and accessibility tests (Playwright)     |
 | `pnpm build`    | Type-check, then build to `./dist/`                          |
 | `pnpm preview`  | Preview the production build                                 |
-
