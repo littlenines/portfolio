@@ -1,7 +1,3 @@
-@use 'sass:color';
-@use 'sass:list';
-@use 'sass:math';
-
 $ground: #140f24;
 $raise: #1b1530;
 $line: #2e2547;
@@ -15,6 +11,7 @@ $lilac: #c9b8e6;
 $midnight: #1b1233;
 $aubergine: #2a1b3f;
 $white: #fff;
+$black: #000;
 
 $night-ink: #0a0716;
 $night-deep: #120c26;
@@ -36,7 +33,6 @@ $eva-void: #070310;
 $eva-paper: #f6eef8;
 $eva-plate: #150b28;
 $eva-plate-hover: #1b0f33;
-$eva-hex-stroke: #c9b2ff;
 
 $sun-top: #ffe6b8;
 $sun-bottom: #ffb9a2;
@@ -48,22 +44,3 @@ $mask-show: #000;
 $gradient-dusk: linear-gradient(180deg, $midnight 0%, #2f1d55 35%, $plum 68%, #ee9684 92%, #f5b590 100%);
 $gradient-night: linear-gradient(180deg, $night-deep 0%, #1d1339 45%, #33204f 78%, #4a2c63 100%);
 $gradient-eva-night: linear-gradient(180deg, $eva-ink 0%, #1e0e42 38%, #43207c 68%, #b4501f 100%);
-
-$black: #000;
-$sunk-ground-share: 88%;
-
-@function sunk($color) {
-  @return color.mix($color, $black, $sunk-ground-share);
-}
-
-@function alpha($color, $opacity) {
-  @return color.change($color, $alpha: $opacity);
-}
-
-@function rgb-triplet($color) {
-  $channels: ();
-  @each $channel in 'red', 'green', 'blue' {
-    $channels: list.append($channels, math.round(color.channel($color, $channel, $space: rgb)), comma);
-  }
-  @return $channels;
-}

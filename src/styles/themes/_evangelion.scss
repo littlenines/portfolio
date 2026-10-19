@@ -1,6 +1,5 @@
 @use 'abstracts' as *;
 
-$plate-cut: 12px;
 $small-plate-cut: 8px;
 
 #{$theme-evangelion} {
@@ -123,6 +122,7 @@ $small-plate-cut: 8px;
   }
 
   .reticle__ring {
+    @include corner-brackets(var(--peach));
     top: -15px;
     left: -15px;
     width: 30px;
@@ -130,7 +130,6 @@ $small-plate-cut: 8px;
     border: 0;
     border-radius: 0;
     opacity: 0.85;
-    @include corner-brackets(var(--peach));
   }
 
   .reticle.is-hot .reticle__ring {

@@ -1,8 +1,6 @@
 @use 'abstracts' as *;
 
 :root {
-  color-scheme: dark;
-
   --ground: #{$ground};
   --raise: #{$raise};
   --line: #{$line};
@@ -26,4 +24,5 @@
   --wave-1-rgb: #{rgb-triplet($peach)};
   --wave-2-rgb: #{rgb-triplet($pink)};
   --wave-3-rgb: #{rgb-triplet($lilac)};
+  color-scheme: dark;
 }

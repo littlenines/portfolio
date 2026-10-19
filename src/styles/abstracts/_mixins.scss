@@ -86,20 +86,20 @@
 }
 
 @mixin chamfer-plate($cut, $edge, $face) {
+  @include chamfer($cut);
   position: relative;
   isolation: isolate;
   border: 0;
   border-radius: 0;
   background: $edge;
-  @include chamfer($cut);
 
   &::before {
+    @include chamfer($cut - 1px);
     content: '';
     position: absolute;
     inset: 1px;
     z-index: z-index(behind);
     background: $face;
-    @include chamfer($cut - 1px);
   }
 }
 

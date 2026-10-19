@@ -10,9 +10,9 @@ $icon-option-padding: 4px;
 $option-padding-wide: 10px;
 
 .theme-switch {
-  @include pill;
   --pill-left: #{$pill-inset};
   --pill-width: 33%;
+  @include pill;
 
   position: relative;
   display: inline-grid;

@@ -1,7 +1,5 @@
 @use 'abstracts' as *;
 
-$cut: 12px;
-
 .back-to-top {
   position: fixed;
   right: max(var(--gutter), env(safe-area-inset-right, 0px));
@@ -31,12 +29,12 @@ $cut: 12px;
   }
 
   &__edge {
+    @include chamfer($plate-cut);
     display: block;
     width: $back-to-top-size;
     height: $back-to-top-size;
     padding: 1px;
     background: color-mix(in srgb, var(--accent) 70%, transparent);
-    @include chamfer($cut);
     transition: background duration(slow);
 
     @include breakpoint-up(md) {
@@ -45,6 +43,7 @@ $cut: 12px;
   }
 
   &__face {
+    @include chamfer($plate-cut - 1px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,7 +55,6 @@ $cut: 12px;
     font-size: font-size(sm);
     letter-spacing: 0.06em;
     white-space: nowrap;
-    @include chamfer($cut - 1px);
     transition: color duration(slow);
 
     @include breakpoint-up(md) {

@@ -11,32 +11,34 @@ $sun-stripes: linear-gradient(
   $mask-show 86% 100%
 );
 
+@mixin fades-in-with-theme {
+  opacity: 0;
+  transition: opacity $theme-fade;
+}
+
 .scene {
   @include cover;
   pointer-events: none;
 
   &::before {
-    content: '';
     @include cover;
+    @include fades-in-with-theme;
+    content: '';
     background: right top / cover no-repeat;
-    opacity: 0;
-    transition: opacity $theme-fade;
     will-change: opacity;
   }
 
   &::after {
-    content: '';
     @include cover;
+    @include fades-in-with-theme;
+    content: '';
     background: repeating-linear-gradient(180deg, alpha($scanline, 0.34) 0 1px, transparent 1px 3px);
-    opacity: 0;
-    transition: opacity $theme-fade;
   }
 
   &__night-sky {
     @include cover;
+    @include fades-in-with-theme;
     background: var(--night-sky);
-    opacity: 0;
-    transition: opacity $theme-fade;
   }
 
   &__star {
@@ -85,6 +87,7 @@ $sun-stripes: linear-gradient(
   }
 
   &__city-light {
+    @include fades-in-with-theme;
     position: absolute;
     inset-inline: 0;
     bottom: 0;
@@ -95,8 +98,6 @@ $sun-stripes: linear-gradient(
       alpha($peach, 0.1) 45%,
       transparent 72%
     );
-    opacity: 0;
-    transition: opacity $theme-fade;
 
     @include breakpoint-up(md) {
       background: radial-gradient(

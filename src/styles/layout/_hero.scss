@@ -52,8 +52,8 @@ $meta-size-md: clamp(font-size(sm), min(1.7vh, 1.3vw), 2.2rem);
   }
 
   &__title {
-    margin: 0;
     @include headline($title-size);
+    margin: 0;
     letter-spacing: letter-spacing(headline);
 
     @include breakpoint-up(md) {

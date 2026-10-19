@@ -34,15 +34,15 @@ CI (`.github/workflows/ci.yml`) runs all of them on every push to `master` and o
   (`TAP_WINDOW_MS`, `FOOTER_TEXT_CLEARANCE`).
 - **Shared values live in one place:**
 
-  | Value                       | Source                                                         |
-  | :-------------------------- | :------------------------------------------------------------- |
-  | Colours in scripts and SVG  | `src/lib/palette.ts` (mirrors `styles/abstracts/_colors.scss`) |
-  | Colours in styles           | Theme tokens (`var(--peach)`) or the palette in `_colors.scss` |
-  | State classes (`is-*`)      | `STATE_CLASS` in `src/scripts/lib/state-classes.ts`            |
-  | Media queries in scripts    | `MEDIA` in `src/scripts/lib/media.ts`                          |
-  | Themes, storage key, events | `src/lib/themes.ts`                                            |
-  | Site name, email, links     | `src/data/site.ts`                                             |
-  | Boot timeout, loader hook   | `src/scripts/lib/boot.ts`                                      |
+  | Value                       | Source                                                                                                  |
+  | :-------------------------- | :------------------------------------------------------------------------------------------------------ |
+  | Colours in scripts and SVG  | `src/lib/palette.ts` (mirrors `styles/abstracts/_colors.scss`; a unit test keeps the shared ones equal) |
+  | Colours in styles           | Theme tokens (`var(--peach)`) or the palette in `_colors.scss`                                          |
+  | State classes (`is-*`)      | `STATE_CLASS` in `src/scripts/lib/state-classes.ts`                                                     |
+  | Media queries in scripts    | `MEDIA` in `src/scripts/lib/media.ts`                                                                   |
+  | Themes, storage key, events | `src/lib/themes.ts`                                                                                     |
+  | Site name, email, links     | `src/data/site.ts`                                                                                      |
+  | Boot timeout, loader hook   | `src/scripts/lib/boot.ts`                                                                               |
 
 - Inline scripts in `.astro` files (`is:inline`) cannot import, so they receive constants through
   `define:vars` instead of repeating them (see `Loader.astro`).
@@ -77,6 +77,8 @@ See [Styles](styles.md) for the folder map. The rules:
   they repeat.
 - **z-index** always through `z-index(layer)`, never a raw number (Stylelint checks it).
 - **No raw colours** outside `abstracts/_colors.scss` and the theme files.
+- **Order inside a rule:** `$variables`, then `--custom-properties`, then `@include`s, then declarations
+  (Stylelint checks it and `pnpm format` fixes it). Mixins come first so the rule's own declarations win.
 
 ## Comments
 

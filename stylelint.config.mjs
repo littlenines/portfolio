@@ -15,6 +15,7 @@ const LEFT_TO_PRETTIER = [
 /** @type {import('stylelint').Config} */
 export default {
   extends: ['stylelint-config-standard-scss'],
+  plugins: ['stylelint-order'],
   rules: {
     ...Object.fromEntries(LEFT_TO_PRETTIER.map((rule) => [rule, null])),
     'selector-class-pattern': [BEM_CLASS, { message: 'Use BEM class names (block__element--modifier) or is-* states' }],
@@ -30,6 +31,10 @@ export default {
       {
         message: (property) => `Use ${property === 'z-index' ? 'z-index()' : 'font-weight()'} instead of a raw number`,
       },
+    ],
+    'order/order': [
+      ['dollar-variables', 'custom-properties', { type: 'at-rule', name: 'include', hasBlock: false }, 'declarations'],
+      { message: 'Order a rule as: $variables, --custom-properties, @include, declarations' },
     ],
     'max-nesting-depth': [4, { ignore: ['pseudo-classes'], ignoreAtRules: ['include', 'media'] }],
   },

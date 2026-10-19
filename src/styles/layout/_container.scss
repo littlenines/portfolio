@@ -1,9 +1,9 @@
 @use 'abstracts' as *;
 
 .container {
+  @include gutter-inline;
   max-width: $container;
   margin-inline: auto;
-  @include gutter-inline;
 
   @include breakpoint-up(xl) {
     max-width: $container-xl;

@@ -39,12 +39,12 @@ $ring-size: 28px;
   }
 
   &__readout {
+    @include mono-readout(font-size(xxxs));
     display: none;
     position: absolute;
     top: 12px;
     left: 26px;
     color: var(--peach);
-    @include mono-readout(font-size(xxxs));
     letter-spacing: 0.14em;
     white-space: nowrap;
     opacity: 0.8;

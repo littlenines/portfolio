@@ -1,4 +1,8 @@
+@use 'sass:color';
+@use 'sass:list';
 @use 'sass:map';
+@use 'sass:math';
+@use 'colors' as *;
 @use 'variables' as *;
 
 @function scale-value($scale, $key, $description) {
@@ -38,6 +42,22 @@
 
 @function breakpoint($name) {
   @return scale-value($breakpoints, $name, 'breakpoint');
+}
+
+@function alpha($color, $opacity) {
+  @return color.change($color, $alpha: $opacity);
+}
+
+@function sunk($color) {
+  @return color.mix($color, $black, $sunk-ground-share);
+}
+
+@function rgb-triplet($color) {
+  $channels: ();
+  @each $channel in 'red', 'green', 'blue' {
+    $channels: list.append($channels, math.round(color.channel($color, $channel, $space: rgb)), comma);
+  }
+  @return $channels;
 }
 
 @function chamfer-shape($cut) {

@@ -2,11 +2,12 @@
 // TABLE OF CONTENTS
 // -----------------------------------------------------------------------------
 // 0. ABSTRACTS (Sass-only, no CSS output; each partial @uses it)
-//    _colors ........... palette, alpha(), rgb-triplet()
+//    _colors ........... palette and gradients only
 //    _variables ........ breakpoints, spacing, z-index, fonts, font sizes and weights, line heights,
-//                        letter spacing, durations, hairline border, theme selectors
+//                        letter spacing, durations, plate cut, hairline border, theme selectors
 //    _functions ........ scale-value(), space(), z-index(), font-size(), font-weight(), line-height(),
-//                        letter-spacing(), duration(), breakpoint(), chamfer-shape()
+//                        letter-spacing(), duration(), breakpoint(), alpha(), sunk(), rgb-triplet(),
+//                        chamfer-shape()
 //    _mixins ........... breakpoint-up(), motion-ok, reduced-motion, touch, fine-pointer, night,
 //                        evangelion, headline, lede, display-heading, mono-readout, cover,
 //                        gutter-inline, fade-sides, chamfer, chamfer-plate, corner-brackets, pill

@@ -10,8 +10,8 @@ $mail-size: clamp(font-size(xxl), 1.8vw, 2rem);
   gap: space(3);
 
   &__title {
-    margin: 0;
     @include headline($title-size);
+    margin: 0;
   }
 
   &__mail-row {

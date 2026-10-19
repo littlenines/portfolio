@@ -5,6 +5,7 @@ $tape-stripe: 40px;
 $warning-size: clamp(7.2rem, 16vw, 20rem);
 $title-size: clamp(8.8rem, 20vw, 26rem);
 $caption-size: clamp(font-size(xs), 1.5vw, font-size(lg));
+$readout-gap: 18px;
 $detail-size: clamp(font-size(sm), 1.6vw, font-size(xl));
 
 .theme-veil {
@@ -86,37 +87,37 @@ $detail-size: clamp(font-size(sm), 1.6vw, font-size(xl));
   }
 
   &__count {
+    @include mono-readout(font-size(md));
     position: absolute;
     top: 56px;
     right: max(var(--gutter), 20px);
     color: $eva-orange;
-    @include mono-readout(font-size(md));
     letter-spacing: 0.2em;
   }
 
   &__warning {
-    color: $eva-orange;
     @include display-heading($warning-size);
+    color: $eva-orange;
     letter-spacing: 0.06em;
     text-shadow: 0 0 34px alpha($eva-orange, 0.45);
   }
 
   &__subtitle {
+    @include mono-readout($caption-size);
     margin-top: 10px;
     color: $eva-amber;
-    @include mono-readout($caption-size);
     letter-spacing: 0.42em;
   }
 
   &__panel {
-    @include chamfer-plate(12px, $eva-orange, $eva-ink);
+    @include chamfer-plate($plate-cut, $eva-orange, $eva-ink);
+    @include mono-readout($detail-size);
     display: flex;
     align-items: baseline;
-    gap: 18px;
+    gap: $readout-gap;
     margin-top: 30px;
     padding: 10px space(3);
     color: $eva-amber;
-    @include mono-readout($detail-size);
     letter-spacing: 0.2em;
   }
 
@@ -128,18 +129,18 @@ $detail-size: clamp(font-size(sm), 1.6vw, font-size(xl));
   }
 
   &__title {
-    color: $eva-paper;
     @include display-heading($title-size);
+    color: $eva-paper;
     letter-spacing: 0.08em;
   }
 
   &__caption {
+    @include mono-readout($caption-size);
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: $readout-gap;
     margin-top: 18px;
     color: var(--veil-accent);
-    @include mono-readout($caption-size);
     letter-spacing: 0.5em;
 
     &::before,
