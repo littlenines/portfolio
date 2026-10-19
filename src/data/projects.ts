@@ -28,7 +28,7 @@ export const projects: Project[] = [
     name: 'resize-quill-image',
     description:
       'Drag-to-resize for images in the Quill editor, with keyboard modifiers for aspect ratio and a live size badge.',
-    tech: ['TypeScript', 'React'],
+    tech: ['JavaScript', 'React'],
     links: quillPlugin('resize-quill-image', 'https://resize-quill-image.vercel.app/'),
   },
   {
