@@ -6,7 +6,7 @@
 src/
 ├── data/            Content only (site details, projects, stack)
 ├── lib/             Pure, DOM-free logic used at build time and in the browser
-├── layouts/         Layout.astro: <head>, fonts, meta tags, theme boot script
+├── layouts/         Layout.astro: <head>, fonts, meta tags, theme boot script, `head` slot
 ├── components/
 │   ├── layout/      Header, Footer, Section
 │   ├── hero/        Hero, Scene, Skyline, StreamBeams
@@ -15,7 +15,7 @@ src/
 │   └── effects/     Loader, ThemeVeil, WarnBar, BackToTop, Toast, Reticle, NightField
 ├── scripts/         Browser behaviour, one module per feature
 ├── styles/          SCSS in the 7-1 pattern
-└── pages/           index.astro, 404.astro, hex-field.svg.ts
+└── pages/           index.astro, 404.astro, hex-field.svg.ts, robots.txt.ts
 ```
 
 ## Code style
@@ -105,6 +105,11 @@ reveal script.
 - **Hex field.** `pages/hex-field.svg.ts` is a static endpoint that writes `/hex-field.svg` from
   `lib/hex-field.ts`. The fade is baked into each hexagon's stroke opacity instead of using a CSS mask, which
   would force an offscreen repaint every frame. The browser only downloads it once the evangelion theme is on.
+- **SEO.** Titles are built with `pageTitle()` from `data/site.ts` (`Nemanja Galbinovic • Portfolio`).
+  `Layout` adds the author, a canonical URL and `og:url`; pass `noindex` (as the 404 does) to drop both and
+  keep the page out of search results. The home page puts its Person structured data (`PersonSchema.astro`)
+  in the layout's `head` slot. `@astrojs/sitemap` writes the sitemap (it leaves out the 404), and
+  `pages/robots.txt.ts` points crawlers to it. Both use `site` from `astro.config.mjs`.
 
 - **Fonts.** Astro's Fonts API (`fonts` in `astro.config.mjs`) downloads the fonts at build time and serves
   them from the site itself; `<Font>` in `Layout.astro` inlines the `@font-face` rules and preloads the

@@ -4,10 +4,10 @@ import Header from '@components/layout/Header.astro';
 import Scene from '@components/hero/Scene.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
 import Button from '@components/ui/Button.astro';
-import { site } from '@data/site';
+import { pageTitle, site } from '@data/site';
 ---
 
-<Layout title={`Signal lost · ${site.name}`}>
+<Layout title={pageTitle('Signal lost', site.name)} noindex>
   <section class="hero hero--lost">
     <Scene variant="lost" />
     <Header minimal />

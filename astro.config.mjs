@@ -1,4 +1,5 @@
 // @ts-check
+import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
 
 const PRINTABLE_ASCII = Array.from({ length: 0x7f - 0x20 }, (_, index) => String.fromCodePoint(0x20 + index));
@@ -8,6 +9,7 @@ const SITE_URL = 'https://nemanja-galbinovic.vercel.app';
 
 export default defineConfig({
   site: SITE_URL,
+  integrations: [sitemap()],
   build: {
     inlineStylesheets: 'always',
   },

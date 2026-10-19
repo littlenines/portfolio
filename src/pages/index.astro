@@ -14,9 +14,11 @@ import Toast from '@components/effects/Toast.astro';
 import ThemeVeil from '@components/effects/ThemeVeil.astro';
 import Reticle from '@components/effects/Reticle.astro';
 import NightField from '@components/effects/NightField.astro';
+import PersonSchema from '@components/layout/PersonSchema.astro';
 ---
 
 <Layout themed>
+  <PersonSchema slot="head" />
   <Loader />
   <div class="page" id="top" tabindex="-1" data-back-to-top-target>
     <SkipLink />

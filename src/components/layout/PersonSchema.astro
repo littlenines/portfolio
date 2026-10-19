@@ -1,0 +1,14 @@
+---
+import { site } from '@data/site';
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle: site.jobTitle,
+  url: Astro.site?.href,
+  sameAs: site.socials.map((social) => social.href),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(person)} />

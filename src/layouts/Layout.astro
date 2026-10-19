@@ -9,12 +9,14 @@ interface Props {
   title?: string;
   description?: string;
   themed?: boolean;
+  noindex?: boolean;
 }
 
-const { title = site.title, description = site.description, themed = false } = Astro.props;
+const { title = site.title, description = site.description, themed = false, noindex = false } = Astro.props;
 
 const OG_IMAGE = { path: '/og.png', width: 1200, height: 630 };
 const ogImage = Astro.site ? new URL(OG_IMAGE.path, Astro.site).href : OG_IMAGE.path;
+const canonicalUrl = Astro.site && !noindex ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 ---
 
 <!doctype html>
@@ -24,6 +26,9 @@ const ogImage = Astro.site ? new URL(OG_IMAGE.path, Astro.site).href : OG_IMAGE.
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content={site.name} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content={site.themeColor} />
     <meta name="generator" content={Astro.generator} />
@@ -31,6 +36,7 @@ const ogImage = Astro.site ? new URL(OG_IMAGE.path, Astro.site).href : OG_IMAGE.
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={site.ogTitle} />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content={String(OG_IMAGE.width)} />
@@ -48,6 +54,7 @@ const ogImage = Astro.site ? new URL(OG_IMAGE.path, Astro.site).href : OG_IMAGE.
     <Font cssVariable="--font-display" />
 
     {themed && <ThemeBootScript />}
+    <slot name="head" />
   </head>
   <body>
     <slot />
