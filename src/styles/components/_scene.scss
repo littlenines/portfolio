@@ -90,13 +90,22 @@ $sun-stripes: linear-gradient(
     bottom: 0;
     height: 58%;
     background: radial-gradient(
-      ellipse 60% 85% at 50% 100%,
-      alpha($city-glow, 0.34),
-      alpha($peach, 0.12) 45%,
+      ellipse 110% 55% at 50% 100%,
+      alpha($city-glow, 0.26),
+      alpha($peach, 0.1) 45%,
       transparent 72%
     );
     opacity: 0;
     transition: opacity $theme-fade;
+
+    @include breakpoint-up(md) {
+      background: radial-gradient(
+        ellipse 60% 85% at 50% 100%,
+        alpha($city-glow, 0.34),
+        alpha($peach, 0.12) 45%,
+        transparent 72%
+      );
+    }
   }
 
   &__strip {
