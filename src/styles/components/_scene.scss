@@ -81,7 +81,7 @@ $sun-stripes: linear-gradient(
     margin-left: calc(var(--sun) / -2);
     border-radius: 50%;
     background: linear-gradient(180deg, $sun-top 0%, $sun-bottom 100%);
-    @include mask($sun-stripes);
+    mask-image: $sun-stripes;
   }
 
   &__city-light {

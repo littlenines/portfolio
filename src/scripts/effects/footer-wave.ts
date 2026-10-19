@@ -5,6 +5,12 @@ import { onThemeChange } from '@scripts/theme/state';
 
 const COLOR_TOKENS = ['--wave-1-rgb', '--wave-2-rgb', '--wave-3-rgb'] as const;
 
+interface Sample {
+  x: number;
+  progress: number;
+  envelope: number;
+}
+
 interface WaveLayer {
   alpha: number;
   amplitude: number;
@@ -29,7 +35,8 @@ const PRIMARY_SHARE = 0.62;
 const SECONDARY_SHARE = 0.38;
 const PRIMARY_SPEED = 2;
 const SECONDARY_SPEED = 3;
-const COLOR_EASING = 0.06;
+const COLOR_EASING = 0.12;
+const FRAME_SECONDS = 1 / 30;
 const MAX_FRAME_SECONDS = 0.05;
 const MS_PER_SECOND = 1000;
 const START_TIME = 2;
@@ -58,6 +65,8 @@ class FooterWave {
   #height = 0;
   #time = START_TIME;
   #lastFrame = 0;
+  #sinceLastDraw = 0;
+  #samples: Sample[] = [];
   #isRunning = false;
   #isVisible = false;
   #blipPosition = NO_BLIP;
@@ -102,13 +111,12 @@ class FooterWave {
       context.strokeStyle = toRgba(this.#colors[index], layer.alpha);
       context.beginPath();
 
-      for (let x = 0; x <= this.#width; x += SAMPLE_STEP_PX) {
-        const progress = x / this.#width;
-        const envelope = Math.sin(Math.PI * progress) ** ENVELOPE_POWER;
+      const phase = this.#time * layer.speed;
+
+      for (const { x, progress, envelope } of this.#samples) {
         const blipDistance = (progress - this.#blipPosition) / BLIP.width;
         const blip = this.#blipPosition === NO_BLIP ? 0 : Math.exp(-(blipDistance ** 2)) * BLIP.strength;
-        const amplitude = layer.amplitude * (envelope * (1 - ENVELOPE_FLOOR) + ENVELOPE_FLOOR) * (1 + blip);
-        const phase = this.#time * layer.speed;
+        const amplitude = layer.amplitude * envelope * (1 + blip);
 
         const y =
           middle +
@@ -131,6 +139,15 @@ class FooterWave {
 
     this.#width = width;
     this.#height = height;
+    this.#samples = [];
+
+    for (let x = 0; x <= width; x += SAMPLE_STEP_PX) {
+      const progress = x / width;
+      const curve = Math.sin(Math.PI * progress) ** ENVELOPE_POWER;
+
+      this.#samples.push({ x, progress, envelope: curve * (1 - ENVELOPE_FLOOR) + ENVELOPE_FLOOR });
+    }
+
     this.#canvas.width = Math.round(width * pixelRatio);
     this.#canvas.height = Math.round(height * pixelRatio);
     this.#context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
@@ -160,7 +177,13 @@ class FooterWave {
     this.#lastFrame = now;
     this.#time += seconds;
     this.#advanceBlip(seconds);
-    this.#draw();
+    this.#sinceLastDraw += seconds;
+
+    if (this.#sinceLastDraw >= FRAME_SECONDS) {
+      this.#sinceLastDraw = Math.min(this.#sinceLastDraw - FRAME_SECONDS, FRAME_SECONDS);
+      this.#draw();
+    }
+
     requestAnimationFrame(this.#tick);
   };
 

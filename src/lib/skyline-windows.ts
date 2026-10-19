@@ -32,6 +32,7 @@ export interface WindowLight extends Point {
 export interface WindowLightingOptions {
   shapeRandom: SeededRandom;
   awakeRandom: SeededRandom;
+  afterDarkRandom: SeededRandom;
   afterDarkShare: number;
   skylineHeight: number;
 }
@@ -46,12 +47,13 @@ const seconds = (value: number) => Number(value.toFixed(SECONDS_PRECISION));
 export function createWindowLighting({
   shapeRandom,
   awakeRandom,
+  afterDarkRandom,
   afterDarkShare,
   skylineHeight,
 }: WindowLightingOptions): WindowLighting {
-  const isAfterDark = () => Math.random() < afterDarkShare;
+  const isAfterDark = () => afterDarkRandom.next() < afterDarkShare;
 
-  const switchDelay = () => seconds(Math.random() * WINDOW.maxSwitchDelay);
+  const switchDelay = () => seconds(afterDarkRandom.next() * WINDOW.maxSwitchDelay);
   let litCount = 0;
 
   function* windowSlots(x: number, top: number, width: number) {

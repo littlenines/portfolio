@@ -20,6 +20,9 @@ export function pointOnCircle(center: Point, radius: number, degrees: number): P
   return { x: center.x + radius * Math.cos(angle), y: center.y + radius * Math.sin(angle) };
 }
 
+export const boxesToPath = (boxes: Box[]): string =>
+  boxes.map(({ x, y, width, height }) => `M${x} ${y}h${width}v${height}h${-width}z`).join('');
+
 export const hexagonCorners = (center: Point, radius: number): Point[] =>
   Array.from({ length: HEXAGON_SIDES }, (_, side) =>
     pointOnCircle(center, radius, (FULL_TURN / HEXAGON_SIDES) * side + POINTY_TOP_OFFSET),

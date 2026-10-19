@@ -1,5 +1,6 @@
 ---
 import StreamBeams from '@components/hero/StreamBeams.astro';
+import { boxesToPath } from '@lib/geometry';
 import { PALETTE } from '@lib/palette';
 import { buildSkyline, type Haze } from '@lib/skyline';
 import type { WindowLight } from '@lib/skyline-windows';
@@ -55,11 +56,7 @@ const windowStyle = (light: WindowLight) =>
     )}
     {skyline.layers.map((layer) => (
       <>
-        <g fill={layer.color} opacity={layer.opacity}>
-          {layer.shapes.map((shape) => (
-            <rect x={shape.x} y={shape.y} width={shape.width} height={shape.height} />
-          ))}
-        </g>
+        <path d={boxesToPath(layer.shapes)} fill={layer.color} opacity={layer.opacity} />
         {[
           { lights: layer.lit, group: 'skyline__lit' },
           { lights: layer.awake, group: 'skyline__awake' },

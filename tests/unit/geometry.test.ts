@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { hexagonCorners, pointOnCircle } from '@lib/geometry';
+import { boxesToPath, hexagonCorners, pointOnCircle } from '@lib/geometry';
 
 const CENTER = { x: 10, y: 20 };
 const RADIUS = 5;
@@ -13,6 +13,17 @@ describe('pointOnCircle', () => {
     expect(right.y).toBeCloseTo(20);
     expect(below.x).toBeCloseTo(10);
     expect(below.y).toBeCloseTo(25);
+  });
+});
+
+describe('boxesToPath', () => {
+  it('draws each box as its own closed rectangle', () => {
+    const boxes = [
+      { x: 1, y: 2, width: 3, height: 4 },
+      { x: 10, y: 0, width: 5, height: 6 },
+    ];
+
+    expect(boxesToPath(boxes)).toBe('M1 2h3v4h-3zM10 0h5v6h-5z');
   });
 });
 

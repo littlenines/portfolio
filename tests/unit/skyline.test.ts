@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { SKYLINE_WIDTH, TOWER_LAYERS, buildSkyline, type SkylineOptions } from '@lib/skyline';
+import { SKYLINE_VARIANTS } from '@lib/skyline-variants';
 
 const OPTIONS: SkylineOptions = {
   windowColor: '#FFFFFF',
@@ -9,8 +10,8 @@ const OPTIONS: SkylineOptions = {
 const shapesOf = (options: SkylineOptions) => buildSkyline(options).layers.map((layer) => layer.shapes);
 
 describe('buildSkyline', () => {
-  it('builds the same towers every time for the same seed', () => {
-    expect(shapesOf(OPTIONS)).toEqual(shapesOf(OPTIONS));
+  it('builds the same skyline every time, lights included', () => {
+    expect(buildSkyline(SKYLINE_VARIANTS.home)).toEqual(buildSkyline(SKYLINE_VARIANTS.home));
   });
 
   it('builds different towers for a different seed', () => {

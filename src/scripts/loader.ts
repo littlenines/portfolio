@@ -4,6 +4,7 @@ import { wait } from '@scripts/lib/dom';
 import { STATE_CLASS } from '@scripts/lib/state-classes';
 
 const SESSION_KEY = 'booted';
+const VISITED = '1';
 
 export const RETURNING_NAVIGATIONS: NavigationTimingType[] = ['back_forward', 'reload'];
 
@@ -54,15 +55,19 @@ const BOOT_STEPS: BootStep[] = [
   { label: 'handshake', waitFor: pageReady },
 ];
 
-function isRepeatVisit() {
+function hasVisitedThisSession() {
   try {
-    const seen = sessionStorage.getItem(SESSION_KEY) === '1';
-
-    sessionStorage.setItem(SESSION_KEY, '1');
-
-    return seen;
+    return sessionStorage.getItem(SESSION_KEY) === VISITED;
   } catch {
     return false;
+  }
+}
+
+function rememberVisit() {
+  try {
+    sessionStorage.setItem(SESSION_KEY, VISITED);
+  } catch {
+    return;
   }
 }
 
@@ -85,7 +90,10 @@ export async function initLoader() {
     return;
   }
 
-  const stepMs = isRepeatVisit() ? STEP_MS.repeatVisit : STEP_MS.firstVisit;
+  const stepMs = hasVisitedThisSession() ? STEP_MS.repeatVisit : STEP_MS.firstVisit;
+
+  rememberVisit();
+
   const giveUp = wait(MAX_WAIT_MS);
 
   const addLine = (text: string, extraClass?: string) => {

@@ -55,12 +55,8 @@
   padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
 }
 
-@mixin mask($image) {
-  mask-image: $image;
-}
-
 @mixin fade-sides($edge) {
-  @include mask(linear-gradient(90deg, transparent, $mask-show $edge, $mask-show calc(100% - #{$edge}), transparent));
+  mask-image: linear-gradient(90deg, transparent, $mask-show $edge, $mask-show calc(100% - #{$edge}), transparent);
 }
 
 @mixin chamfer($cut) {

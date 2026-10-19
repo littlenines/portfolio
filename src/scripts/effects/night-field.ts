@@ -12,6 +12,17 @@ const TOKENS = {
   skyTop: '--sky-top-rgb',
 } as const;
 
+const writeWhenChanged = (write: (value: string) => void) => {
+  let lastValue: string | undefined;
+
+  return (value: string) => {
+    if (value === lastValue) return;
+
+    lastValue = value;
+    write(value);
+  };
+};
+
 const readColors = () => ({
   ground: readRgbToken(TOKENS.ground),
   sunkGround: readRgbToken(TOKENS.sunkGround),
@@ -25,36 +36,52 @@ export function initNightField(field: HTMLElement) {
   if (!hero) return;
 
   let colors = readColors();
+  let heroHeight = 0;
+  let maxScroll = 0;
+
+  const setBackground = writeWhenChanged((value) => (document.body.style.backgroundColor = value));
+  const setStarOpacity = writeWhenChanged((value) => (field.style.opacity = value));
+
+  const setBarColor = writeWhenChanged((value) => {
+    if (themeColor) themeColor.content = value;
+  });
+
+  const measure = () => {
+    heroHeight = hero.offsetHeight;
+    maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  };
 
   const update = () => {
-    const heroHeight = hero.offsetHeight;
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-
     const nightProgress =
       maxScroll > heroHeight ? clamp01((window.scrollY - heroHeight) / (maxScroll - heroHeight)) : 0;
 
     const ground = mixRgb(colors.ground, colors.sunkGround, nightProgress).map(Math.round) as Rgb;
+    const barBlend = clamp01(window.scrollY / (heroHeight * BAR_BLEND_DISTANCE));
 
-    document.body.style.backgroundColor = `rgb(${ground.join(',')})`;
-    field.style.opacity = (nightProgress * MAX_STAR_OPACITY).toFixed(3);
-
-    if (themeColor) {
-      const barBlend = clamp01(window.scrollY / (heroHeight * BAR_BLEND_DISTANCE));
-
-      themeColor.content = rgbToHex(mixRgb(colors.skyTop, ground, barBlend));
-    }
+    setBackground(`rgb(${ground.join(',')})`);
+    setStarOpacity((nightProgress * MAX_STAR_OPACITY).toFixed(3));
+    setBarColor(rgbToHex(mixRgb(colors.skyTop, ground, barBlend)));
   };
 
   const scheduleUpdate = throttleToFrame(update);
 
+  const remeasure = () => {
+    measure();
+    scheduleUpdate();
+  };
+
+  const resizeObserver = new ResizeObserver(remeasure);
+
+  resizeObserver.observe(document.documentElement);
+  resizeObserver.observe(hero);
+  window.addEventListener('resize', remeasure);
   window.addEventListener('scroll', scheduleUpdate, { passive: true });
-  window.addEventListener('resize', scheduleUpdate);
-  window.addEventListener('load', scheduleUpdate);
 
   onThemeChange(() => {
     colors = readColors();
     scheduleUpdate();
   });
 
+  measure();
   update();
 }

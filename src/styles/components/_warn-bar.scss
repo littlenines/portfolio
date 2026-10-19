@@ -35,11 +35,11 @@ $draw: 1.1s $ease-standard;
   }
 
   &::before {
-    @include mask(linear-gradient(90deg, transparent, $mask-show 60%));
+    mask-image: linear-gradient(90deg, transparent, $mask-show 60%);
   }
 
   &::after {
-    @include mask(linear-gradient(270deg, transparent, $mask-show 60%));
+    mask-image: linear-gradient(270deg, transparent, $mask-show 60%);
   }
 
   &__label {

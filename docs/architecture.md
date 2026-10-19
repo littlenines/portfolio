@@ -93,8 +93,9 @@ reveal script.
 - **Skyline.** `lib/skyline.ts` is a seeded generator, so the city is the same on every build. Window
   lighting is in `lib/skyline-windows.ts`, and the home and 404 settings in `lib/skyline-variants.ts`.
   `Skyline.astro` renders it straight into the HTML as SVG, which means no script and nothing pops in on load.
-  Which windows only light up after dark is picked with `Math.random`, not the seeded generator.
-  Switching that to the seeded generator would shift every value after it and reshape the city.
+  Shapes, lit windows, awake windows and after-dark windows each draw from their own seed, so changing one
+  never reshapes the others, and two builds produce the same HTML. Each layer's tower bodies are one `<path>`;
+  only windows, beacons and neon are separate elements, because those animate.
 - **Stream beams (netspace).** `lib/stream-beams.ts` picks up to five front towers (closest to the middle,
   at least 190 units apart, away from the edges) and lays out a light beam with six climbing packets on
   each. Towers whose roof is in the top 60 units are skipped: wide, short windows crop that part of the

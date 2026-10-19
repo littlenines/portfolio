@@ -99,10 +99,12 @@ export interface SkylineOptions {
   afterDarkShare?: number;
   seed?: number;
   awakeSeed?: number;
+  afterDarkSeed?: number;
 }
 
 const DEFAULT_SEED = 11;
 const DEFAULT_AWAKE_SEED = 7;
+const DEFAULT_AFTER_DARK_SEED = 23;
 
 const inRange = (value: number, [min, max]: readonly [number, number]) => value > min && value <= max;
 
@@ -112,10 +114,19 @@ export function buildSkyline({
   afterDarkShare = 0,
   seed = DEFAULT_SEED,
   awakeSeed = DEFAULT_AWAKE_SEED,
+  afterDarkSeed = DEFAULT_AFTER_DARK_SEED,
 }: SkylineOptions) {
   const shapeRandom = createSeededRandom(seed);
   const awakeRandom = createSeededRandom(awakeSeed);
-  const windows = createWindowLighting({ shapeRandom, awakeRandom, afterDarkShare, skylineHeight: SKYLINE_HEIGHT });
+  const afterDarkRandom = createSeededRandom(afterDarkSeed);
+
+  const windows = createWindowLighting({
+    shapeRandom,
+    awakeRandom,
+    afterDarkRandom,
+    afterDarkShare,
+    skylineHeight: SKYLINE_HEIGHT,
+  });
   const valley = (x: number) => 1 - VALLEY.depth * Math.exp(-(((x - SKYLINE_WIDTH / 2) / VALLEY.spread) ** 2));
 
   const buildLayer = (options: LayerOptions): Layer => {
