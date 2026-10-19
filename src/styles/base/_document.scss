@@ -30,7 +30,7 @@ body {
   color: var(--text);
   font-family: $font-body;
   font-size: font-size(body);
-  line-height: 1.65;
+  line-height: line-height(body);
 }
 
 ::selection {

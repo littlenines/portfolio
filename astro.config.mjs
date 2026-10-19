@@ -25,7 +25,7 @@ export default defineConfig({
       provider: fontProviders.fontsource(),
       name: 'JetBrains Mono',
       cssVariable: '--font-mono',
-      weights: [400, 500],
+      weights: [400, 500, 600, 700],
       styles: ['normal'],
       subsets: ['latin'],
       fallbacks: ['ui-monospace', 'Menlo', 'monospace'],

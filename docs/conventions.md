@@ -68,6 +68,10 @@ See [Styles](styles.md) for the folder map. The rules:
 - **Mobile first:** phone styles first, wider screens through `@include breakpoint-up(md)`.
 - **Font sizes** come from `font-size(step)`, or a named variable for fluid and one-off sizes. Never `px`
   (Stylelint checks it).
+- **Font weights** come from `font-weight(name)`, never a raw number (Stylelint checks it). A size and
+  weight pair that repeats becomes a mixin (`headline`, `lede`, `display-heading`, `mono-readout`).
+- **Line heights, letter spacing and transition durations** come from `line-height()`, `letter-spacing()`
+  and `duration()` when the value is shared. One-offs get a named variable in their partial.
 - **Spacing:** layout spacing (section padding, gaps between blocks) uses `space(step)`. Small optical
   adjustments and component geometry (a 6px nudge, an icon's size) may stay in `px`; give them a name when
   they repeat.

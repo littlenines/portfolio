@@ -1,6 +1,7 @@
 @use 'abstracts' as *;
 
 $auto-hide-after: 7s;
+$log-line-height: 1.9;
 $log-size: clamp(font-size(sm), 1.6vw, font-size(xl));
 
 html.is-loading {
@@ -37,19 +38,19 @@ html.is-loading {
   &__log {
     margin-top: 12vh;
     font-size: $log-size;
-    line-height: 1.9;
+    line-height: $log-line-height;
     color: var(--mute);
     white-space: pre;
   }
 
   &__line {
-    animation: loader-line-in 0.25s ease both;
+    animation: loader-line-in duration(medium) ease both;
   }
 
   &__heading {
     margin-bottom: 14px;
     color: var(--teal);
-    letter-spacing: 0.08em;
+    letter-spacing: letter-spacing(label);
   }
 
   &__status {

@@ -17,7 +17,7 @@
     width: 100%;
     padding-block: space(4) 28px;
     font-size: font-size(md);
-    letter-spacing: 0.08em;
+    letter-spacing: letter-spacing(label);
     text-align: center;
 
     @include breakpoint-up(phablet) {

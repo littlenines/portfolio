@@ -45,6 +45,28 @@
   }
 }
 
+@mixin headline($size) {
+  font-size: $size;
+  font-weight: font-weight(bold);
+  line-height: line-height(heading);
+}
+
+@mixin lede($size) {
+  max-width: 44ch;
+  margin: 0;
+  font-size: $size;
+  line-height: line-height(lede);
+  opacity: 0.92;
+}
+
+@mixin display-heading($size) {
+  font: font-weight(extra-bold) list.slash($size, line-height(solid)) $font-display;
+}
+
+@mixin mono-readout($size) {
+  font: font-weight(medium) list.slash($size, line-height(solid)) $font-mono;
+}
+
 @mixin cover {
   position: absolute;
   inset: 0;
@@ -106,7 +128,7 @@
 @mixin pill {
   min-height: 36px;
   padding: 0 14px;
-  border: 1px solid var(--line);
+  border: $hairline-border;
   border-radius: $radius-pill;
   background: none;
   color: var(--mute);
@@ -114,8 +136,8 @@
   font-size: font-size(sm);
   cursor: pointer;
   transition:
-    color 0.2s,
-    border-color 0.2s;
+    color duration(base),
+    border-color duration(base);
 
   @include breakpoint-up(xxl) {
     font-size: font-size(xl);

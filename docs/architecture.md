@@ -112,6 +112,9 @@ reveal script.
   - Zen Kaku Gothic New (`--font-body`) and JetBrains Mono (`--font-mono`) come from Fontsource with the
     `latin` subset only. Google serves these Japanese families as about 120 unnamed slices per weight,
     which Astro can't filter.
+  - Every weight the styles use must be listed in `weights`, or the browser fakes it. Unused weights cost
+    nothing: a weight is only downloaded when something on screen uses it (mono 600 and 700 only load in
+    evangelion).
   - Shippori Mincho B1 (`--font-display`) is only used for evangelion headings and the veil, so it ships
     just printable ASCII plus 警告撤収 (`glyphs` option). If you add other characters to those headings,
     add them to that list or they will fall back to the system serif.

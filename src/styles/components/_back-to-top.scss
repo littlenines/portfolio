@@ -16,9 +16,9 @@ $cut: 12px;
   visibility: hidden;
   transform: translateY(8px);
   transition:
-    opacity 0.3s,
-    transform 0.3s,
-    visibility 0.3s;
+    opacity duration(slow),
+    transform duration(slow),
+    visibility duration(slow);
 
   @include breakpoint-up(md) {
     right: max($back-to-top-offset, env(safe-area-inset-right, 0px));
@@ -37,7 +37,7 @@ $cut: 12px;
     padding: 1px;
     background: color-mix(in srgb, var(--accent) 70%, transparent);
     @include chamfer($cut);
-    transition: background 0.3s;
+    transition: background duration(slow);
 
     @include breakpoint-up(md) {
       width: auto;
@@ -57,7 +57,7 @@ $cut: 12px;
     letter-spacing: 0.06em;
     white-space: nowrap;
     @include chamfer($cut - 1px);
-    transition: color 0.3s;
+    transition: color duration(slow);
 
     @include breakpoint-up(md) {
       padding: 0 space(2);
@@ -67,7 +67,7 @@ $cut: 12px;
   &__arrow {
     display: inline-block;
     font-size: font-size(sm);
-    transition: transform 0.25s;
+    transition: transform duration(medium);
 
     @include breakpoint-up(md) {
       font-size: font-size(xxs);

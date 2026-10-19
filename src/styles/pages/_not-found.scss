@@ -33,15 +33,13 @@ $lede-size: 1.9rem;
   .eyebrow {
     gap: 10px;
     font-size: font-size(md);
-    letter-spacing: 0.08em;
+    letter-spacing: letter-spacing(label);
   }
 
   &__title {
     margin: 0;
-    font-size: $title-size;
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
+    @include headline($title-size);
+    letter-spacing: letter-spacing(headline);
 
     em {
       font-style: normal;
@@ -50,11 +48,7 @@ $lede-size: 1.9rem;
   }
 
   &__lede {
-    max-width: 44ch;
-    margin: 0;
-    font-size: $lede-size;
-    line-height: 1.55;
-    opacity: 0.92;
+    @include lede($lede-size);
   }
 
   > * {

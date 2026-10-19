@@ -26,8 +26,10 @@ export default {
       { message: 'Use font-size() or a rem value' },
     ],
     'declaration-property-value-disallowed-list': [
-      { 'z-index': [/^-?\d+$/] },
-      { message: 'Use z-index() instead of a raw number' },
+      { 'z-index': [/^-?\d+$/], 'font-weight': [/^\d+$/], font: [/^\d+\s/] },
+      {
+        message: (property) => `Use ${property === 'z-index' ? 'z-index()' : 'font-weight()'} instead of a raw number`,
+      },
     ],
     'max-nesting-depth': [4, { ignore: ['pseudo-classes'], ignoreAtRules: ['include', 'media'] }],
   },

@@ -9,11 +9,11 @@
   border-radius: $radius-pill;
   color: var(--peach);
   font-size: font-size(xl);
-  font-weight: 500;
+  font-weight: font-weight(medium);
   text-decoration: none;
   transition:
-    background 0.15s,
-    color 0.15s;
+    background duration(fast),
+    color duration(fast);
 
   &:hover {
     background: var(--peach);

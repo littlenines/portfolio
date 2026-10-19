@@ -6,9 +6,9 @@
   gap: space(2);
   margin: 0 0 space(4);
   font-size: font-size(lg);
-  font-weight: 400;
-  line-height: 1.65;
-  letter-spacing: 0.08em;
+  font-weight: font-weight(regular);
+  line-height: line-height(body);
+  letter-spacing: letter-spacing(label);
   color: var(--mute);
 
   @include breakpoint-up(md) {
@@ -16,7 +16,7 @@
   }
 
   &__index {
-    font-weight: 500;
+    font-weight: font-weight(medium);
     color: var(--teal);
   }
 

@@ -1,32 +1,43 @@
 @use 'sass:map';
 @use 'variables' as *;
 
-@function space($step) {
-  @if not map.has-key($space, $step) {
-    @error 'Unknown space step `#{$step}`. Expected one of #{map.keys($space)}.';
+@function scale-value($scale, $key, $description) {
+  @if not map.has-key($scale, $key) {
+    @error 'Unknown #{$description} `#{$key}`. Expected one of #{map.keys($scale)}.';
   }
-  @return map.get($space, $step);
+  @return map.get($scale, $key);
+}
+
+@function space($step) {
+  @return scale-value($space, $step, 'space step');
 }
 
 @function z-index($layer) {
-  @if not map.has-key($z-layers, $layer) {
-    @error 'Unknown z-index layer `#{$layer}`. Expected one of #{map.keys($z-layers)}.';
-  }
-  @return map.get($z-layers, $layer);
+  @return scale-value($z-layers, $layer, 'z-index layer');
 }
 
 @function font-size($step) {
-  @if not map.has-key($font-sizes, $step) {
-    @error 'Unknown font size `#{$step}`. Expected one of #{map.keys($font-sizes)}.';
-  }
-  @return map.get($font-sizes, $step);
+  @return scale-value($font-sizes, $step, 'font size');
+}
+
+@function font-weight($name) {
+  @return scale-value($font-weights, $name, 'font weight');
+}
+
+@function line-height($name) {
+  @return scale-value($line-heights, $name, 'line height');
+}
+
+@function letter-spacing($name) {
+  @return scale-value($letter-spacings, $name, 'letter spacing');
+}
+
+@function duration($name) {
+  @return scale-value($durations, $name, 'duration');
 }
 
 @function breakpoint($name) {
-  @if not map.has-key($breakpoints, $name) {
-    @error 'Unknown breakpoint `#{$name}`. Expected one of #{map.keys($breakpoints)}.';
-  }
-  @return map.get($breakpoints, $name);
+  @return scale-value($breakpoints, $name, 'breakpoint');
 }
 
 @function chamfer-shape($cut) {

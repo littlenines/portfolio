@@ -3,11 +3,13 @@
 // -----------------------------------------------------------------------------
 // 0. ABSTRACTS (Sass-only, no CSS output; each partial @uses it)
 //    _colors ........... palette, alpha(), rgb-triplet()
-//    _variables ........ breakpoints, spacing, z-index, fonts, font-size scale, theme selectors
-//    _functions ........ space(), z-index(), font-size(), breakpoint(), chamfer-shape()
+//    _variables ........ breakpoints, spacing, z-index, fonts, font sizes and weights, line heights,
+//                        letter spacing, durations, hairline border, theme selectors
+//    _functions ........ scale-value(), space(), z-index(), font-size(), font-weight(), line-height(),
+//                        letter-spacing(), duration(), breakpoint(), chamfer-shape()
 //    _mixins ........... breakpoint-up(), motion-ok, reduced-motion, touch, fine-pointer, night,
-//                        evangelion, cover, gutter-inline, fade-sides, chamfer, chamfer-plate,
-//                        corner-brackets, pill
+//                        evangelion, headline, lede, display-heading, mono-readout, cover,
+//                        gutter-inline, fade-sides, chamfer, chamfer-plate, corner-brackets, pill
 //
 // 1. BASE
 //    _reset ............ box-sizing, margins, list reset

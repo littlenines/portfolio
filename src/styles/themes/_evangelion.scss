@@ -35,7 +35,7 @@ $small-plate-cut: 8px;
   .hero__title,
   .contact__title {
     font-family: $font-display;
-    font-weight: 800;
+    font-weight: font-weight(extra-bold);
   }
 
   .hero__title {
@@ -65,7 +65,7 @@ $small-plate-cut: 8px;
     @include chamfer-plate($plate-cut, var(--line), $eva-plate);
 
     &::before {
-      transition: background 0.2s;
+      transition: background duration(base);
     }
 
     & + .project {
@@ -106,7 +106,7 @@ $small-plate-cut: 8px;
     @include chamfer-plate($plate-cut, var(--peach), $eva-plate);
 
     &::before {
-      transition: background 0.15s;
+      transition: background duration(fast);
     }
 
     &:hover::before {

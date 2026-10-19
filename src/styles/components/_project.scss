@@ -23,11 +23,11 @@ $name-column: 190px;
   align-items: baseline;
   row-gap: space(1);
   padding: space(3) var(--project-inset);
-  border-top: 1px solid var(--line);
-  transition: background 0.2s;
+  border-top: $hairline-border;
+  transition: background duration(base);
 
   &:last-child {
-    border-bottom: 1px solid var(--line);
+    border-bottom: $hairline-border;
   }
 
   &:hover {
@@ -36,8 +36,8 @@ $name-column: 190px;
 
   &__name {
     font-size: font-size(xxl);
-    font-weight: 500;
-    transition: color 0.2s;
+    font-weight: font-weight(medium);
+    transition: color duration(base);
 
     .project:hover & {
       color: var(--pink);
@@ -88,7 +88,7 @@ $name-column: 190px;
     text-decoration: underline;
     text-underline-offset: 4px;
     opacity: 0.9;
-    transition: opacity 0.25s;
+    transition: opacity duration(medium);
 
     @include breakpoint-up(md) {
       min-height: 32px;

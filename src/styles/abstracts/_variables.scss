@@ -47,6 +47,36 @@ $font-sizes: (
   xxxl: 1.8rem,
 );
 
+$font-weights: (
+  regular: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+  extra-bold: 800,
+);
+
+$line-heights: (
+  solid: 1,
+  heading: 1.1,
+  lede-compact: 1.45,
+  lede: 1.55,
+  body: 1.65,
+);
+
+$letter-spacings: (
+  headline: -0.01em,
+  label: 0.08em,
+);
+
+$durations: (
+  fast: 0.15s,
+  base: 0.2s,
+  medium: 0.25s,
+  slow: 0.3s,
+);
+
+$hairline-border: 1px solid var(--line);
+
 $container: 1080px;
 $container-xl: 1360px;
 $container-xxl: 1560px;
