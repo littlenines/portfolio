@@ -64,8 +64,10 @@ The download link is commented out in `Contact.astro` until a CV exists. To turn
   address, not the one you chose.
 - pnpm is pinned through `packageManager` in `package.json`. Vercel only honours it with the environment
   variable `ENABLE_EXPERIMENTAL_COREPACK=1`.
-- Node: Vercel builds with the newest major it offers that matches `engines.node` in `package.json`
-  (currently 24.x; it doesn't offer 26 for builds yet). Keep `engines.node` as a lower bound, at least what
-  `astro` requires, rather than pinning a major Vercel may not have. CI runs on Node 24 to match it.
+- Node: `engines.node` in `package.json` is pinned to `24.x`, so Vercel builds with Node 24 and only moves to
+  a new major when you change it (an open range like `>=22` makes Vercel warn and upgrade on its own). CI runs
+  on Node 24 to match. Local development on a newer Node is fine; pnpm doesn't enforce `engines`. When
+  Vercel offers Node 26 for builds, bump `engines.node` and the CI `node-version` together. The pinned major
+  must still meet `astro`'s minimum Node version.
 - `pnpm-workspace.yaml` tells pnpm to skip `@parcel/watcher`'s build script (only needed by the Sass CLI's
   watch mode). Without it, pnpm 12 fails the install.
