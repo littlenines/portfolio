@@ -16,6 +16,7 @@ src/
 ├── scripts/         Browser behaviour, one module per feature
 ├── styles/          SCSS in the 7-1 pattern
 └── pages/           index.astro, 404.astro, hex-field.svg.ts, robots.txt.ts
+integrations/        Build-time Astro integrations (module-preload)
 ```
 
 ## Code style
@@ -125,6 +126,11 @@ reveal script.
     add them to that list or they will fall back to the system serif.
   - Japanese text in mono contexts (section labels, eyebrow, footer) uses the system's Japanese font, as before.
 - **CSS** is inlined into each page (`build.inlineStylesheets: 'always'`), so no stylesheet blocks rendering.
+- **Module preloads.** Each component script imports shared chunks (GSAP, `dom`, `state`…), which the
+  browser would only discover after downloading the script. `integrations/module-preload.ts` records the
+  import graph from Rollup's bundle metadata, then after the build follows each page's module scripts through
+  it and adds `<link rel="modulepreload">` tags to the `<head>`, so GSAP starts downloading while the head is
+  still being read. Scripts the build didn't produce are skipped.
 
 **In the browser:** themes, the loader, GSAP motion, the footer wave, the night sky, the reticle,
 back to top and copy-to-clipboard. See [Scripts](scripts.md).

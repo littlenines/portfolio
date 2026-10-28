@@ -1,10 +1,16 @@
-import type { AmbientClock } from '../ambient-clock';
-import { gsap, selectAll } from '../gsap';
+import { createAmbientClock, type AmbientClock } from '../ambient-clock';
+import { addInNextTask, gsap, selectAll } from '../gsap';
 
+const FRAMES_PER_SECOND = 30;
 const PEAK_OPACITY = 0.7;
 const FADE_IN_SHARE = 0.04;
 
-export function addStreamBeamPackets(clock: AmbientClock, hero: HTMLElement): boolean {
+export interface StreamBeams {
+  setRunning: (shouldRun: boolean) => void;
+  kill: () => void;
+}
+
+function addPackets(clock: AmbientClock, hero: HTMLElement): boolean {
   const packets = selectAll<SVGRectElement>('[data-stream-packet]', hero);
 
   for (const packet of packets) {
@@ -22,4 +28,31 @@ export function addStreamBeamPackets(clock: AmbientClock, hero: HTMLElement): bo
   }
 
   return packets.length > 0;
+}
+
+export function createStreamBeams(hero: HTMLElement, context: gsap.Context): StreamBeams {
+  const clock = createAmbientClock(FRAMES_PER_SECOND);
+  let isWanted = false;
+  let hasPackets = false;
+  let cancelSetup: (() => void) | undefined;
+
+  return {
+    setRunning: (shouldRun) => {
+      isWanted = shouldRun;
+
+      if (shouldRun) {
+        cancelSetup ??= addInNextTask(context, () => {
+          hasPackets = addPackets(clock, hero);
+          clock.setRunning(isWanted && hasPackets);
+        });
+      }
+
+      clock.setRunning(shouldRun && hasPackets);
+    },
+
+    kill: () => {
+      cancelSetup?.();
+      clock.kill();
+    },
+  };
 }

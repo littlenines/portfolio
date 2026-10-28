@@ -34,3 +34,6 @@ export function onVisibilityChange(
 }
 
 export const wait = (milliseconds: number) => new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
+
+export const yieldToBrowser = (): Promise<void> =>
+  'scheduler' in window && 'yield' in window.scheduler ? window.scheduler.yield() : wait(0);

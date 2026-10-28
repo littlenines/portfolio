@@ -1,60 +1,53 @@
-// =============================================================================
-// TABLE OF CONTENTS
-// -----------------------------------------------------------------------------
-// 0. ABSTRACTS (Sass-only, no CSS output; each partial @uses it)
-//    _colors ........... palette and gradients only
-//    _variables ........ breakpoints, spacing, z-index, fonts, font sizes and weights, line heights,
-//                        letter spacing, durations, plate cut, hairline border, theme selectors
-//    _functions ........ scale-value(), space(), z-index(), font-size(), font-weight(), line-height(),
-//                        letter-spacing(), duration(), breakpoint(), alpha(), sunk(), rgb-triplet(),
-//                        chamfer-shape()
-//    _mixins ........... breakpoint-up(), motion-ok, reduced-motion, touch, fine-pointer, night,
-//                        evangelion, headline, lede, display-heading, mono-readout, cover,
-//                        gutter-inline, fade-sides, chamfer, chamfer-plate, corner-brackets, pill
+// Table of contents, in cascade order
 //
-// 1. BASE
-//    _reset ............ box-sizing, margins, list reset
-//    _document ......... html, body, scrollbar, ::selection, --gutter
-//    _typography ....... .mono
-//    _accessibility .... focus rings, reduced-motion overrides
+// abstracts/        Sass only, no CSS output; every partial @uses it
+//   colors          palette and gradients
+//   variables       scales, breakpoints, theme selectors
+//   functions       scale lookups, colour helpers, chamfer shape
+//   mixins          media queries, theme scopes, typography, shapes
 //
-// 2. LAYOUT
-//    _container ........ .container, .page
-//    _header ........... .site-header
-//    _hero ............. .hero
-//    _section .......... .section
-//    _footer ........... .site-footer
+// base/
+//   reset           box sizing, margins, lists
+//   document        html, body, scrollbar, selection, --gutter
+//   typography      .mono
+//   accessibility   focus rings, reduced motion
 //
-// 3. COMPONENTS
-//    _scene ............ .scene (sky, stars, sun, city light, strip)
-//    _skyline .......... .skyline (windows, beacons, neon, haze)
-//    _stream-beams ..... .stream-beams (netspace light beams over the skyline)
-//    _eyebrow .......... .eyebrow
-//    _section-label .... .section-label
-//    _button ........... .button, .button-group, .pill-button
-//    _theme-switch ..... .theme-switch
-//    _theme-icon ....... .theme-icon (sun, chip, Unit-01 hexagon)
-//    _project .......... .project
-//    _spec-list ........ .spec-list
-//    _contact .......... .contact
-//    _themed-text ...... .themed-text__alt
-//    _back-to-top ...... .back-to-top
-//    _toast ............ .toast
-//    _reticle .......... .reticle
-//    _loader ........... .loader, html.is-loading
-//    _theme-veil ....... .theme-veil
-//    _warn-bar ......... .warn-bar
-//    _night-field ...... .night-field
-//    _skip-link ........ .skip-link
+// layout/
+//   container       .container, .page
+//   header          .site-header
+//   hero            .hero
+//   section         .section
+//   footer          .site-footer
 //
-// 4. PAGES
-//    _not-found ........ .hero--lost, .not-found
+// components/
+//   scene           .scene: sky, stars, sun, city light, strip
+//   skyline         .skyline: windows, beacons, neon, haze
+//   stream-beams    .stream-beams: netspace light beams
+//   eyebrow         .eyebrow
+//   section-label   .section-label
+//   button          .button, .button-group, .pill-button
+//   theme-switch    .theme-switch
+//   theme-icon      .theme-icon: sun, chip, Unit-01 hexagon
+//   project         .project
+//   spec-list       .spec-list
+//   contact         .contact
+//   themed-text     .themed-text
+//   back-to-top     .back-to-top
+//   toast           .toast
+//   reticle         .reticle
+//   loader          .loader, html.is-loading
+//   theme-veil      .theme-veil
+//   warn-bar        .warn-bar
+//   night-field     .night-field
+//   skip-link       .skip-link
 //
-// 5. THEMES
-//    _surface .......... default tokens (CSS custom properties)
-//    _netspace ......... night tokens and scene overrides
-//    _evangelion ....... secret theme tokens and overrides
-// =============================================================================
+// pages/
+//   not-found       .hero--lost, .not-found
+//
+// themes/
+//   surface         default tokens
+//   netspace        night tokens and scene overrides
+//   evangelion      secret theme tokens and overrides
 
 @use 'base';
 @use 'layout';

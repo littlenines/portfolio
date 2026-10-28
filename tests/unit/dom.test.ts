@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { onVisibilityChange } from '@scripts/lib/dom';
+import { onVisibilityChange, yieldToBrowser } from '@scripts/lib/dom';
 
 type Entry = Pick<IntersectionObserverEntry, 'isIntersecting' | 'intersectionRatio'>;
 type ObserverCallback = (entries: Entry[]) => void;
@@ -63,5 +63,37 @@ describe('onVisibilityChange', () => {
     deliver([TOUCHING_EDGE]);
 
     expect(callback).toHaveBeenLastCalledWith(true);
+  });
+});
+
+describe('yieldToBrowser', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.useRealTimers();
+  });
+
+  it('uses scheduler.yield where the browser has it', async () => {
+    const schedulerYield = vi.fn(() => Promise.resolve());
+
+    vi.stubGlobal('window', { scheduler: { yield: schedulerYield } });
+    await yieldToBrowser();
+
+    expect(schedulerYield).toHaveBeenCalledOnce();
+  });
+
+  it('falls back to a timer where scheduler has no yield', async () => {
+    vi.useFakeTimers();
+    vi.stubGlobal('window', { scheduler: {} });
+
+    let hasResumed = false;
+
+    void yieldToBrowser().then(() => (hasResumed = true));
+    await Promise.resolve();
+
+    expect(hasResumed).toBe(false);
+
+    await vi.runAllTimersAsync();
+
+    expect(hasResumed).toBe(true);
   });
 });

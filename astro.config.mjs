@@ -1,6 +1,7 @@
 // @ts-check
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
+import { modulePreload } from './integrations/module-preload.ts';
 
 const PRINTABLE_ASCII = Array.from({ length: 0x7f - 0x20 }, (_, index) => String.fromCodePoint(0x20 + index));
 const DISPLAY_KANJI = ['警', '告', '撤', '収'];
@@ -9,7 +10,7 @@ const SITE_URL = 'https://nemanja-galbinovic.vercel.app';
 
 export default defineConfig({
   site: SITE_URL,
-  integrations: [sitemap()],
+  integrations: [sitemap(), modulePreload()],
   build: {
     inlineStylesheets: 'always',
   },

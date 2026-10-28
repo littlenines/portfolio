@@ -46,7 +46,13 @@ Safety nets, in `Loader.astro` and `_loader.scss`:
 
 ## Hero motion: `motion/hero/`
 
-One module per job; `index.ts` wires them together and decides when they run.
+One module per job; `index.ts` wires them together and decides when they run. Only the intro is set up
+straight away. The scroll effects and then the ambient motion are each set up in a later task
+(`addInNextTask()` in `motion/gsap.ts`), so the browser can paint and respond to taps in between instead of
+running one long setup. Anything set up later still goes through the `gsap.matchMedia` context, so turning
+on reduced motion undoes it like the rest. The reveals below the hero are set up straight away: they hide
+content with `gsap.from`, and setting them up after a paint would show that content, then hide it, then fade
+it in.
 
 - **Intro:** the sun rises, the name, eyebrow and title lines slide in, then the copy. Held until the loader lifts.
 - **Scroll depth:** across the hero, the sun sinks, the stars drift up and the copy lifts slightly.
@@ -56,7 +62,9 @@ One module per job; `index.ts` wires them together and decides when they run.
   until the script starts, which flashed on every reload.
 - **Ambient loops** (`ambient-loops.ts`): beacons pulse, about 40 random windows breathe and the haze drifts.
 - **Stream beams** (`stream-beams.ts`, netspace only): packets of light climb each beam. Their climb, speed and
-  starting point come from data attributes written at build time.
+  starting point come from data attributes written at build time. Their timelines are only built the first time
+  the hero is shown in netspace, so surface and evangelion visitors never pay for them, and in the task after
+  that, so choosing netspace stays responsive.
 - **Meteor** (`meteor.ts`): a shooting star crosses every 7–12 seconds.
 
 When they run (`watchActivity()` in `lib/activity.ts` reports whether the hero is shown and whether the page

@@ -13,8 +13,6 @@ export function addScrollEffects(hero: HTMLElement) {
 
   const awakeWindows = selectAll<SVGRectElement>('.skyline__awake .skyline__window', hero);
 
-  gsap.set(awakeWindows, { opacity: 0 });
-
   gsap.to(awakeWindows, {
     opacity: () => gsap.utils.random(AWAKE_OPACITY.min, AWAKE_OPACITY.max),
     duration: AWAKE_SWITCH.duration,
