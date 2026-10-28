@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
+    "@vercel/speed-insights": "^2.0.0",
     "astro": "^7.4.2",
     "gsap": "^3.15.0"
   },

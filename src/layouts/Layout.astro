@@ -1,5 +1,6 @@
 ---
 import { Font } from 'astro:assets';
+import SpeedInsights from '@vercel/speed-insights/astro';
 import '@styles/main.scss';
 import ThemeBootScript from '@components/layout/ThemeBootScript.astro';
 import { site } from '@data/site';
@@ -58,5 +59,6 @@ const canonicalUrl = Astro.site && !noindex ? new URL(Astro.url.pathname, Astro.
   </head>
   <body>
     <slot />
+    <SpeedInsights />
   </body>
 </html>

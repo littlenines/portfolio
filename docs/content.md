@@ -69,5 +69,8 @@ The download link is commented out in `Contact.astro` until a CV exists. To turn
   on Node 24 to match. Local development on a newer Node is fine; pnpm doesn't enforce `engines`. When
   Vercel offers Node 26 for builds, bump `engines.node` and the CI `node-version` together. The pinned major
   must still meet `astro`'s minimum Node version.
+- Speed Insights: `<SpeedInsights />` from `@vercel/speed-insights` sits at the end of `<body>` in
+  `Layout.astro`. It reports real visitors' Web Vitals to the Vercel dashboard. Its collector script is served
+  by Vercel at `/_vercel/speed-insights/script.js`, so locally it isn't found and nothing is reported.
 - `pnpm-workspace.yaml` tells pnpm to skip `@parcel/watcher`'s build script (only needed by the Sass CLI's
   watch mode). Without it, pnpm 12 fails the install.
