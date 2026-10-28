@@ -46,7 +46,7 @@ $small-plate-cut: 8px;
   }
 
   .scene::before {
-    background-image: url('/hex-field.svg');
+    background-image: var(--hex-field-image);
     opacity: 0.17;
   }
 

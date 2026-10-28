@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { DEFAULT_THEME } from '@lib/themes';
 
 const TRANSPARENT = 'rgba(0, 0, 0, 0)';
 
@@ -29,6 +30,6 @@ test.describe('first paint, before any script runs', () => {
       TRANSPARENT,
     );
 
-    expect(highlighted).toEqual(['surface']);
+    expect(highlighted).toEqual([DEFAULT_THEME]);
   });
 });

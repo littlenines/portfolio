@@ -1,4 +1,5 @@
 import { devices, expect, test } from '@playwright/test';
+import { DEFAULT_THEME, THEME_STORAGE_KEY } from '@lib/themes';
 
 // Real Chrome: only it smooths the scroll restore on Back, which is the bug this guards against
 test.use({ ...devices['Pixel 7'], channel: 'chrome' });
@@ -42,11 +43,11 @@ test.describe('navigation', () => {
 
   test('the 404 button goes back to the surface theme', async ({ page }) => {
     await page.goto('/');
-    await page.evaluate(() => localStorage.setItem('theme', 'netspace'));
+    await page.evaluate(([key, theme]) => localStorage.setItem(key, theme), [THEME_STORAGE_KEY, 'netspace']);
     await page.goto('/does-not-exist');
     await page.getByRole('link', { name: 'Back to the surface' }).click();
     await page.waitForURL((url) => url.pathname === '/');
 
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'surface');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', DEFAULT_THEME);
   });
 });

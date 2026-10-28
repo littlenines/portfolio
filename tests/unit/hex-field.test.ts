@@ -1,5 +1,6 @@
+import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { buildHexField } from '@lib/hex-field';
+import { HEX_FIELD_PATH, buildHexField } from '@lib/hex-field';
 
 const MAX_STROKE_OPACITY = 0.75;
 
@@ -20,5 +21,11 @@ describe('buildHexField', () => {
       expect(opacity).toBeGreaterThan(0);
       expect(opacity).toBeLessThanOrEqual(MAX_STROKE_OPACITY);
     }
+  });
+});
+
+describe('HEX_FIELD_PATH', () => {
+  it('matches the endpoint that writes the file', () => {
+    expect(existsSync(new URL(`../../src/pages${HEX_FIELD_PATH}.ts`, import.meta.url))).toBe(true);
   });
 });

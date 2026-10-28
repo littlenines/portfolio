@@ -101,11 +101,14 @@ reveal script.
   at least 190 units apart, away from the edges) and lays out a light beam with six climbing packets on
   each. Towers whose roof is in the top 60 units are skipped: wide, short windows crop that part of the
   skyline, which would leave the beam floating above a cut-off tower. `StreamBeams.astro` draws them in a
-  second, small SVG on top of the city, so the moving packets never repaint the large skyline drawing. Packet speeds and start points come from fixed multipliers, not
-  randomness, so every build looks the same.
-- **Hex field.** `pages/hex-field.svg.ts` is a static endpoint that writes `/hex-field.svg` from
-  `lib/hex-field.ts`. The fade is baked into each hexagon's stroke opacity instead of using a CSS mask, which
-  would force an offscreen repaint every frame. The browser only downloads it once the evangelion theme is on.
+  second, small SVG on top of the city, so the moving packets never repaint the large skyline drawing.
+  Packet speeds and start points come from fixed multipliers, not randomness, so every build looks the same.
+- **Hex field.** `pages/hex-field.svg.ts` is a static endpoint that writes `/hex-field.svg`
+  (`HEX_FIELD_PATH`, kept equal to the endpoint's file name by a unit test) from `lib/hex-field.ts`. The fade
+  is baked into each hexagon's stroke opacity instead of using a CSS mask, which would force an offscreen
+  repaint every frame. The browser only downloads it once the evangelion theme is on.
+  `Scene.astro` passes the URL to CSS as `--hex-field-image` in the markup: written as `url()` in the SCSS,
+  Vite would try to find the file at build time, before the endpoint has written it, and warn.
 - **SEO.** Titles are built with `pageTitle()` from `data/site.ts` (`Nemanja Galbinovic • Portfolio`).
   `Layout` adds the author, a canonical URL and `og:url`; pass `noindex` (as the 404 does) to drop both and
   keep the page out of search results. The home page puts its Person structured data (`PersonSchema.astro`)

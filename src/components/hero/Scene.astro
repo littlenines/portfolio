@@ -1,5 +1,6 @@
 ---
 import Skyline from './Skyline.astro';
+import { HEX_FIELD_PATH } from '@lib/hex-field';
 import type { SkylineVariant } from '@lib/skyline-variants';
 
 interface Props {
@@ -19,7 +20,7 @@ const STARS = [
 ---
 
 {isHome && <div class="scene__night-sky" aria-hidden="true" />}
-<div class="scene" aria-hidden="true">
+<div class="scene" aria-hidden="true" style={`--hex-field-image: url('${HEX_FIELD_PATH}')`}>
   <div class="scene__stars">
     {STARS.map((star) => (
       <div

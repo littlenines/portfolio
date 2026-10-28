@@ -1,4 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
+import { HEX_FIELD_PATH } from '@lib/hex-field';
+import { SECRET_THEME, THEME_STORAGE_KEY } from '@lib/themes';
 
 const KNOCKS_TO_UNLOCK = 3;
 
@@ -30,12 +32,37 @@ test.describe('themes', () => {
 
     for (let knock = 1; knock < KNOCKS_TO_UNLOCK; knock++) await name.click();
 
-    await expect(page.locator('html')).not.toHaveAttribute('data-theme', 'evangelion');
+    await expect(page.locator('html')).not.toHaveAttribute('data-theme', SECRET_THEME);
 
     await name.click();
 
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'evangelion');
-    await expect(page.locator('[data-theme-option="evangelion"]')).toBeVisible();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', SECRET_THEME);
+    await expect(page.locator(`[data-theme-option="${SECRET_THEME}"]`)).toBeVisible();
+  });
+
+  test('the hex field is only downloaded in evangelion', async ({ page }) => {
+    const hexFieldResponses: boolean[] = [];
+
+    page.on('response', (response) => {
+      if (new URL(response.url()).pathname === HEX_FIELD_PATH) hexFieldResponses.push(response.ok());
+    });
+
+    const reloadIn = async (theme: string) => {
+      await page.evaluate(([key, value]) => localStorage.setItem(key, value), [THEME_STORAGE_KEY, theme]);
+      await page.reload();
+      await page.waitForLoadState('networkidle');
+    };
+
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+    await reloadIn('netspace');
+
+    expect(hexFieldResponses).toEqual([]);
+
+    await reloadIn(SECRET_THEME);
+
+    expect(hexFieldResponses).not.toHaveLength(0);
+    expect(hexFieldResponses).not.toContain(false);
   });
 
   test.describe('stream beams', () => {
@@ -51,7 +78,7 @@ test.describe('themes', () => {
 
     test('the packets climb in netspace', async ({ page }) => {
       await page.goto('/');
-      await page.evaluate((theme) => localStorage.setItem('theme', theme), 'netspace');
+      await page.evaluate(([key, theme]) => localStorage.setItem(key, theme), [THEME_STORAGE_KEY, 'netspace']);
       await page.goto('/');
       await page.waitForFunction(() => document.documentElement.hasAttribute('data-booted'));
 

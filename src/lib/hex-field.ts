@@ -2,6 +2,8 @@ import { hexagonCorners } from './geometry';
 import { isOdd } from './math';
 import { PALETTE } from './palette';
 
+export const HEX_FIELD_PATH = '/hex-field.svg';
+
 const SQRT_3 = Math.sqrt(3);
 const ROW_SPACING = 1.5;
 
