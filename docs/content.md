@@ -27,7 +27,8 @@ Each project is one object:
 }
 ```
 
-`label` is one of `demo`, `github` or `npm`; it controls the screen-reader text ("… on GitHub (opens in new tab)").
+`label` is one of `demo`, `download`, `github` or `npm`; it controls the screen-reader text ("… on GitHub (opens in new tab)").
+That text must contain the visible label, or the accessibility test fails.
 The `quillPlugin(name, demoUrl)` helper builds the usual demo, GitHub and npm links for a package.
 
 In the evangelion theme projects are numbered automatically as "EPISODE 01", "EPISODE 02", and so on.

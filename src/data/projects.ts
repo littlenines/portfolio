@@ -1,5 +1,5 @@
 export interface ProjectLink {
-  label: 'demo' | 'github' | 'npm';
+  label: 'demo' | 'download' | 'github' | 'npm';
   href: string;
 }
 
@@ -23,6 +23,16 @@ export const projects: Project[] = [
     description: 'This site: a cyberpunk city-pop portfolio with a layered skyline and smooth GSAP motion.',
     tech: ['Astro', 'TypeScript', 'SCSS', 'GSAP'],
     links: [{ label: 'github', href: 'https://github.com/littlenines/portfolio' }],
+  },
+  {
+    name: 'youtube-downloader',
+    description:
+      'Desktop app for downloading high-quality music and video from YouTube and 1000+ other sites, with tag editing, trimming and batch downloads.',
+    tech: ['TypeScript', 'Electron'],
+    links: [
+      { label: 'download', href: 'https://github.com/littlenines/youtube-downloader-gui/releases/latest' },
+      { label: 'github', href: 'https://github.com/littlenines/youtube-downloader-gui' },
+    ],
   },
   {
     name: 'resize-quill-image',
