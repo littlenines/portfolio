@@ -19,7 +19,7 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
     "@vercel/speed-insights": "^2.0.0",
-    "astro": "^7.4.2",
+    "astro": "^7.4.4",
     "gsap": "^3.15.0"
   },
   "devDependencies": {
@@ -28,11 +28,11 @@
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.64.1",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "eslint": "^10.13.0",
+    "eslint": "^10.14.0",
     "eslint-plugin-astro": "^3.2.1",
     "prettier": "^3.9.10",
     "prettier-plugin-astro": "^1.1.2",
-    "sass": "^1.106.1",
+    "sass": "^1.107.1",
     "stylelint": "^17.16.0",
     "stylelint-config-standard-scss": "^17.0.0",
     "stylelint-order": "^8.1.2",
