@@ -32,6 +32,7 @@ export default defineConfig(
     plugins: { '@stylistic': stylistic },
     rules: {
       eqeqeq: 'error',
+      'no-nested-ternary': 'error',
       'no-console': ['error', { allow: ['info'] }],
       'id-length': ['error', { min: MIN_NAME_LENGTH, exceptions: ALLOWED_SHORT_NAMES, properties: 'never' }],
       '@typescript-eslint/consistent-type-imports': 'error',

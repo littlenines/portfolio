@@ -3,8 +3,14 @@ import { STATE_CLASS } from '@scripts/lib/state-classes';
 import { currentTheme, onThemeChange } from './state';
 import type { ChooseTheme } from './transition';
 
-const NEXT_KEYS = new Set(['ArrowRight', 'ArrowDown']);
-const PREVIOUS_KEYS = new Set(['ArrowLeft', 'ArrowUp']);
+type Direction = 1 | -1;
+
+const KEY_DIRECTIONS: Partial<Record<string, Direction>> = {
+  ArrowRight: 1,
+  ArrowDown: 1,
+  ArrowLeft: -1,
+  ArrowUp: -1,
+};
 
 export function initThemeSwitch(group: HTMLElement, chooseTheme: ChooseTheme) {
   const options = [...group.querySelectorAll<HTMLButtonElement>('[data-theme-option]')];
@@ -46,7 +52,7 @@ export function initThemeSwitch(group: HTMLElement, chooseTheme: ChooseTheme) {
     placeHighlight();
   };
 
-  const visibleNeighbour = (index: number, direction: 1 | -1) => {
+  const visibleNeighbour = (index: number, direction: Direction) => {
     let next = index;
 
     do {
@@ -60,9 +66,9 @@ export function initThemeSwitch(group: HTMLElement, chooseTheme: ChooseTheme) {
     option.addEventListener('click', () => chooseTheme(themeOf(option)));
 
     option.addEventListener('keydown', (event) => {
-      const direction = NEXT_KEYS.has(event.key) ? 1 : PREVIOUS_KEYS.has(event.key) ? -1 : 0;
+      const direction = KEY_DIRECTIONS[event.key];
 
-      if (!direction) return;
+      if (direction === undefined) return;
 
       event.preventDefault();
       chooseTheme(themeOf(visibleNeighbour(index, direction)));

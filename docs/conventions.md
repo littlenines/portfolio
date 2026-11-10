@@ -57,6 +57,9 @@ CI (`.github/workflows/ci.yml`) runs all of them on every push to `master` and o
 - A function that adds listeners or observers returns a function that removes them (`onThemeChange`,
   `onVisibilityChange`).
 - A promise that is intentionally not awaited is marked with `void` (`void initLoader();`).
+- A ternary is only `condition ? a : b`; nesting one fails lint (`no-nested-ternary`). When several
+  branches compare one value, use an object lookup instead of an `if`/`else` chain (`KEY_DIRECTIONS` in
+  `scripts/theme/switch.ts`).
 - `console.info` only, and only on purpose (the easter-egg hint).
 
 ## Styles
@@ -79,6 +82,20 @@ See [Styles](styles.md) for the folder map. The rules:
 - **No raw colours** outside `abstracts/_colors.scss` and the theme files.
 - **Order inside a rule:** `$variables`, then `--custom-properties`, then `@include`s, then declarations
   (Stylelint checks it and `pnpm format` fixes it). Mixins come first so the rule's own declarations win.
+
+## Files
+
+Each file does one job. Split it when it grows or starts doing a second thing:
+
+- Pure logic (calculations, decisions, formatting) goes in `src/lib` or `src/scripts/lib`, not inside an
+  effect or component, so it can be unit-tested with plain inputs.
+- A script that runs several separate pieces gets each piece as its own module, wired together by one
+  `index.ts` (as `scripts/motion/hero/` does).
+- Past roughly 150 lines, or when one flow means scrolling between distant parts, look for a seam to split
+  along.
+- Don't split a small piece that only makes sense inside its parent, and don't build a shared abstraction
+  for a pattern with one user.
+- Each new module gets its line in `docs/`.
 
 ## Comments
 

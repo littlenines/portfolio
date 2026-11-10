@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import { HEX_FIELD_PATH } from '@lib/hex-field';
-import { SECRET_THEME, THEME_STORAGE_KEY } from '@lib/themes';
+import { DEFAULT_THEME, SECRET_THEME, THEME_STORAGE_KEY } from '@lib/themes';
 
 const KNOCKS_TO_UNLOCK = 3;
 
@@ -19,10 +19,27 @@ test.describe('themes', () => {
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'netspace');
   });
 
+  test('arrow keys move through the visible themes and skip the hidden one', async ({ page }) => {
+    await page.goto('/');
+    await page.locator(`[data-theme-option="${DEFAULT_THEME}"]`).focus();
+
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'netspace');
+
+    await page.keyboard.press('ArrowDown');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', DEFAULT_THEME);
+
+    await page.keyboard.press('ArrowUp');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'netspace');
+
+    await page.keyboard.press('Enter');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'netspace');
+  });
+
   test('the secret theme stays hidden until it is unlocked', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page.locator('[data-theme-option="evangelion"]')).toBeHidden();
+    await expect(page.locator(`[data-theme-option="${SECRET_THEME}"]`)).toBeHidden();
   });
 
   test('three knocks on the name unlock evangelion', async ({ page }) => {
