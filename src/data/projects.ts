@@ -21,8 +21,18 @@ export const projects: Project[] = [
   {
     name: 'portfolio',
     description: 'This site: a cyberpunk city-pop portfolio with a layered skyline and smooth GSAP motion.',
-    tech: ['Astro', 'TypeScript', 'SCSS', 'GSAP'],
+    tech: ['Astro', 'TypeScript', 'GSAP'],
     links: [{ label: 'github', href: 'https://github.com/littlenines/portfolio' }],
+  },
+  {
+    name: 'shiori',
+    description:
+      'Desktop anime app for tracking what you watch, finding new episodes and playing them from your own download folder.',
+    tech: ['JavaScript', 'React', 'Electron'],
+    links: [
+      { label: 'download', href: 'https://github.com/shiori-project-app/shiori/releases/latest' },
+      { label: 'github', href: 'https://github.com/shiori-project-app/shiori' },
+    ],
   },
   {
     name: 'youtube-downloader',
